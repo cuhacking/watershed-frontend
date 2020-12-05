@@ -9,3 +9,7 @@ export const colors = {
   parksCanada: '#3A5154',
   wineDark: '#CA4353'
 };
+
+export const shadows = {
+  primary: `0px 0px 16px rgba(49, 90, 150, 0.5);`
+};

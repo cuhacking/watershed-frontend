@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../components/button'
-import { colors } from '../shared/constants';
+import { colors, shadows } from '../shared/constants';
 
 const theme = 'dark';
 
@@ -13,6 +13,11 @@ const Container = styled.div`
   background-color: ${theme === 'dark' 
     ? colors.ikeaBlue : colors.white };
   margin:auto;
+  transition: box-shadow 250ms ease;
+
+  &:hover {
+    box-shadow: ${shadows.primary}
+  }
 `;
 
 const FormContainer = styled.div`
@@ -26,15 +31,20 @@ function Registration() {
   const personalInformation = () => {
     return (
       <FormContainer>
-        
+        <h3>Personal information</h3>
       </FormContainer>
     )
   }
 
+  const currentStep = () => {
+    switch(step) {
+      case 0: return personalInformation();
+    };
+  };
+
   return (
     <Container>
-
-      <h3>Personal information</h3>
+      {currentStep()}
     </Container>
   );
 }
