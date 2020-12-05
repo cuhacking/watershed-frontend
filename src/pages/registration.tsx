@@ -11,12 +11,13 @@ const Container = styled.div`
   max-width: 1200px;
   border-radius: 8px;
   background-color: ${theme === 'dark' 
-    ? colors.ikeaBlue : colors.white };
+    ? colors.spaceGrey : colors.white };
   margin:auto;
-  transition: box-shadow 250ms ease;
+  transition: box-shadow 300ms ease;
+  box-shadow: ${shadows.primary};
 
   &:hover {
-    box-shadow: ${shadows.primary}
+    box-shadow: ${shadows.hover}
   }
 `;
 
@@ -41,6 +42,8 @@ function Registration() {
       case 0: return personalInformation();
     };
   };
+ 
+  // const 
 
   return (
     <Container>

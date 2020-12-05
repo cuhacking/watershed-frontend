@@ -14,7 +14,7 @@ code {
     monospace;
 }
 
-h1, h2, h3, p, a {
+body {
   font-family: 'Work Sans', sans-serif;
   color: white;
 }
