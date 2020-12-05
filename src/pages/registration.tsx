@@ -1,23 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../components/button'
-import { colors } from '../shared/colors';
+import { colors } from '../shared/constants';
 
 const theme = 'dark';
 
 const Container = styled.div`
-  min-width: 100%;
-  min-height: 100%;
+  display: flex;
+  padding: 2rem;
   max-width: 1200px;
+  border-radius: 8px;
   background-color: ${theme === 'dark' 
-    ? colors.spaceDark : colors.white };
+    ? colors.ikeaBlue : colors.white };
+  margin:auto;
+`;
+
+const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 function Registration() {
+  const [step, setStep] = useState(0);
+
+  const personalInformation = () => {
+    return (
+      <FormContainer>
+        
+      </FormContainer>
+    )
+  }
+
   return (
     <Container>
-      <h1> Registration </h1>
-      <Button disabled></Button>
+
+      <h3>Personal information</h3>
     </Container>
   );
 }
