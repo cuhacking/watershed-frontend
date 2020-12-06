@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../components/button'
 import { colors, shadows } from '../shared/constants';
+import darkDrop from '../assets/img/drop-dark.svg';
 
 const theme = 'dark';
 
@@ -11,7 +12,7 @@ const Container = styled.div`
   padding: 2rem 4rem;
   max-width: 100%;
   min-width: 800px;
-  border-radius: 8px;
+  border-radius: 16px;
   align-items: center;
   background-color: ${theme === 'dark' 
     ? colors.spaceGrey : colors.white };
@@ -32,6 +33,7 @@ const Container = styled.div`
 const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 1rem 0rem;
 `;
 
 const InteractionsContainer = styled.div`
@@ -44,7 +46,7 @@ const InteractionsContainer = styled.div`
 function Registration() {
   const [step, setStep] = useState(0);
 
-  const personalInformation = () => (
+  const personalInformation = (
     <FormContainer>
       <h3>Personal information</h3>
     </FormContainer>
@@ -52,11 +54,11 @@ function Registration() {
 
   const currentStep = () => {
     switch(step) {
-      case 0: return personalInformation();
+      case 0: return personalInformation;
     };
   };
  
-  const actions = () => (
+  const actions = (
     <InteractionsContainer>
       <Button />
       <Button />
@@ -65,8 +67,9 @@ function Registration() {
 
   return (
     <Container>
+      <img src={darkDrop} />
       {currentStep()}
-      {actions()}
+      {actions}
     </Container>
   );
 }
