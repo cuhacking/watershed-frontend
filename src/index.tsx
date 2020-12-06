@@ -17,6 +17,10 @@ const Container = styled.div`
   background-color: ${theme === 'dark' 
     ? colors.spaceDark : colors.white };
   display: flex;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const App = () => (
