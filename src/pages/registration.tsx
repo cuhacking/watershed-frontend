@@ -52,14 +52,18 @@ function Registration() {
  
   const actions = (
     <InteractionsContainer>
-      <Button />
-      <Button />
+      <Button onClick={() => setStep(1)}>
+        Cancel
+      </Button>
+      <Button role="secondary" onClick={() => setStep(1)}>
+        Continue
+      </Button>
     </InteractionsContainer>
   );
 
   return (
     <Container>
-      <img src={darkDrop} />
+      <img src={darkDrop} alt="cuhacking icon" />
       {currentStep()}
       {actions}
     </Container>
