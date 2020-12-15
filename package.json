@@ -4,8 +4,10 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-brands-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.13",
+    "@n8tb1t/use-scroll-position": "^2.0.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -15,6 +17,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.6",
     "fontsource-dm-sans": "^3.1.5",
+    "fontsource-montserrat-alternates": "^3.1.5",
     "fontsource-work-sans": "^3.1.6",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",

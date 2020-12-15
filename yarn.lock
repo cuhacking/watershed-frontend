@@ -1572,6 +1572,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fortawesome/free-brands-svg-icons@npm:^5.15.1":
+  version: 5.15.1
+  resolution: "@fortawesome/free-brands-svg-icons@npm:5.15.1"
+  dependencies:
+    "@fortawesome/fontawesome-common-types": ^0.2.32
+  checksum: d6d0544d2428a2cdca8308a4a0d4c8f7eb10b3b9f1aa04c26e58f310d909201e316253d6bdb8d31cca21e8633060f5b342fc68a7e8d11cf6d6289e23cc0a94d2
+  languageName: node
+  linkType: hard
+
 "@fortawesome/free-solid-svg-icons@npm:^5.15.1":
   version: 5.15.1
   resolution: "@fortawesome/free-solid-svg-icons@npm:5.15.1"
@@ -1835,6 +1844,16 @@ __metadata:
     call-me-maybe: ^1.0.1
     glob-to-regexp: ^0.3.0
   checksum: e01193b783ed7682710a9af87ba05c69d15cc2183eedca36e37c720bbb7d7449f7d5cd8ad15c991f20c5d95cdce1a3a10ef6d82b1bb8a9762a193ad4245cc9da
+  languageName: node
+  linkType: hard
+
+"@n8tb1t/use-scroll-position@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "@n8tb1t/use-scroll-position@npm:2.0.3"
+  peerDependencies:
+    "@types/react": "*"
+    react: "*"
+  checksum: 3fe3387e3f271c2558b74fd297988775a1e51daecd9a93b76f86ddec0b0d9d1e3f4016e7ddda8f90cb929f78460ce70b617d84a0e905a908911a2b30f6e98372
   languageName: node
   linkType: hard
 
@@ -6778,6 +6797,13 @@ __metadata:
   version: 3.1.5
   resolution: "fontsource-dm-sans@npm:3.1.5"
   checksum: ac5e3153e1c6ef49259e36f5749a6d9f55de056ee0ec97c9c7892785f60988bd54aaa5439afb1f6c82ffa271de2c51924cac7407f9aa3d0bd7815f5b29943b8e
+  languageName: node
+  linkType: hard
+
+"fontsource-montserrat-alternates@npm:^3.1.5":
+  version: 3.1.5
+  resolution: "fontsource-montserrat-alternates@npm:3.1.5"
+  checksum: 17c75dc45876a830b98689ac38337589f25847ba50b2f68f43fce0c760cadab68c0d0b3c6003bce11cadf80487130cf1a40230b5ec8cb7a8ad2ec4c2252eae23
   languageName: node
   linkType: hard
 
@@ -15150,8 +15176,10 @@ typescript@^4.0.5:
   resolution: "watershed-frontend@workspace:."
   dependencies:
     "@fortawesome/fontawesome-svg-core": ^1.2.32
+    "@fortawesome/free-brands-svg-icons": ^5.15.1
     "@fortawesome/free-solid-svg-icons": ^5.15.1
     "@fortawesome/react-fontawesome": ^0.1.13
+    "@n8tb1t/use-scroll-position": ^2.0.3
     "@testing-library/jest-dom": ^4.2.4
     "@testing-library/react": ^9.3.2
     "@testing-library/user-event": ^7.1.2
@@ -15163,6 +15191,7 @@ typescript@^4.0.5:
     "@types/styled-components": ^5.1.4
     "@yarnpkg/pnpify": ^2.3.3
     fontsource-dm-sans: ^3.1.5
+    fontsource-montserrat-alternates: ^3.1.5
     fontsource-work-sans: ^3.1.6
     react: ^16.14.0
     react-dom: ^16.14.0
