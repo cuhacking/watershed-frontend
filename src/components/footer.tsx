@@ -122,7 +122,7 @@ const Footer = () => (
       <Content>
         <a
           href='https://cuhacking.com'
-          rel='noopener referrer external'
+          rel='noopener noreferrer external'
           target='_blank'
         >
           <StyledLogo />
