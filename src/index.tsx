@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {createGlobalStyle} from 'styled-components';
 import 'fontsource-dm-sans';
 import 'fontsource-work-sans';
-import Registration from './pages/registration';
+import {Home} from './pages';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -66,7 +66,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   a {
-  text-decoration: none;
+    text-decoration: none;
   }
 
   a:link,
@@ -82,7 +82,7 @@ const App = () => (
     <GlobalStyle />
     <Router>
       <Switch>
-        <Route path='/' exact component={Registration} />
+        <Route path='/' exact component={Home} />
       </Switch>
     </Router>
   </>
