@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../components/button'
-import { colors, shadows } from '../shared/constants';
 import darkDrop from '../assets/img/drop-dark.svg';
-
-const theme = 'dark';
 
 const Container = styled.div`
   display: flex;
@@ -14,15 +11,10 @@ const Container = styled.div`
   min-width: 800px;
   border-radius: 16px;
   align-items: center;
-  background-color: ${theme === 'dark' 
-    ? colors.spaceGrey : colors.white };
+  background-color: var(--spaceGrey);
   margin:auto;
   transition: box-shadow 300ms ease;
-  box-shadow: ${shadows.hover};
-/* 
-  &:hover {
-    box-shadow: ${shadows.hover}
-  } */
+  box-shadow: var(--hover);
 
   @media (max-width: 768px) {
     min-width: 0;
