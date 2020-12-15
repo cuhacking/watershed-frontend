@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
-import {Link, NavLink, useRouteMatch} from 'react-router-dom';
+import {Link, useRouteMatch} from 'react-router-dom';
 import {useScrollPosition} from '@n8tb1t/use-scroll-position';
 import {ReactComponent as WordLogo} from 'assets/img/word-logo-white.svg';
 import MenuButton from './menuButton';
