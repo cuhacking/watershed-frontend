@@ -6737,6 +6737,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fontsource-dm-sans@npm:^3.1.5":
+  version: 3.1.5
+  resolution: "fontsource-dm-sans@npm:3.1.5"
+  checksum: ac5e3153e1c6ef49259e36f5749a6d9f55de056ee0ec97c9c7892785f60988bd54aaa5439afb1f6c82ffa271de2c51924cac7407f9aa3d0bd7815f5b29943b8e
+  languageName: node
+  linkType: hard
+
+"fontsource-work-sans@npm:^3.1.6":
+  version: 3.1.6
+  resolution: "fontsource-work-sans@npm:3.1.6"
+  checksum: 48ce41a1919af978ebf9a60e1a745aa0cb32725d363bab17a4730d6dd59c2952cc9207a57bc4af33d4e5243003aec708846b4a7921d9a3ee60bf081971ff0502
+  languageName: node
+  linkType: hard
+
 "for-in@npm:^0.1.3":
   version: 0.1.8
   resolution: "for-in@npm:0.1.8"
@@ -15108,6 +15122,8 @@ typescript@^4.0.5:
     "@types/react-router-dom": ^5.1.6
     "@types/styled-components": ^5.1.4
     "@yarnpkg/pnpify": ^2.3.3
+    fontsource-dm-sans: ^3.1.5
+    fontsource-work-sans: ^3.1.6
     react: ^16.14.0
     react-dom: ^16.14.0
     react-is: ^17.0.1

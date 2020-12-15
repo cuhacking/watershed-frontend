@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'fontsource-dm-sans'
+import 'fontsource-work-sans'
 import './index.css';
 import Registration from './pages/registration';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'; 
