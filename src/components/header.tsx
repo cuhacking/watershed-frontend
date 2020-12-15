@@ -23,7 +23,7 @@ const StyledHeader = styled.header<{
   display: flex;
   flex-direction: column;
   width: 100vw;
-  height: ${(props) => (props.isOpen ? '20rem' : '65px')};
+  height: ${(props) => (props.isOpen ? '25rem' : '65px')};
   justify-content: flex-start;
   align-items: center;
 
@@ -80,7 +80,7 @@ const NavMenu = styled.nav`
   }
 `;
 
-const NavButton = styled(NavLink)`
+const NavButton = styled(Link)`
   text-align: right;
   font-size: 2rem;
   margin: 0.5rem 0;
@@ -116,73 +116,19 @@ const Header = (props: {fixed: boolean}) => {
         </Link>
         <MenuButton isOpen={isOpen} onClick={() => setOpen(!isOpen)} />
         <ButtonDiv>
-          <NavButton
-            to='/#about'
-            activeStyle={{
-              color: 'var(--purple)',
-            }}
-          >
-            About
-          </NavButton>
-          <NavButton
-            to='/#schedule'
-            activeStyle={{
-              color: 'var(--purple)',
-            }}
-          >
-            Schedule
-          </NavButton>
-          <NavButton
-            to='/#sponsors'
-            activeStyle={{
-              color: 'var(--purple)',
-            }}
-          >
-            Sponsors
-          </NavButton>
-          <NavButton
-            to='/#FAQ'
-            activeStyle={{
-              color: 'var(--purple)',
-            }}
-          >
-            FAQ
-          </NavButton>
+          <NavButton to='/#about'>About</NavButton>
+          <NavButton to='/#schedule'>Schedule</NavButton>
+          <NavButton to='/#sponsors'>Sponsors</NavButton>
+          <NavButton to='/#FAQ'>FAQ</NavButton>
+          <NavButton to='/dashboard/login'>Login</NavButton>
         </ButtonDiv>
       </NavBar>
       <NavMenu>
-        <NavButton
-          to='/#about'
-          activeStyle={{
-            color: 'var(--purple)',
-          }}
-        >
-          About
-        </NavButton>
-        <NavButton
-          to='/#schedule'
-          activeStyle={{
-            color: 'var(--purple)',
-          }}
-        >
-          Schedule
-        </NavButton>
-        <NavButton
-          to='/#sponsors'
-          activeStyle={{
-            color: 'var(--purple)',
-          }}
-        >
-          Sponsors
-        </NavButton>
-        <NavButton
-          to='/#FAQ'
-          activeStyle={{
-            color: 'var(--purple)',
-          }}
-        >
-          FAQ
-        </NavButton>
+        <NavButton to='/#about'>About</NavButton>
+        <NavButton to='/#schedule'>Schedule</NavButton>
+        <NavButton to='/#sponsors'>Sponsors</NavButton>
+        <NavButton to='/#FAQ'>FAQ</NavButton>
+        <NavButton to='/dashboard/login'>Login</NavButton>
       </NavMenu>
     </StyledHeader>
   );

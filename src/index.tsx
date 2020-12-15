@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {createGlobalStyle} from 'styled-components';
 import 'fontsource-dm-sans';
 import 'fontsource-work-sans';
+import 'fontsource-montserrat-alternates/600.css';
 import {Home} from './pages';
 
 const GlobalStyle = createGlobalStyle`
@@ -41,11 +42,11 @@ const GlobalStyle = createGlobalStyle`
     --shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
     --hover: 0px 0px 16px rgba(49, 90, 150, 0.5);
 
-    font-family: 'Work Sans', sans-serif;
+    font-family: var(--secondary-font);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     
-    background-color: var(--wine);
+    background-color: #210002;
     color: var(--white);
 
     margin: 0;

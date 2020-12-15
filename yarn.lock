@@ -6800,6 +6800,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fontsource-montserrat-alternates@npm:^3.1.5":
+  version: 3.1.5
+  resolution: "fontsource-montserrat-alternates@npm:3.1.5"
+  checksum: 17c75dc45876a830b98689ac38337589f25847ba50b2f68f43fce0c760cadab68c0d0b3c6003bce11cadf80487130cf1a40230b5ec8cb7a8ad2ec4c2252eae23
+  languageName: node
+  linkType: hard
+
 "fontsource-work-sans@npm:^3.1.6":
   version: 3.1.6
   resolution: "fontsource-work-sans@npm:3.1.6"
@@ -15184,6 +15191,7 @@ typescript@^4.0.5:
     "@types/styled-components": ^5.1.4
     "@yarnpkg/pnpify": ^2.3.3
     fontsource-dm-sans: ^3.1.5
+    fontsource-montserrat-alternates: ^3.1.5
     fontsource-work-sans: ^3.1.6
     react: ^16.14.0
     react-dom: ^16.14.0

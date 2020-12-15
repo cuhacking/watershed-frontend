@@ -45,7 +45,7 @@ const BackToTopButton = styled.button`
   background: none;
   border: none;
 
-  font-family: 'Work Sans', sans-serif;
+  font-family: var(--secondary-font);
   font-size: 1.25rem;
   font-weight: normal;
 
