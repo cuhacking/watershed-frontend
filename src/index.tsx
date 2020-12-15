@@ -1,36 +1,72 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import Registration from './pages/registration';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'; 
-import styled from 'styled-components';
-import { colors } from './shared/constants';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { createGlobalStyle } from 'styled-components'
+import 'fontsource-dm-sans'
+import 'fontsource-work-sans'
+import Registration from './pages/registration'
 
-const theme = 'dark';
+const GlobalStyle = createGlobalStyle`
+  body {
+    --white: #F5F9FF;
+    --snow: #C1DAFF;
+    --ikeaBlue: #315A96;
+    --spaceGrey: #21273F;
+    --spaceDark: #040816;
+    --wine: #89072E;
+    --vanilla: #FECD7D;
+    --parksCanada: #3A5154;
+    --wineDark: #CA4353;
 
-const Container = styled.div`
-  box-sizing: border-box;
-  min-width: 100%;
-  min-height: 100vh;
-  padding: 2rem;
-  max-width: 1200px;
-  background-color: ${theme === 'dark' 
-    ? colors.spaceDark : colors.white };
-  display: flex;
+    --shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
+    --hover: 0px 0px 16px rgba(49, 90, 150, 0.5);
 
-  @media (max-width: 768px) {
-    padding: 1rem;
+    font-family: 'Work Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: var(--white);
+
+    margin: 0;
   }
-`;
+
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+
+  h1, h2, h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-weight: 300;
+  }
+
+  #root {
+    box-sizing: border-box;
+    min-width: 100%;
+    min-height: 100vh;
+    padding: 2rem;
+    max-width: 1200px;
+    background-color: var(--spaceDark);
+    display: flex;
+
+    @media (max-width: 768px) {
+      padding: 1rem;
+    }
+  }
+`
 
 const App = () => (
-  <Container>
+  <>
+    <GlobalStyle />
     <Router>
       <Switch>
-        <Route path="/" exact component={Registration}/> 
+        <Route path='/' exact component={Registration} />
       </Switch>
     </Router>
-  </Container>
-); 
+  </>
+)
 
-ReactDOM.render(<App/>, document.getElementById('root')); 
+ReactDOM.render(<App />, document.getElementById('root'))
