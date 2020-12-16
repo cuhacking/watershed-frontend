@@ -14,6 +14,7 @@ import layer9 from 'assets/img/hero/hero_9.png';
 import layer10 from 'assets/img/hero/hero_10.png';
 import indoor from 'assets/img/indoor.png';
 import stats from 'assets/img/stats.svg';
+import schedule from 'assets/img/schedule-graphic.svg';
 import {ReactComponent as Logo} from 'assets/img/word-and-year-logo-white.svg';
 import {RellaxWrapper} from 'react-rellax-wrapper';
 import {Button} from '../components';
@@ -142,7 +143,7 @@ const Title = styled.h1`
   white-space: nowrap;
 
   color: var(--outdoor);
-  text-shadow: 0px 0px 30px #08DAB7;
+  text-shadow: 0px 0px 30px #08dab7;
 
   @media only screen and (min-width: 700px) {
     font-size: 12vw;
@@ -241,6 +242,11 @@ const FirstSectionSpacer = styled.div`
   height: 156px;
 `;
 
+const ScheduleGraphic = styled.img`
+  width: 100%;
+  margin: 24px 0 48px;
+`;
+
 export default () => (
   <MainLayout>
     <HeroSection>
@@ -265,7 +271,10 @@ export default () => (
         <SectionText>
           For the last four years, cuHacking has continued to bring increasingly
           more hackers together, culminating in an annual event which{' '}
-          <u><strong>over 600 hackers</strong></u> enjoyed last year.
+          <u>
+            <strong>over 600 hackers</strong>
+          </u>{' '}
+          enjoyed last year.
         </SectionText>
         <SectionText>
           Although we can't all gather in Richcraft Hall like we normally do, we
@@ -275,7 +284,7 @@ export default () => (
       </SectionHalf>
       <SectionHalf>
         <StatsImage
-          aria-label='cuHacking 2020 statistics. 602 hackers, 1234 applicants, 120 projects.'
+          aria-label='cuHacking 2020: 602 hackers, 1234 applicants, 120 projects.'
           src={stats}
         />
       </SectionHalf>
@@ -318,6 +327,10 @@ export default () => (
         split our event into three main chunks to allow for proper rest and
         conscious coding while at home.
       </SectionText>
+      <ScheduleGraphic
+        aria-label='January 29: Network and Socialize. January 30: Hack and Learn. January 31: Demo and Flex.'
+        src={schedule}
+      />
     </StyledSection>
     <StyledSection color='indoor' id='sponsors'>
       <SectionHeader>Sponsors</SectionHeader>
