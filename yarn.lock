@@ -12533,6 +12533,18 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"react-rellax-wrapper@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "react-rellax-wrapper@npm:1.0.6"
+  dependencies:
+    rellax: ^1.12.1
+  peerDependencies:
+    react: ^16.8.0
+    react-dom: ^16.8.0
+  checksum: 408bd861b213cce6e0b2d4b72fda0513b3b872ecc42274e59ae9193bb49a12950591b15e32531226136a6e01428baed33d3dea98e425b1b190f24fb8506dfd3c
+  languageName: node
+  linkType: hard
+
 "react-router-dom@npm:^5.2.0":
   version: 5.2.0
   resolution: "react-router-dom@npm:5.2.0"
@@ -12885,6 +12897,13 @@ fsevents@^1.2.7:
   version: 0.2.7
   resolution: "relateurl@npm:0.2.7"
   checksum: 856db0385d82022042584c14702ce58cb4d74c6b6a6d98ba85357638e64c081e6cb85adbbadebc82eec87b6e70ba43ae02d8655e565dbd4baffdc405a1b0b614
+  languageName: node
+  linkType: hard
+
+"rellax@npm:^1.12.1":
+  version: 1.12.1
+  resolution: "rellax@npm:1.12.1"
+  checksum: a9c422b8430043a2a5d0d41a7afd7d47c814e8a4bb596d662489c51c9eb4c84c0b8430346901827d19f0ae8c9f39478a5c07c1c63b5449931f166e4fc71e65a1
   languageName: node
   linkType: hard
 
@@ -15196,6 +15215,7 @@ typescript@^4.0.5:
     react: ^16.14.0
     react-dom: ^16.14.0
     react-is: ^17.0.1
+    react-rellax-wrapper: ^1.0.6
     react-router-dom: ^5.2.0
     react-scripts: 3.4.3
     styled-components: ^5.2.0
