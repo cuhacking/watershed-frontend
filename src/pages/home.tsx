@@ -30,6 +30,7 @@ const HeroLayer = styled.div<{src: string}>`
   background: bottom / cover no-repeat url(${(props) => props.src});
   background-size: auto 100vh;
   background-position-x: 28%;
+  pointer-events: none;
 
   @media only screen and (min-width: 1200px) {
     background-position-x: center;
@@ -42,6 +43,7 @@ const HeroLayerWrapper = styled(RellaxWrapper)`
   position: absolute;
   display: flex;
   justify-content: center;
+  pointer-events: none;
 `;
 
 const HeroBannerWrapper = styled.div`
@@ -67,7 +69,10 @@ const HeroBanner = () => {
   ];
 
   let layers = layerImages.map((image, index) => (
-    <HeroLayerWrapper speed={-1.5 * (layerImages.length - 1 - index)}>
+    <HeroLayerWrapper
+      key={`image-${index}`}
+      speed={-1.5 * (layerImages.length - 1 - index)}
+    >
       <HeroLayer src={image} />
     </HeroLayerWrapper>
   ));
@@ -76,7 +81,10 @@ const HeroBanner = () => {
   const front = layers.slice(0, textLayer);
   const back = layers.slice(textLayer);
   const text = (
-    <HeroLayerWrapper speed={-1.5 * (layerImages.length - 1 - textLayer)}>
+    <HeroLayerWrapper
+      key='text-0'
+      speed={-1.5 * (layerImages.length - 1 - textLayer)}
+    >
       <HeroText>
         <StyledLogo />
         <Title>Snowed In</Title>
@@ -110,6 +118,7 @@ const HeroText = styled.div`
     content: '';
     flex-grow: 11;
   }
+  pointer-events: all;
 
   @media only screen and (min-width: 700px) {
     width: unset;
