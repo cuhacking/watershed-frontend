@@ -34,7 +34,7 @@ const HeroLayer = styled.div<{src: string}>`
   height: 100%;
   background: bottom / cover no-repeat url(${(props) => props.src});
   background-size: auto 100vh;
-  background-position-x: 28%;
+  background-position-x: 60%;
   pointer-events: none;
 
   @media only screen and (min-width: 1200px) {
