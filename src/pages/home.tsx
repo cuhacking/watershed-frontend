@@ -22,7 +22,7 @@ const HeroSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: var(--outside);
+  background: var(--outdoor);
 
   height: 100vh;
   min-height: 600px;
@@ -141,8 +141,8 @@ const Title = styled.h1`
   text-align: right;
   white-space: nowrap;
 
-  color: var(--snow);
-  text-shadow: 0px 0px 10px var(--snow);
+  color: var(--outdoor);
+  text-shadow: 0px 0px 30px #08DAB7;
 
   @media only screen and (min-width: 700px) {
     font-size: 12vw;
@@ -173,20 +173,27 @@ const Location = styled.p`
 const ColourTransition = styled.div`
   width: 100%;
   height: 256px;
-  background-image: linear-gradient(var(--outside), var(--inside));
+  background-image: linear-gradient(var(--outdoor), var(--indoor));
 `;
 
-const StyledSection = styled.section<{halves?: boolean}>`
+const StyledSection = styled.section<{
+  halves?: boolean;
+  center?: boolean;
+  color: 'indoor' | 'outdoor';
+}>`
   display: flex;
   flex-direction: row;
   padding: 0 calc((100% - var(--mobile-width)) / 2);
   flex-direction: column;
-  margin-bottom: 72px;
+  padding-bottom: 72px;
+  text-align: ${(props) => (props.center ? 'center' : 'left')};
+  background-color: ${(props) =>
+    props.color === 'indoor' ? 'var(--indoor)' : 'var(--outdoor)'};
 
   @media only screen and (min-width: 1200px) {
     padding: 0 calc((100% - var(--max-width)) / 2);
     flex-direction: ${(props) => (props.halves ? 'row-reverse' : 'column')};
-    &:nth-child(odd) {
+    &:nth-child(even) {
       flex-direction: ${(props) => (props.halves ? 'row' : 'column')};
     }
   }
@@ -194,17 +201,18 @@ const StyledSection = styled.section<{halves?: boolean}>`
 
 const SectionHeader = styled.h1`
   color: var(--white);
-  font-size: 1.7em;
-  font-weight: 700;
-  font-family: var(--primary-font);
+  font-size: 2.1em;
+  font-weight: 600;
+  font-family: var(--secondary-font);
 `;
 
 const SectionText = styled.p`
   color: var(--white);
   margin: 0 0 0.5em 0;
-  font-weight: 200;
+  font-weight: 400;
   line-height: 1.8em;
   margin-bottom: 1.3em;
+  font-family: var(--primary-font);
 `;
 
 const SectionHalf = styled.div`
@@ -229,29 +237,35 @@ const StatsImage = styled.img`
   align-self: center;
 `;
 
+const FirstSectionSpacer = styled.div`
+  height: 156px;
+`;
+
 export default () => (
   <MainLayout>
     <HeroSection>
       <HeroBanner />
     </HeroSection>
+    <StyledSection color='outdoor' center>
+      <FirstSectionSpacer />
+      <SectionHeader>Ottawa's largest hackathon is getting cozy!</SectionHeader>
+      <SectionText>
+        Get the hot cocoa ready!{' '}
+        <span role='img' aria-label='Coffee Emoji'>
+          ☕
+        </span>{' '}
+        To cap off this crazy year, cuHacking is bundling up and getting warm at
+        home for its first ever virtual hackathon!
+      </SectionText>
+    </StyledSection>
     <ColourTransition />
-    <StyledSection halves id='about'>
+    <StyledSection color='indoor' halves id='about'>
       <SectionHalf>
-        <SectionHeader>
-          Ottawa's largest hackathon is getting cozy!
-        </SectionHeader>
-        <SectionText>
-          Get the hot cocoa ready!{' '}
-          <span role='img' aria-label='Coffee Emoji'>
-            ☕
-          </span>{' '}
-          To cap off this crazy year, cuHacking is bundling up and getting warm
-          at home for its first ever virtual hackathon!
-        </SectionText>
+        <SectionHeader>First, a look back</SectionHeader>
         <SectionText>
           For the last four years, cuHacking has continued to bring increasingly
           more hackers together, culminating in an annual event which{' '}
-          <strong>over 600 hackers</strong> enjoyed last year.
+          <u><strong>over 600 hackers</strong></u> enjoyed last year.
         </SectionText>
         <SectionText>
           Although we can't all gather in Richcraft Hall like we normally do, we
@@ -266,7 +280,7 @@ export default () => (
         />
       </SectionHalf>
     </StyledSection>
-    <StyledSection halves>
+    <StyledSection color='indoor' halves>
       <SectionHalf>
         <SectionHeader>How we've adapted</SectionHeader>
         <SectionText>
@@ -288,7 +302,7 @@ export default () => (
         />
       </SectionHalf>
     </StyledSection>
-    <StyledSection id="schedule">
+    <StyledSection color='indoor' id='schedule'>
       <SectionHeader>Schedule</SectionHeader>
       <SectionText>
         We've also adapted our schedule this year to encourage a{' '}
@@ -305,7 +319,7 @@ export default () => (
         conscious coding while at home.
       </SectionText>
     </StyledSection>
-    <StyledSection id="sponsors">
+    <StyledSection color='indoor' id='sponsors'>
       <SectionHeader>Sponsors</SectionHeader>
     </StyledSection>
   </MainLayout>

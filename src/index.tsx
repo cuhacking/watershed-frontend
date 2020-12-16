@@ -4,8 +4,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {createGlobalStyle} from 'styled-components';
 import 'fontsource-dm-sans';
 import 'fontsource-work-sans';
-import 'fontsource-work-sans/300.css';
-import 'fontsource-dm-sans/700.css';
+import 'fontsource-work-sans/600.css';
 import 'fontsource-montserrat-alternates/600.css';
 import {Home} from './pages';
 
@@ -33,8 +32,8 @@ const GlobalStyle = createGlobalStyle`
     --vanilla: #FECD7D;
     --parksCanada: #3A5154;
     --wineDark: #CA4353;
-    --outside: #030a16;
-    --inside: #130101;
+    --outdoor: #030a16;
+    --indoor: #130101;
 
     --max-width: 1200px;
     --reading-width: 80ch;
@@ -50,7 +49,8 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     
-    background-color: var(--inside);
+    background-color: var(--indoor);
+
     color: var(--white);
 
     margin: 0;
