@@ -80,7 +80,7 @@ const NavMenu = styled.nav`
   }
 `;
 
-const NavButton = styled(Link)`
+const NavButton = styled.a`
   text-align: right;
   font-size: 2rem;
   margin: 0.5rem 0;
@@ -116,19 +116,19 @@ const Header = (props: {fixed: boolean}) => {
         </Link>
         <MenuButton isOpen={isOpen} onClick={() => setOpen(!isOpen)} />
         <ButtonDiv>
-          <NavButton to='/#about'>About</NavButton>
-          <NavButton to='/#schedule'>Schedule</NavButton>
-          <NavButton to='/#sponsors'>Sponsors</NavButton>
-          <NavButton to='/#FAQ'>FAQ</NavButton>
-          <NavButton to='/dashboard/login'>Login</NavButton>
+          <NavButton href='/#about'>About</NavButton>
+          <NavButton href='/#schedule'>Schedule</NavButton>
+          <NavButton href='/#sponsors'>Sponsors</NavButton>
+          <NavButton href='/#FAQ'>FAQ</NavButton>
+          <NavButton href='/dashboard/login'>Login</NavButton>
         </ButtonDiv>
       </NavBar>
       <NavMenu>
-        <NavButton to='/#about'>About</NavButton>
-        <NavButton to='/#schedule'>Schedule</NavButton>
-        <NavButton to='/#sponsors'>Sponsors</NavButton>
-        <NavButton to='/#FAQ'>FAQ</NavButton>
-        <NavButton to='/dashboard/login'>Login</NavButton>
+        <NavButton href='/#about'>About</NavButton>
+        <NavButton href='/#schedule'>Schedule</NavButton>
+        <NavButton href='/#sponsors'>Sponsors</NavButton>
+        <NavButton href='/#FAQ'>FAQ</NavButton>
+        <NavButton href='/dashboard/login'>Login</NavButton>
       </NavMenu>
     </StyledHeader>
   );

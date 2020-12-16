@@ -12,13 +12,17 @@ import layer7 from 'assets/img/hero/hero_7.png';
 import layer8 from 'assets/img/hero/hero_8.png';
 import layer9 from 'assets/img/hero/hero_9.png';
 import layer10 from 'assets/img/hero/hero_10.png';
+import indoor from 'assets/img/indoor.png';
+import stats from 'assets/img/stats.svg';
 import {ReactComponent as Logo} from 'assets/img/word-and-year-logo-white.svg';
 import {RellaxWrapper} from 'react-rellax-wrapper';
+import {Button} from '../components';
 
 const HeroSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: var(--outside);
 
   height: 100vh;
   min-height: 600px;
@@ -105,7 +109,7 @@ const HeroText = styled.div`
   align-items: center;
   width: var(--mobile-width);
   text-align: right;
-  color: var(--wineDark);
+  color: var(--white);
   position: absolute;
   justify-content: center;
   height: 100%;
@@ -134,10 +138,11 @@ const Title = styled.h1`
   font-family: 'Montserrat Alternates';
   font-weight: bold;
   font-size: 3.5em;
-  text-align: center;
+  text-align: right;
   white-space: nowrap;
 
-  color: var(--wine);
+  color: var(--snow);
+  text-shadow: 0px 0px 10px var(--snow);
 
   @media only screen and (min-width: 700px) {
     font-size: 12vw;
@@ -165,46 +170,143 @@ const Location = styled.p`
   }
 `;
 
+const ColourTransition = styled.div`
+  width: 100%;
+  height: 256px;
+  background-image: linear-gradient(var(--outside), var(--inside));
+`;
+
+const StyledSection = styled.section<{halves?: boolean}>`
+  display: flex;
+  flex-direction: row;
+  padding: 0 calc((100% - var(--mobile-width)) / 2);
+  flex-direction: column;
+  margin-bottom: 72px;
+
+  @media only screen and (min-width: 1200px) {
+    padding: 0 calc((100% - var(--max-width)) / 2);
+    flex-direction: ${(props) => (props.halves ? 'row-reverse' : 'column')};
+    &:nth-child(odd) {
+      flex-direction: ${(props) => (props.halves ? 'row' : 'column')};
+    }
+  }
+`;
+
+const SectionHeader = styled.h1`
+  color: var(--white);
+  font-size: 1.7em;
+  font-weight: 700;
+  font-family: var(--primary-font);
+`;
+
+const SectionText = styled.p`
+  color: var(--white);
+  margin: 0 0 0.5em 0;
+  font-weight: 200;
+  line-height: 1.8em;
+  margin-bottom: 1.3em;
+`;
+
+const SectionHalf = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  @media only screen and (min-width: 1200px) {
+    width: 50%;
+  }
+`;
+
+const IndoorImage = styled.img`
+  width: 80%;
+  align-self: center;
+`;
+
+const StatsImage = styled.img`
+  width: 60%;
+  align-self: center;
+`;
+
 export default () => (
   <MainLayout>
     <HeroSection>
       <HeroBanner />
     </HeroSection>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
-    <h1>Text</h1>
+    <ColourTransition />
+    <StyledSection halves id='about'>
+      <SectionHalf>
+        <SectionHeader>
+          Ottawa's largest hackathon is getting cozy!
+        </SectionHeader>
+        <SectionText>
+          Get the hot cocoa ready!{' '}
+          <span role='img' aria-label='Coffee Emoji'>
+            ☕
+          </span>{' '}
+          To cap off this crazy year, cuHacking is bundling up and getting warm
+          at home for its first ever virtual hackathon!
+        </SectionText>
+        <SectionText>
+          For the last four years, cuHacking has continued to bring increasingly
+          more hackers together, culminating in an annual event which{' '}
+          <strong>over 600 hackers</strong> enjoyed last year.
+        </SectionText>
+        <SectionText>
+          Although we can't all gather in Richcraft Hall like we normally do, we
+          still want to provide a space for hackers to build new things, learn
+          new skills, and meet new people.
+        </SectionText>
+      </SectionHalf>
+      <SectionHalf>
+        <StatsImage
+          aria-label='cuHacking 2020 statistics. 602 hackers, 1234 applicants, 120 projects.'
+          src={stats}
+        />
+      </SectionHalf>
+    </StyledSection>
+    <StyledSection halves>
+      <SectionHalf>
+        <SectionHeader>How we've adapted</SectionHeader>
+        <SectionText>
+          This year, cuHacking's themed virtual hackathon "Snowed In" will be
+          taking place on our Discord and our website. The coolest part is we're
+          already holding events on our server right now! We've been running
+          events year-round, and will continue to do so leading up to cuHacking
+          2021: Snowed In. Discord will be the primary platform for
+          communication, and is where we'll be hosting many of our workshops.
+        </SectionText>
+        <Button external link='https://discord.gg/TGvYPnD'>
+          Join our Discord Server
+        </Button>
+      </SectionHalf>
+      <SectionHalf>
+        <IndoorImage
+          aria-label='Cozy image of a laptop and mug in front of a chair'
+          src={indoor}
+        />
+      </SectionHalf>
+    </StyledSection>
+    <StyledSection id="schedule">
+      <SectionHeader>Schedule</SectionHeader>
+      <SectionText>
+        We've also adapted our schedule this year to encourage a{' '}
+        <span role='img' aria-label='Sparkles Emoji'>
+          ✨
+        </span>
+        healthier
+        <span role='img' aria-label='Sparkles Emoji'>
+          ✨
+        </span>
+        at-home hackathon experience. Conventionally we would host our hackathon
+        over 24 hours for non-stop creative programming time. This year, we've
+        split our event into three main chunks to allow for proper rest and
+        conscious coding while at home.
+      </SectionText>
+    </StyledSection>
+    <StyledSection id="sponsors">
+      <SectionHeader>Sponsors</SectionHeader>
+    </StyledSection>
   </MainLayout>
 );
