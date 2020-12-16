@@ -244,7 +244,13 @@ const FirstSectionSpacer = styled.div`
 
 const ScheduleGraphic = styled.img`
   width: 100%;
-  margin: 24px 0 48px;
+  margin: 48px 0 96px;
+  object-fit: cover;
+  height: 34vw;
+
+  @media only screen and (min-width: 1200px) {
+    height: auto;
+  }
 `;
 
 export default () => (
