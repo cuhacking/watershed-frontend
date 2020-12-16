@@ -26,11 +26,14 @@ const HeroSection = styled.div`
 
   height: 100vh;
   min-height: 600px;
+
+  // Base layer 
+  background: bottom / cover no-repeat url(${layer0});
+  background-attachment: fixed;
 `;
 
 const HeroBanner = () => {
   const layerImages = [
-    layer0,
     layer1,
     layer2,
     layer3,
