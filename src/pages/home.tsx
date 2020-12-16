@@ -13,11 +13,7 @@ import layer8 from 'assets/img/hero/hero_8.png';
 import layer9 from 'assets/img/hero/hero_9.png';
 import layer10 from 'assets/img/hero/hero_10.png';
 import {ReactComponent as Logo} from 'assets/img/word-and-year-logo-white.svg';
-import {
-  BannerLayer,
-  ParallaxBanner,
-  ParallaxProvider,
-} from 'react-scroll-parallax';
+import {RellaxWrapper} from 'react-rellax-wrapper';
 
 const HeroSection = styled.div`
   display: flex;
@@ -26,14 +22,38 @@ const HeroSection = styled.div`
 
   height: 100vh;
   min-height: 600px;
+`;
 
-  // Base layer 
-  background: bottom / cover no-repeat url(${layer0});
-  background-attachment: fixed;
+const HeroLayer = styled.div<{src: string}>`
+  width: 100%;
+  height: 100%;
+  background: bottom / cover no-repeat url(${(props) => props.src});
+  background-size: auto 100vh;
+  background-position-x: 28%;
+
+  @media only screen and (min-width: 1200px) {
+    background-position-x: center;
+  }
+`;
+
+const HeroLayerWrapper = styled(RellaxWrapper)`
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+`;
+
+const HeroBannerWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
 `;
 
 const HeroBanner = () => {
   const layerImages = [
+    layer0,
     layer1,
     layer2,
     layer3,
@@ -46,38 +66,29 @@ const HeroBanner = () => {
     layer10,
   ];
 
-  let layers: BannerLayer[] = layerImages.map((image, index) => ({
-    image,
-    amount: (layerImages.length - 1 - index) * 0.1,
-    props: {
-      style: {backgroundSize: 'auto 100vh', backgroundPosition: 'center', backgroundRepeatY: "no-repeat"},
-    },
-  }));
+  let layers = layerImages.map((image, index) => (
+    <HeroLayerWrapper speed={-1.5 * (layerImages.length - 1 - index)}>
+      <HeroLayer src={image} />
+    </HeroLayerWrapper>
+  ));
 
   const textLayer = 5;
   const front = layers.slice(0, textLayer);
   const back = layers.slice(textLayer);
-  const text = {
-    amount: (layerImages.length - 1 - textLayer) * 0.1,
-    children: (
+  const text = (
+    <HeroLayerWrapper speed={-1.5 * (layerImages.length - 1 - textLayer)}>
       <HeroText>
         <StyledLogo />
         <Title>Snowed In</Title>
         <Date>January 29–31, 2021</Date>
         <Location>Virtual, Worldwide</Location>
       </HeroText>
-    ),
-    props: {
-      style: {
-        display: 'flex',
-        justifyContent: 'center',
-      },
-    },
-  };
+    </HeroLayerWrapper>
+  );
 
   layers = [...front, text, ...back];
 
-  return <ParallaxBanner layers={layers} style={{height: '100%'}} />;
+  return <HeroBannerWrapper>{layers}</HeroBannerWrapper>;
 };
 
 const HeroText = styled.div`
@@ -93,7 +104,7 @@ const HeroText = styled.div`
   width: 100%;
   &:before {
     content: '';
-    flex-grow: 8;
+    flex-grow: 5;
   }
   &:after {
     content: '';
@@ -146,47 +157,45 @@ const Location = styled.p`
 `;
 
 export default () => (
-  <ParallaxProvider>
-    <MainLayout>
-      <HeroSection>
-        <HeroBanner />
-      </HeroSection>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-      <h1>Text</h1>
-    </MainLayout>
-  </ParallaxProvider>
+  <MainLayout>
+    <HeroSection>
+      <HeroBanner />
+    </HeroSection>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+    <h1>Text</h1>
+  </MainLayout>
 );
