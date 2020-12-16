@@ -7,7 +7,6 @@ const Container = styled.div`
   flex-direction: column;
   min-width: 100%;
   min-height: 100vh;
-  padding-top: 65px;
 `;
 
 const Main = styled.main`
