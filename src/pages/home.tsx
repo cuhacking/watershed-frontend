@@ -9,6 +9,15 @@ import {RellaxWrapper} from 'react-rellax-wrapper';
 import {Button, FAQEntry, FaqPanel} from '../components';
 import {heroStacks, ImageStack} from '../hero';
 
+import indoorPng720 from 'assets/img/indoor/720.png';
+import indoorPng1080 from 'assets/img/indoor/1080.png';
+import indoorPng1440 from 'assets/img/indoor/1440.png';
+import indoorPng from 'assets/img/indoor/original.png';
+import indoorWebP720 from 'assets/img/indoor/720.webp';
+import indoorWebP1080 from 'assets/img/indoor/1080.webp';
+import indoorWebP1440 from 'assets/img/indoor/1440.webp';
+import indoorWebP from 'assets/img/indoor/original.webp';
+
 const faqs: FAQEntry[] = [
   {
     question: 'What is cuHacking 2021: Snowed In?',
@@ -73,43 +82,43 @@ const HeroLayerImage = styled.img`
 const HeroLayer2 = ({stack}: {stack: ImageStack}) => {
   return (
     <picture>
-      {/* <source
+      <source
         type='image/webp'
-        media='(max-width: 722px and max-height: 256px)'
+        media='(max-height: 720px)'
         srcSet={stack.webp[0]}
       />
       <source
         type='image/webp'
-        media='(max-width: 1445px and max-height: 512px)'
+        media='(max-height: 1080px)'
         srcSet={stack.webp[1]}
       />
       <source
         type='image/webp'
-        media='(max-width: 2890px and max-height: 1024px)'
+        media='(max-height: 1440px)'
         srcSet={stack.webp[2]}
       />
       <source
-        media='(min-width: 2891px or min-height: 1025px)'
+        media='(min-height: 1441px)'
         type='image/webp'
         srcSet={stack.webp[3]}
-      /> */}
+      />
       <source
         type='image/png'
-        media='(max-width: 722px and max-height: 256px)'
+        media='(max-height: 720px)'
         srcSet={stack.png[0]}
       />
       <source
         type='image/png'
-        media='(max-width: 1445px and max-height: 512px)'
+        media='(max-height: 1080px)'
         srcSet={stack.png[1]}
       />
       <source
         type='image/png'
-        media='(max-width: 2890px and max-height: 1024px)'
+        media='(max-height: 1440px)'
         srcSet={stack.png[2]}
       />
       <source
-        media='(min-width: 2891px or min-height: 1025px)'
+        media='(min-height: 1441px)'
         type='image/png'
         srcSet={stack.png[3]}
       />
@@ -135,7 +144,6 @@ const HeroBannerWrapper = styled.div`
 `;
 
 const HeroBanner = () => {
-
   console.log(heroStacks);
   let layers = heroStacks.map((image, index) => (
     <HeroLayerWrapper
@@ -160,7 +168,7 @@ const HeroBanner = () => {
         <Date>January 29–31, 2021</Date>
         <Location>Virtual, Worldwide</Location>
         <HeroActions>
-          <RegistrationLink>Registration Opening Soon</RegistrationLink>
+          <RegistrationLink href="#">Registration Opening Soon</RegistrationLink>
           <SponsorshipLink href='mailto:sponsorship@cuhacking.com'>
             Sponsor cuHacking
           </SponsorshipLink>
@@ -473,10 +481,52 @@ export default () => (
         </DiscordButton>
       </SectionHalf>
       <SectionHalf>
-        <IndoorImage
-          aria-label='Cozy image of a laptop and mug in front of a chair'
-          src={indoor}
-        />
+        <picture>
+          <source
+            type='image/webp'
+            media='(max-height: 720px)'
+            srcSet={indoorWebP720}
+          />
+          <source
+            type='image/webp'
+            media='(max-height: 1080px)'
+            srcSet={indoorWebP1080}
+          />
+          <source
+            type='image/webp'
+            media='(max-height: 1440px)'
+            srcSet={indoorWebP1440}
+          />
+          <source
+            media='(min-height: 1441px)'
+            type='image/webp'
+            srcSet={indoorWebP}
+          />
+          <source
+            type='image/png'
+            media='(max-height: 720px)'
+            srcSet={indoorPng720}
+          />
+          <source
+            type='image/png'
+            media='(max-height: 1080px)'
+            srcSet={indoorPng1080}
+          />
+          <source
+            type='image/png'
+            media='(max-height: 1440px)'
+            srcSet={indoorPng1440}
+          />
+          <source
+            media='(min-height: 1441px)'
+            type='image/png'
+            srcSet={indoorPng}
+          />
+          <IndoorImage
+            aria-label='Cozy image of a laptop and mug in front of a chair'
+            src={indoorPng1080}
+          />
+        </picture>
       </SectionHalf>
     </StyledSection>
     <StyledSection id='schedule'>
