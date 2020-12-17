@@ -116,7 +116,7 @@ const Header = (props: {fixed: boolean; banner?: boolean}) => {
         <Link aria-label="Home" to='/'>
           <StyledLogo />
         </Link>
-        <MenuButton aria-label="Menu" isOpen={isOpen} onClick={() => setOpen(!isOpen)} />
+        <MenuButton isOpen={isOpen} onClick={() => setOpen(!isOpen)} />
         <ButtonDiv>
           <NavButton href='/#about'>About</NavButton>
           <NavButton href='/#schedule'>Schedule</NavButton>

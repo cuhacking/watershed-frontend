@@ -23,40 +23,39 @@ import fdmGroup from 'assets/img/sponsors/fdm-group.svg';
 const faqs: FAQEntry[] = [
   {
     question: 'What is cuHacking 2021: Snowed In?',
-    answer:
-      "cuHacking is Ottawa's largest annual student run hackathon. Think of it as a marathon of learning and building new things. Over the span of our 3 day weekend, students from around the country, from various backgrounds and skill levels will participate in events, workshops, network with engaging companies, and work on personal projects!",
+    answer: `cuHacking is Ottawa's largest annual student-run hackathon. Think of it as a marathon of learning and building new things. "Snowed In" is what we're calling the 2021 edition of cuHacking. Over the weekend of January 29–31, students from around the country, from various backgrounds and skill levels will participate in events, workshops, network with engaging companies, and work on personal projects!`,
   },
   {
     question: 'Is this an online event?',
-    answer:
-      "Yes, it is. cuHacking has historically been held in person in Richcraft Hall at Carleton University. This year, we are keeping all of our hackers safe, and hosting our event online on our Discord server. We can't wait to see you again in person when we can guarantee your safety!",
+    answer: `Yes, it is. cuHacking has historically been held in person in Richcraft Hall at Carleton University. This year, we are keeping all of our hackers safe, and hosting our event online on our Discord server. We can't wait to see you again in person when we can guarantee your safety!`,
   },
   {
-    question: "What if I've never participated in a hackathon?",
-    answer:
-      'Every year we are excited to welcome students of all skill levels to our event. In previous years, half of our attendees have had their first hackathon experiences at cuHacking. There will be a lot of opportunities to learn new skills, participate in activities, and make new connections, regardless of your skill or experience set.',
+    question: 'How much does it cost to attend?',
+    answer: `cuHacking, along with all other MLH hackathons are completely free to attend for all students. Even though the event has no cost, you still have the chance to win amazing prizes for participating in our event. Follow the registration information found on this page to sign up for this amazing weekend!`,
+  },
+  {
+    question: `What if I've never participated in a hackathon?`,
+    answer: `Every year we are excited to welcome students of all skill levels to our event. In previous years, half of our attendees have had their first hackathon experiences at cuHacking. There will be lots of opportunities to learn new skills, participate in activities, and make new connections, regardless of your skill or experience set.`,
   },
   {
     question: 'Who can attend cuHacking 2021?',
-    answer:
-      "If you're a student, you can attend. When we say student, we mean any student. Middle schoolers, high schoolers, university students, and college students of all skill levels are welcome at our event. You don't need to be in any specific program or focus to attend. If you're interested in tech, this event is for you!",
+    answer: `If you're a student, you can attend! When we say students, we mean *any student.* Middle schoolers, high schoolers, university students, and college students of all skill levels are welcome at our event. You don't need to be in any specific program or focus to attend either. If you're interested in tech, this event is for you!`,
   },
   {
     question: 'How do I sign up?',
-    answer: `Pay attention to our social media and join our Discord server to be kept in the loop! Once applications are open, you won't be able to miss the big button at the top of this site.`,
+    answer: `Keep tabs on our social media and join our Discord server to stay in the loop! Once applications are open, you won't be able to miss the big button at the top of this site.`,
   },
   {
     question: 'Where will cuHacking be hosted?',
-    answer: `The entire event will be run through our Discord server. Once you're there and signed up through our site, you're ready to go.`,
+    answer: `The event will be run through our website and our Discord server. Once you've registered here and joined the Discord server, you're all set!`,
   },
   {
     question: 'How big are teams?',
-    answer:
-      'Teams can be anywhere from 1-4 people. You will have a bunch of opportunities to find teammates before hacking!',
+    answer: `Teams can be anywhere from 1–4 people. You'll have plenty of opportunities to find teammates before hacking starts!`,
   },
   {
     question: 'Can I work on an existing project?',
-    answer: `To be eligible to win prizes and challenges, your project must not be started until the hacking begins on Saturday. You're more than welcome to come up with ideas beforehand!`,
+    answer: `To be eligible to participate in challenges and win prizes, your project must not be started until hacking officially begins on Saturday. You're more than welcome to come up with ideas beforehand though!`,
   },
 ];
 
@@ -124,7 +123,12 @@ const HeroLayer2 = ({stack}: {stack: ImageStack}) => {
         type='image/png'
         srcSet={stack.png[3]}
       />
-      <HeroLayerImage alt={`Hero Image Layer`} width='100%' height='100%' src={stack.png[2]} />
+      <HeroLayerImage
+        alt={`Hero Image Layer`}
+        width='100%'
+        height='100%'
+        src={stack.png[2]}
+      />
     </picture>
   );
 };
@@ -468,17 +472,18 @@ export default () => (
       <SectionHalf>
         <SectionHeader>First, a look back</SectionHeader>
         <SectionText>
-          For the last four years, cuHacking has continued to bring increasingly
-          more hackers together, culminating in an annual event which{' '}
+          For the last four years, cuHacking has continued to bring more and
+          more hackers together, culminating in an annual event that{' '}
           <u>
             <strong>over 600 hackers</strong>
           </u>{' '}
-          enjoyed last year.
+          enjoyed last year. We are proud to be considered Ottawa's largest MLH
+          hackathon!
         </SectionText>
         <SectionText>
-          Although we can't all gather in Richcraft Hall like we normally do, we
-          still want to provide a space for hackers to build new things, learn
-          new skills, and meet new people.
+          Although we can't all gather in Richcraft Hall this January like we
+          normally do, we still intend to provide a space for hackers to build
+          new things, learn new skills, and meet new people.
         </SectionText>
       </SectionHalf>
       <SectionHalf>
@@ -492,12 +497,12 @@ export default () => (
       <SectionHalf>
         <SectionHeader>How we've adapted</SectionHeader>
         <SectionText>
-          This year, cuHacking's themed virtual hackathon "Snowed In" will be
-          taking place on our Discord and our website. The coolest part is we're
-          already holding events on our server right now! We've been running
-          events year-round, and will continue to do so leading up to cuHacking
-          2021: Snowed In. Discord will be the primary platform for
-          communication, and is where we'll be hosting many of our workshops.
+          This year, our main event will be taking place on our Discord and our
+          website. The coolest part is we're already holding events on our
+          server right now! We've been running events year-round and will
+          continue to do so leading up to cuHacking 2021: Snowed In. Discord
+          will be the primary platform for communication and is where we'll be
+          hosting many of our workshops.
         </SectionText>
         <DiscordButton external link='https://discord.gg/TGvYPnD'>
           Join our Discord Server
@@ -592,7 +597,7 @@ export default () => (
         <LogoRow>
           <Sponsor
             logo={fdmGroup}
-            name="FDM Group"
+            name='FDM Group'
             size={2}
             url='https://www.fdmgroup.com/en-ca/ca-home/'
           />
@@ -600,7 +605,7 @@ export default () => (
         <LogoRow>
           <Sponsor
             logo={macadamian}
-            name="Macadamian"
+            name='Macadamian'
             size={1}
             url='https://www.macadamian.com/'
           />
