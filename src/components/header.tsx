@@ -39,12 +39,13 @@ const StyledHeader = styled.header<{
   }
 `;
 
-const NavBar = styled.nav`
+const NavBar = styled.nav<{banner: boolean}>`
   display: flex;
   flex-direction: row;
   flex-shrink: 0;
   justify-content: space-between;
   align-items: center;
+  padding-right: ${({banner}) => (banner ? '164px' : '0')};
 
   width: var(--mobile-width);
 
@@ -95,7 +96,7 @@ const NavButton = styled.a`
   }
 `;
 
-const Header = (props: {fixed: boolean}) => {
+const Header = (props: {fixed: boolean; banner?: boolean}) => {
   const [isOpen, setOpen] = useState(false);
   const [isDark, setDark] = useState(false);
   const isHome = useRouteMatch('/');
@@ -110,7 +111,7 @@ const Header = (props: {fixed: boolean}) => {
 
   return (
     <StyledHeader isOpen={isOpen} isDark={isDark} fixed={props.fixed}>
-      <NavBar>
+      <NavBar banner={props.banner === true}>
         <Link to='/'>
           <StyledLogo />
         </Link>

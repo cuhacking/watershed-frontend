@@ -80,6 +80,10 @@ const GlobalStyle = createGlobalStyle`
   a:active {
     color: inherit;
   }
+
+  .ReactCollapse--collapse {
+    transition: height 500ms cubic-bezier(0.33, 1, 0.68, 1);
+  }
 `;
 
 const App = () => (

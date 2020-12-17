@@ -15,29 +15,34 @@ const Main = styled.main`
   flex-direction: column;
 `;
 
+const Badge = styled.a`
+  display: block;
+  max-width: 100px;
+  min-width: 60px;
+  position: absolute;
+  right: 50px;
+  top: 0px;
+  width: 10%;
+  z-index: 10000;
+
+  @media only screen and (min-width: 1200px) {
+    right: calc(50% - 600px + 16px);
+  }
+`;
+
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 export default ({children}: LayoutProps) => (
   <Container>
-    <Header fixed={false} />
+    <Header fixed={false} banner />
     <Main>{children}</Main>
     <Footer />
-    <a
+    <Badge
       id='mlh-trust-badge'
-      style={{
-        display: 'block',
-        maxWidth: 100,
-        minWidth: 60,
-        position: 'fixed',
-        right: 50,
-        top: 0,
-        width: '10%',
-        zIndex: 10000,
-      }}
       href='https://mlh.io/seasons/2021/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2021-season&utm_content=white'
-      rel="noopener noreferrer"
+      rel='noopener noreferrer'
       target='_blank'
     >
       <img
@@ -45,6 +50,6 @@ export default ({children}: LayoutProps) => (
         alt='Major League Hacking 2021 Hackathon Season'
         style={{width: '100%'}}
       />
-    </a>
+    </Badge>
   </Container>
 );
