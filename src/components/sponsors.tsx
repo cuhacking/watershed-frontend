@@ -34,10 +34,10 @@ const SponsorLogo = styled.img<{size: number}>`
   }
 `;
 
-export const Sponsor = (props: {logo: string; size: number; url: string}) => {
+export const Sponsor = (props: {name: string; logo: string; size: number; url: string}) => {
   return (
     <a href={props.url}>
-      <SponsorLogo size={props.size} src={props.logo} />
+      <SponsorLogo alt={`${props.name} logo`} size={props.size} src={props.logo} />
     </a>
   );
 };

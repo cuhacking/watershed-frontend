@@ -25,7 +25,7 @@ interface ButtonProps {
 export default (props: ButtonProps) => {
   if (props.isOpen) {
     return (
-      <StyledButton type='button' onClick={props.onClick}>
+      <StyledButton aria-label="Close Menu" type='button' onClick={props.onClick}>
         <svg
           viewBox='0 0 24 24'
           fillRule='evenodd'
@@ -43,7 +43,7 @@ export default (props: ButtonProps) => {
     );
   } else {
     return (
-      <StyledButton type='button' onClick={props.onClick}>
+      <StyledButton aria-label="Open Menu" type='button' onClick={props.onClick}>
         <svg
           viewBox='0 0 24 24'
           fillRule='evenodd'

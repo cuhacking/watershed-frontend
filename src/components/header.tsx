@@ -45,12 +45,13 @@ const NavBar = styled.nav<{banner: boolean}>`
   flex-shrink: 0;
   justify-content: space-between;
   align-items: center;
-  padding-right: ${({banner}) => (banner ? '164px' : '0')};
+  padding-right: 0px;
 
   width: var(--mobile-width);
 
   @media only screen and (min-width: 1200px) {
     max-width: var(--max-width);
+    padding-right: ${({banner}) => (banner ? '164px' : '0')};
   }
 `;
 
@@ -112,16 +113,16 @@ const Header = (props: {fixed: boolean; banner?: boolean}) => {
   return (
     <StyledHeader isOpen={isOpen} isDark={isDark} fixed={props.fixed}>
       <NavBar banner={props.banner === true}>
-        <Link to='/'>
+        <Link aria-label="Home" to='/'>
           <StyledLogo />
         </Link>
-        <MenuButton isOpen={isOpen} onClick={() => setOpen(!isOpen)} />
+        <MenuButton aria-label="Menu" isOpen={isOpen} onClick={() => setOpen(!isOpen)} />
         <ButtonDiv>
           <NavButton href='/#about'>About</NavButton>
           <NavButton href='/#schedule'>Schedule</NavButton>
           <NavButton href='/#sponsors'>Sponsors</NavButton>
           <NavButton href='/#FAQ'>FAQ</NavButton>
-          <NavButton href='/dashboard/login'>Login</NavButton>
+          {/* <NavButton href='/dashboard/login'>Login</NavButton> */}
         </ButtonDiv>
       </NavBar>
       <NavMenu>
@@ -129,7 +130,7 @@ const Header = (props: {fixed: boolean; banner?: boolean}) => {
         <NavButton href='/#schedule'>Schedule</NavButton>
         <NavButton href='/#sponsors'>Sponsors</NavButton>
         <NavButton href='/#FAQ'>FAQ</NavButton>
-        <NavButton href='/dashboard/login'>Login</NavButton>
+        {/* <NavButton href='/dashboard/login'>Login</NavButton> */}
       </NavMenu>
     </StyledHeader>
   );

@@ -124,6 +124,7 @@ const Footer = () => (
           href='https://cuhacking.com'
           rel='noopener noreferrer external'
           target='_blank'
+          aria-label="cuHacking Home"
         >
           <StyledLogo />
         </a>
@@ -132,6 +133,7 @@ const Footer = () => (
             target='_blank'
             rel='noopener noreferrer external'
             href='https://discord.gg/TGvYPnD'
+            aria-label="Discord"
           >
             <FontAwesomeIcon icon={faDiscord} size='1x' />
           </StyledIcon>
@@ -139,6 +141,7 @@ const Footer = () => (
             target='_blank'
             rel='noopener noreferrer external'
             href='https://www.facebook.com/cuhacking/'
+            aria-label="Facebook"
           >
             <FontAwesomeIcon icon={faFacebookF} size='1x' />
           </StyledIcon>
@@ -146,6 +149,7 @@ const Footer = () => (
             target='_blank'
             rel='noopener noreferrer external'
             href='https://www.linkedin.com/company/cuhacking/'
+            aria-label="Linkedin"
           >
             <FontAwesomeIcon icon={faLinkedin} size='1x' />
           </StyledIcon>
@@ -153,6 +157,7 @@ const Footer = () => (
             target='_blank'
             rel='noopener noreferrer external'
             href='https://www.instagram.com/cuHacking/'
+            aria-label="Instagram"
           >
             <FontAwesomeIcon icon={faInstagram} size='1x' />
           </StyledIcon>
@@ -160,6 +165,7 @@ const Footer = () => (
             target='_blank'
             rel='noopener noreferrer external'
             href='https://twitter.com/cuhacking'
+            aria-label="Twitter"
           >
             <FontAwesomeIcon icon={faTwitter} size='1x' />
           </StyledIcon>
@@ -167,6 +173,7 @@ const Footer = () => (
             target='_blank'
             rel='noopener noreferrer external'
             href='https://github.com/cuhacking'
+            aria-label="Github"
           >
             <FontAwesomeIcon icon={faGithub} size='1x' />
           </StyledIcon>

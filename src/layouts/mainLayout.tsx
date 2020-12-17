@@ -20,7 +20,7 @@ const Badge = styled.a`
   max-width: 100px;
   min-width: 60px;
   position: absolute;
-  right: 50px;
+  right: 68px;
   top: 0px;
   width: 10%;
   z-index: 0;

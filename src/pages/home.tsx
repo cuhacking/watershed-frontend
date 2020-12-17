@@ -124,7 +124,7 @@ const HeroLayer2 = ({stack}: {stack: ImageStack}) => {
         type='image/png'
         srcSet={stack.png[3]}
       />
-      <HeroLayerImage width='100%' height='100%' src={stack.png[2]} />
+      <HeroLayerImage alt={`Hero Image Layer`} width='100%' height='100%' src={stack.png[2]} />
     </picture>
   );
 };
@@ -239,7 +239,7 @@ const HeroText = styled.div`
   width: 100%;
   &:before {
     content: '';
-    flex-grow: 4;
+    flex-grow: 6;
   }
   &:after {
     content: '';
@@ -249,6 +249,11 @@ const HeroText = styled.div`
 
   @media only screen and (min-width: 1200px) {
     width: 1200px;
+
+    &:before {
+      content: '';
+      flex-grow: 4;
+    }
   }
 `;
 
@@ -587,6 +592,7 @@ export default () => (
         <LogoRow>
           <Sponsor
             logo={fdmGroup}
+            name="FDM Group"
             size={2}
             url='https://www.fdmgroup.com/en-ca/ca-home/'
           />
@@ -594,6 +600,7 @@ export default () => (
         <LogoRow>
           <Sponsor
             logo={macadamian}
+            name="Macadamian"
             size={1}
             url='https://www.macadamian.com/'
           />
