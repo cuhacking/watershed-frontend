@@ -173,12 +173,9 @@ const HeroBanner = () => {
         <Date>January 29–31, 2021</Date>
         <Location>Virtual, Worldwide</Location>
         <HeroActions>
-          <RegistrationLink href='#'>
-            Registration Opening Soon
+          <RegistrationLink>
+            Registration Opens Dec. 22
           </RegistrationLink>
-          <SponsorshipLink href='mailto:sponsorship@cuhacking.com'>
-            Sponsor cuHacking
-          </SponsorshipLink>
         </HeroActions>
       </HeroText>
     </HeroLayerWrapper>
@@ -193,41 +190,15 @@ const HeroActions = styled.div`
   font-size: 1.2rem;
   color: var(--white);
   display: flex;
-  flex-direction: row;
-  align-self: flex-end;
+  flex-direction: column;
+  align-self: center;
   margin-top: 16px;
   text-align: center;
+  align-content: center;
 `;
 
-const RegistrationLink = styled.a`
-  border-right: 1px solid var(--white);
-  padding: 0 16px;
-  width: 50%;
+const RegistrationLink = styled.div`
   box-sizing: border-box;
-  @media only screen and (min-width: 1200px) {
-    width: unset;
-    margin-left: 16px;
-  }
-`;
-
-const SponsorshipLink = styled.a`
-  margin: 0;
-  padding: 0 16px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0);
-
-  width: 50%;
-  box-sizing: border-box;
-  @media only screen and (min-width: 1200px) {
-    width: unset;
-    padding: 0;
-    margin: 0 0 0 16px;
-  }
-
-  transition: 0.1s;
-
-  &:hover {
-    border-bottom: 1px solid var(--white);
-  }
 `;
 
 const HeroText = styled.div`
@@ -288,18 +259,10 @@ const Title = styled.h1`
 const Date = styled.p`
   margin: 0;
   font-size: 1.75em;
-
-  @media only screen and (min-width: 700px) {
-    width: 100%;
-  }
 `;
 
 const Location = styled.p`
   margin: 5px;
-
-  @media only screen and (min-width: 700px) {
-    width: 100%;
-  }
 `;
 
 const ColourTransition = styled.div`
@@ -578,7 +541,7 @@ export default () => (
         src={schedule}
       />
     </StyledSection>
-    <StyledSection center>
+    <StyledSection id='sponsors' center>
       <SponsorshipContainer>
         <SponsorshipTitle>Interested in becoming a sponsor?</SponsorshipTitle>
         <SectionText>
@@ -591,7 +554,7 @@ export default () => (
         </Button>
       </SponsorshipContainer>
     </StyledSection>
-    <StyledSection id='sponsors' center>
+    <StyledSection center>
       <SponsorTitle>Sponsors</SponsorTitle>
       <SponsorLogos>
         <LogoRow>

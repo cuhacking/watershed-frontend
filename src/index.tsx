@@ -19,6 +19,8 @@ const GlobalStyle = createGlobalStyle`
     font-size: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
+    scroll-padding-top: 16px;
+    scroll-behavior: smooth;
   }
 
   body {
