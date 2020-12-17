@@ -23,7 +23,7 @@ import fdmGroup from 'assets/img/sponsors/fdm-group.svg';
 const faqs: FAQEntry[] = [
   {
     question: 'What is cuHacking 2021: Snowed In?',
-    answer: `cuHacking is Ottawa's largest annual student-run hackathon. Think of it as a marathon of learning and building new things. "Snowed In" is what we're calling the 2021 edition of cuHacking. Over the weekend of January 29–31, students from around the country, from various backgrounds and skill levels will participate in events, workshops, network with engaging companies, and work on personal projects!`,
+    answer: `cuHacking is Ottawa's largest annual student-run hackathon. Think of it as a marathon of learning and building new things. "Snowed In" is what we're calling the 2021 edition of cuHacking. Over the weekend of January 29–31, students from around the country, and possibly the world, from various backgrounds and skill levels will participate in events, workshops, network with engaging companies, and work on personal projects!`,
   },
   {
     question: 'Is this an online event?',
