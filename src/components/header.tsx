@@ -39,17 +39,19 @@ const StyledHeader = styled.header<{
   }
 `;
 
-const NavBar = styled.nav`
+const NavBar = styled.nav<{banner: boolean}>`
   display: flex;
   flex-direction: row;
   flex-shrink: 0;
   justify-content: space-between;
   align-items: center;
+  padding-right: 0px;
 
   width: var(--mobile-width);
 
   @media only screen and (min-width: 1200px) {
     max-width: var(--max-width);
+    padding-right: ${({banner}) => (banner ? '164px' : '0')};
   }
 `;
 
@@ -80,7 +82,7 @@ const NavMenu = styled.nav`
   }
 `;
 
-const NavButton = styled(Link)`
+const NavButton = styled.a`
   text-align: right;
   font-size: 2rem;
   margin: 0.5rem 0;
@@ -95,7 +97,7 @@ const NavButton = styled(Link)`
   }
 `;
 
-const Header = (props: {fixed: boolean}) => {
+const Header = (props: {fixed: boolean; banner?: boolean}) => {
   const [isOpen, setOpen] = useState(false);
   const [isDark, setDark] = useState(false);
   const isHome = useRouteMatch('/');
@@ -110,25 +112,25 @@ const Header = (props: {fixed: boolean}) => {
 
   return (
     <StyledHeader isOpen={isOpen} isDark={isDark} fixed={props.fixed}>
-      <NavBar>
-        <Link to='/'>
+      <NavBar banner={props.banner === true}>
+        <Link aria-label="Home" to='/'>
           <StyledLogo />
         </Link>
         <MenuButton isOpen={isOpen} onClick={() => setOpen(!isOpen)} />
         <ButtonDiv>
-          <NavButton to='/#about'>About</NavButton>
-          <NavButton to='/#schedule'>Schedule</NavButton>
-          <NavButton to='/#sponsors'>Sponsors</NavButton>
-          <NavButton to='/#FAQ'>FAQ</NavButton>
-          <NavButton to='/dashboard/login'>Login</NavButton>
+          <NavButton href='/#about'>About</NavButton>
+          <NavButton href='/#schedule'>Schedule</NavButton>
+          <NavButton href='/#sponsors'>Sponsors</NavButton>
+          <NavButton href='/#FAQ'>FAQ</NavButton>
+          {/* <NavButton href='/dashboard/login'>Login</NavButton> */}
         </ButtonDiv>
       </NavBar>
       <NavMenu>
-        <NavButton to='/#about'>About</NavButton>
-        <NavButton to='/#schedule'>Schedule</NavButton>
-        <NavButton to='/#sponsors'>Sponsors</NavButton>
-        <NavButton to='/#FAQ'>FAQ</NavButton>
-        <NavButton to='/dashboard/login'>Login</NavButton>
+        <NavButton href='/#about'>About</NavButton>
+        <NavButton href='/#schedule'>Schedule</NavButton>
+        <NavButton href='/#sponsors'>Sponsors</NavButton>
+        <NavButton href='/#FAQ'>FAQ</NavButton>
+        {/* <NavButton href='/dashboard/login'>Login</NavButton> */}
       </NavMenu>
     </StyledHeader>
   );

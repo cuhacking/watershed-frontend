@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {createGlobalStyle} from 'styled-components';
 import 'fontsource-dm-sans';
 import 'fontsource-work-sans';
+import 'fontsource-work-sans/600.css';
 import 'fontsource-montserrat-alternates/600.css';
 import {Home} from './pages';
 
@@ -18,6 +19,8 @@ const GlobalStyle = createGlobalStyle`
     font-size: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
+    scroll-padding-top: 16px;
+    scroll-behavior: smooth;
   }
 
   body {
@@ -31,12 +34,14 @@ const GlobalStyle = createGlobalStyle`
     --vanilla: #FECD7D;
     --parksCanada: #3A5154;
     --wineDark: #CA4353;
+    --outdoor: #030a16;
+    --indoor: #130101;
 
     --max-width: 1200px;
     --reading-width: 80ch;
     --mobile-width: 90vw;
 
-    --primary-font: 'DM-Sans', sans-serif;
+    --primary-font: 'DM Sans', sans-serif;
     --secondary-font: 'Work Sans', sans-serif;
 
     --shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
@@ -46,7 +51,8 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     
-    background-color: #030a16;
+    background-color: var(--indoor);
+
     color: var(--white);
 
     margin: 0;
@@ -75,6 +81,10 @@ const GlobalStyle = createGlobalStyle`
   a:hover,
   a:active {
     color: inherit;
+  }
+
+  .ReactCollapse--collapse {
+    transition: height 500ms cubic-bezier(0.33, 1, 0.68, 1);
   }
 `;
 
