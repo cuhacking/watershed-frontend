@@ -1,23 +1,13 @@
 import React from 'react';
 import styled, {css} from 'styled-components';
 import {MainLayout} from '../layouts';
-import layer0 from 'assets/img/hero/hero_0.png';
-import layer1 from 'assets/img/hero/hero_1.png';
-import layer2 from 'assets/img/hero/hero_2.png';
-import layer3 from 'assets/img/hero/hero_3.png';
-import layer4 from 'assets/img/hero/hero_4.png';
-import layer5 from 'assets/img/hero/hero_5.png';
-import layer6 from 'assets/img/hero/hero_6.png';
-import layer7 from 'assets/img/hero/hero_7.png';
-import layer8 from 'assets/img/hero/hero_8.png';
-import layer9 from 'assets/img/hero/hero_9.png';
-import layer10 from 'assets/img/hero/hero_10.png';
 import indoor from 'assets/img/indoor.png';
 import stats from 'assets/img/stats.svg';
 import schedule from 'assets/img/schedule-graphic.svg';
 import {ReactComponent as Logo} from 'assets/img/word-and-year-logo-white.svg';
 import {RellaxWrapper} from 'react-rellax-wrapper';
 import {Button, FAQEntry, FaqPanel} from '../components';
+import {heroStacks, ImageStack} from '../hero';
 
 const faqs: FAQEntry[] = [
   {
@@ -69,18 +59,64 @@ const HeroSection = styled.div`
   min-height: 600px;
 `;
 
-const HeroLayer = styled.div<{src: string}>`
-  width: 100%;
-  height: 100%;
-  background: bottom / cover no-repeat url(${(props) => props.src});
-  background-size: auto 100vh;
-  background-position-x: 60%;
-  pointer-events: none;
+const HeroLayerImage = styled.img`
+  object-fit: cover;
+  object-position: 60% 50%;
 
   @media only screen and (min-width: 1200px) {
-    background-position-x: center;
+    width: 100%;
+    object-position: center;
   }
 `;
+
+// Uses a stack of different png and webp images to let the browser choose the optimal size to use
+const HeroLayer2 = ({stack}: {stack: ImageStack}) => {
+  return (
+    <picture>
+      {/* <source
+        type='image/webp'
+        media='(max-width: 722px and max-height: 256px)'
+        srcSet={stack.webp[0]}
+      />
+      <source
+        type='image/webp'
+        media='(max-width: 1445px and max-height: 512px)'
+        srcSet={stack.webp[1]}
+      />
+      <source
+        type='image/webp'
+        media='(max-width: 2890px and max-height: 1024px)'
+        srcSet={stack.webp[2]}
+      />
+      <source
+        media='(min-width: 2891px or min-height: 1025px)'
+        type='image/webp'
+        srcSet={stack.webp[3]}
+      /> */}
+      <source
+        type='image/png'
+        media='(max-width: 722px and max-height: 256px)'
+        srcSet={stack.png[0]}
+      />
+      <source
+        type='image/png'
+        media='(max-width: 1445px and max-height: 512px)'
+        srcSet={stack.png[1]}
+      />
+      <source
+        type='image/png'
+        media='(max-width: 2890px and max-height: 1024px)'
+        srcSet={stack.png[2]}
+      />
+      <source
+        media='(min-width: 2891px or min-height: 1025px)'
+        type='image/png'
+        srcSet={stack.png[3]}
+      />
+      <HeroLayerImage width='100%' height='100%' src={stack.png[2]} />
+    </picture>
+  );
+};
 
 const HeroLayerWrapper = styled(RellaxWrapper)`
   width: 100%;
@@ -99,26 +135,14 @@ const HeroBannerWrapper = styled.div`
 `;
 
 const HeroBanner = () => {
-  const layerImages = [
-    layer0,
-    layer1,
-    layer2,
-    layer3,
-    layer4,
-    layer5,
-    layer6,
-    layer7,
-    layer8,
-    layer9,
-    layer10,
-  ];
 
-  let layers = layerImages.map((image, index) => (
+  console.log(heroStacks);
+  let layers = heroStacks.map((image, index) => (
     <HeroLayerWrapper
       key={`image-${index}`}
-      speed={-1.5 * (layerImages.length - 1 - index)}
+      speed={-1.5 * (heroStacks.length - 1 - index)}
     >
-      <HeroLayer src={image} />
+      <HeroLayer2 stack={image} />
     </HeroLayerWrapper>
   ));
 
@@ -128,7 +152,7 @@ const HeroBanner = () => {
   const text = (
     <HeroLayerWrapper
       key='text-0'
-      speed={-1.5 * (layerImages.length - 1 - textLayer)}
+      speed={-1.5 * (heroStacks.length - 1 - textLayer)}
     >
       <HeroText>
         <StyledLogo />
