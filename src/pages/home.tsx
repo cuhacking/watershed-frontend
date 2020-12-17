@@ -144,7 +144,6 @@ const HeroBannerWrapper = styled.div`
 `;
 
 const HeroBanner = () => {
-  console.log(heroStacks);
   let layers = heroStacks.map((image, index) => (
     <HeroLayerWrapper
       key={`image-${index}`}
