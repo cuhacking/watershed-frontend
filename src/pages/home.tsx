@@ -1,12 +1,11 @@
 import React from 'react';
 import styled, {css} from 'styled-components';
 import {MainLayout} from '../layouts';
-import indoor from 'assets/img/indoor.png';
 import stats from 'assets/img/stats.svg';
 import schedule from 'assets/img/schedule-graphic.svg';
 import {ReactComponent as Logo} from 'assets/img/word-and-year-logo-white.svg';
 import {RellaxWrapper} from 'react-rellax-wrapper';
-import {Button, FAQEntry, FaqPanel} from '../components';
+import {Button, FAQEntry, FaqPanel, Sponsor} from '../components';
 import {heroStacks, ImageStack} from '../hero';
 
 import indoorPng720 from 'assets/img/indoor/720.png';
@@ -17,6 +16,9 @@ import indoorWebP720 from 'assets/img/indoor/720.webp';
 import indoorWebP1080 from 'assets/img/indoor/1080.webp';
 import indoorWebP1440 from 'assets/img/indoor/1440.webp';
 import indoorWebP from 'assets/img/indoor/original.webp';
+
+import macadamian from 'assets/img/sponsors/macadamian.svg';
+import fdmGroup from 'assets/img/sponsors/fdm-group.svg';
 
 const faqs: FAQEntry[] = [
   {
@@ -167,7 +169,9 @@ const HeroBanner = () => {
         <Date>January 29–31, 2021</Date>
         <Location>Virtual, Worldwide</Location>
         <HeroActions>
-          <RegistrationLink href="#">Registration Opening Soon</RegistrationLink>
+          <RegistrationLink href='#'>
+            Registration Opening Soon
+          </RegistrationLink>
           <SponsorshipLink href='mailto:sponsorship@cuhacking.com'>
             Sponsor cuHacking
           </SponsorshipLink>
@@ -318,6 +322,7 @@ const StyledSection = styled.section<{
   text-align: ${(props) => (props.center ? 'center' : 'left')};
   background-color: var(--indoor);
   margin-bottom: 32px;
+  align-items: center;
 
   @media only screen and (min-width: 1200px) {
     flex-direction: ${(props) => (props.halves ? 'row-reverse' : 'column')};
@@ -420,6 +425,20 @@ const SponsorshipContainer = styled.div`
 
 const SponsorshipTitle = styled.h2`
   color: var(--white);
+`;
+
+const SponsorTitle = styled(SectionHeader)`
+  align-self: center;
+`;
+
+const SponsorLogos = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const LogoRow = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
 `;
 
 export default () => (
@@ -563,7 +582,23 @@ export default () => (
       </SponsorshipContainer>
     </StyledSection>
     <StyledSection id='sponsors' center>
-      <SectionHeader>Sponsors</SectionHeader>
+      <SponsorTitle>Sponsors</SponsorTitle>
+      <SponsorLogos>
+        <LogoRow>
+          <Sponsor
+            logo={fdmGroup}
+            size={2}
+            url='https://www.fdmgroup.com/en-ca/ca-home/'
+          />
+        </LogoRow>
+        <LogoRow>
+          <Sponsor
+            logo={macadamian}
+            size={1}
+            url='https://www.macadamian.com/'
+          />
+        </LogoRow>
+      </SponsorLogos>
     </StyledSection>
 
     <StyledSection id='FAQ'>
