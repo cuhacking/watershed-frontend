@@ -334,6 +334,10 @@ const SectionHeader = styled.h1`
   }
 `;
 
+const OutdoorHeader = styled(SectionHeader)`
+  align-self: center;
+`;
+
 const SectionText = styled.p`
   color: var(--white);
   margin: 0 0 0.5em 0;
@@ -375,6 +379,10 @@ const IndoorImage = styled.img`
 const StatsImage = styled.img`
   width: 60%;
   align-self: center;
+  margin-left: 16px;
+  @media only screen and (min-width: 1200px) {
+    margin-left: 48px;
+  }
 `;
 
 const FirstSectionSpacer = styled.div`
@@ -414,7 +422,7 @@ export default () => (
     </HeroSection>
     <OutdoorSection>
       <FirstSectionSpacer />
-      <SectionHeader>Ottawa's largest hackathon is getting cozy!</SectionHeader>
+      <OutdoorHeader>Ottawa's largest hackathon is getting cozy!</OutdoorHeader>
       <SectionText>
         Get the hot cocoa ready!{' '}
         <span role='img' aria-label='Coffee Emoji'>
