@@ -19,6 +19,7 @@ import indoorWebP from 'assets/img/indoor/original.webp';
 
 import macadamian from 'assets/img/sponsors/macadamian.svg';
 import fdmGroup from 'assets/img/sponsors/fdm-group.svg';
+import kinaxis from 'assets/img/sponsors/kinaxis.png';
 
 const faqs: FAQEntry[] = [
   {
@@ -562,7 +563,7 @@ export default () => (
             logo={fdmGroup}
             name='FDM Group'
             size={2}
-            url='https://www.fdmgroup.com/en-ca/ca-home/'
+            url='https://apply.fdmgroup.com/?chkCategory=1&chkCategory=3&lstRegion=10'
           />
         </LogoRow>
         <LogoRow>
@@ -571,6 +572,12 @@ export default () => (
             name='Macadamian'
             size={1}
             url='https://www.macadamian.com/'
+          />
+          <Sponsor
+            logo={kinaxis}
+            name='Kinaxis'
+            size={1}
+            url='https://kinaxis.com/'
           />
         </LogoRow>
       </SponsorLogos>
