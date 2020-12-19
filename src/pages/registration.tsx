@@ -423,7 +423,7 @@ function Registration() {
             type='text'
             name='question1'
             value={userForm.question1.value}
-            placeHolder='What do you to learn at cuHacking 2021: Snowed In?'
+            placeHolder='What do you want to learn at cuHacking 2021: Snowed In?'
             displayLabel
             padded
             style={{width: '100%'}}
