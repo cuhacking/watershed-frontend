@@ -4,15 +4,12 @@ import { colors } from "../shared/constants";
 import { themeElement } from "../shared/theme";
 
 const InputContainer = styled.div`
-  /* max-width: 320px; */
   width: 100%;
-  box-sizing: border-box;
 
   & label {
     color: ${themeElement(colors.snow, colors.ikeaBlue)};
-    position: absolute;
     transition: opacity 300ms ease;
-    margin: -14px 0 0 0;
+    margin: 0 0 4px 0;
     font-size: 12px;
   }
 
@@ -26,7 +23,8 @@ const InputContainer = styled.div`
   }
 `;
 
-const StyledInput = styled.input`
+const StyledTextArea = styled.textarea`
+  height: 84px;
   width: 100%;
   position: relative;
   background-color: transparent;
@@ -35,6 +33,7 @@ const StyledInput = styled.input`
   border-bottom: solid 1px ${themeElement(colors.ikeaBlue, colors.spaceDark)};
   font-size: 1rem;
   box-sizing: border-box;
+  resize: unset;
 
   &:focus {
     outline: none;
@@ -48,46 +47,45 @@ type InputProps = {
   name?: string;
   onChange: (e?: React.MouseEvent) => void;
   displayLabel?: boolean;
-  expand?: boolean;
   error?: string;
   padded?: boolean;
-  list?: string;
-} & React.InputHTMLAttributes<HTMLInputElement>;
+} & React.InputHTMLAttributes<HTMLTextAreaElement>;
 
-const InputComponent = ({
+const TextAreaComponent = ({
   placeHolder,
   onChange,
   value,
   name,
   displayLabel,
-  expand,
   error,
   padded,
-  list,
-  style,
-}: InputProps) => (
-  <InputContainer
-    style={{
-      width: `${expand ? "100%" : "auto"}`,
-      padding: `${padded ? "1.5rem" : 0}`,
-      ...style,
-    }}
-  >
-    {displayLabel && (
-      <label htmlFor={name} style={{ opacity: `${value ? 1 : 0}` }}>
-        {placeHolder}
-      </label>
-    )}
-    <StyledInput
-      id={name}
-      list={list}
-      onChange={onChange}
-      value={value}
-      placeholder={placeHolder}
-      name={name}
-    ></StyledInput>
-    {error && <p>{error}</p>}
-  </InputContainer>
-);
+  maxLength,
+}: InputProps) => {
+  const charactersLeft = () =>
+    maxLength && value ? `(${maxLength - value?.length} chars left)` : "";
 
-export default InputComponent;
+  return (
+    <InputContainer
+      style={{
+        padding: `${padded ? "1.5rem" : 0}`,
+      }}
+    >
+      {displayLabel && (
+        <label htmlFor={name} style={{ opacity: `${value ? 1 : 0}` }}>
+          {`${placeHolder} ${maxLength ? charactersLeft() : ""}`}
+        </label>
+      )}
+      <StyledTextArea
+        id={name}
+        onChange={onChange}
+        value={value}
+        placeholder={placeHolder}
+        name={name}
+        maxLength={maxLength}
+      ></StyledTextArea>
+      {error && <p>{error}</p>}
+    </InputContainer>
+  );
+};
+
+export default TextAreaComponent;

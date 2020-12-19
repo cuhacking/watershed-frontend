@@ -3461,6 +3461,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"attr-accept@npm:^2.2.1":
+  version: 2.2.2
+  resolution: "attr-accept@npm:2.2.2"
+  checksum: e9c5d3580f6cae9c5c25c5c9c8660d344dd8bed25e77df7515c046864fe1aa4bb245e743ad46f55b85443ff53c95e378b3203c3e83f2168a2557e94d0552d458
+  languageName: node
+  linkType: hard
+
 "autoprefixer@npm:^9.6.1":
   version: 9.7.4
   resolution: "autoprefixer@npm:9.7.4"
@@ -6634,6 +6641,15 @@ __metadata:
   peerDependencies:
     webpack: ^4.0.0
   checksum: 03535f889b56836dc462f20e138ba5ad46893cc079cfb970b3434aa4d4e959a1e52770fa62e87d657f4d7d3dd9207726a464dee19eb82ccdafdc2e5c6a80f92a
+  languageName: node
+  linkType: hard
+
+"file-selector@npm:^0.2.2":
+  version: 0.2.4
+  resolution: "file-selector@npm:0.2.4"
+  dependencies:
+    tslib: ^2.0.3
+  checksum: 45258fb1218ba9362e1fd0fdfd25e40b18fd2473adf8a45436245a78310dc76d2fdde95463afe1f4e9e8c0ef178837eb0e5335978c0db348bc1dec425e510429
   languageName: node
   linkType: hard
 
@@ -12530,6 +12546,19 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"react-dropzone@npm:^11.2.4":
+  version: 11.2.4
+  resolution: "react-dropzone@npm:11.2.4"
+  dependencies:
+    attr-accept: ^2.2.1
+    file-selector: ^0.2.2
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: ">= 16.8"
+  checksum: cc065e824e3d09f39c47f4cd5842f25bab7768256a09c62c5d3a069141d998290da24fe1506a78ba652dd806a563cd6c93cfaba09fb00293f60c483ab3138d8a
+  languageName: node
+  linkType: hard
+
 "react-error-overlay@npm:^6.0.7":
   version: 6.0.7
   resolution: "react-error-overlay@npm:6.0.7"
@@ -14740,6 +14769,13 @@ resolve@1.15.0:
   languageName: node
   linkType: hard
 
+"tslib@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "tslib@npm:2.0.3"
+  checksum: 447bfca5deaa157806c3f77eaba74d05dd0b38b014e47ce79d98b5c77ce7d91b00a687ba13ca1b5a74d35ca1098ac7a072c0a97fad06f0266612f2a03a6c8e8f
+  languageName: node
+  linkType: hard
+
 "tsutils@npm:^3.17.1":
   version: 3.17.1
   resolution: "tsutils@npm:3.17.1"
@@ -15234,6 +15270,7 @@ typescript@^4.1.3:
     react: ^16.14.0
     react-collapse: ^5.1.0
     react-dom: ^16.14.0
+    react-dropzone: ^11.2.4
     react-is: ^17.0.1
     react-rellax-wrapper: ^1.0.6
     react-router-dom: ^5.2.0
