@@ -1,11 +1,13 @@
-import React from "react";
-import styled from "styled-components";
-import { themeElement } from "../shared/theme";
+import React from 'react';
+import {Required} from '../shared/util';
+import styled from 'styled-components';
+import {themeElement} from '../shared/theme';
 
 const InputContainer = styled.div`
   /* max-width: 320px; */
   min-width: 124px;
   width: 100%;
+  position: relative;
 
   & label {
     color: var(${themeElement('--snow', '--ikeaBlue')});
@@ -31,7 +33,7 @@ const StyledInput = styled.input`
   background-color: transparent;
   color: var(${themeElement('--white', '--spaceDark')});
   border: none;
-  border-bottom: solid 1px var(${themeElement('--ikeaBlue', '--spaceDark')});
+  border-bottom: solid 1px var(${themeElement('--ikeaBlue', '--spaceGrey')});
   font-size: 1rem;
 
   &:focus {
@@ -63,16 +65,18 @@ const InputComponent = ({
   padded,
   list,
   style,
+  required,
 }: InputProps) => (
   <InputContainer
     style={{
-      width: `${expand ? "100%" : "auto"}`,
-      padding: `${padded ? "1rem" : 0}`,
+      width: `${expand ? '100%' : 'auto'}`,
+      padding: `${padded ? '1rem' : 0}`,
       ...style,
     }}
   >
+    {required && <Required style={{opacity: value ? 0 : 1}}></Required>}
     {displayLabel && (
-      <label htmlFor={name} style={{ opacity: `${value ? 1 : 0}` }}>
+      <label htmlFor={name} style={{opacity: `${value ? 1 : 0}`}}>
         {placeHolder}
       </label>
     )}

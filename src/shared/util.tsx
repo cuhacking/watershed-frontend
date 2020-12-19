@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { themeElement } from "./theme";
 
 const alignStyles = css`
   display: flex;
@@ -23,4 +24,14 @@ export const Mobile = styled.span`
   @media (min-width: 769px) {
     display: none;
   }
+`;
+
+export const Required = styled.div`
+  position: absolute;
+  height: 4px;
+  width: 4px;
+  right: 0.5rem;
+  border-radius: 100%;
+  background-color: var(${themeElement('--wineDark', '--wine')});
+  transition: opacity 300ms ease;
 `;

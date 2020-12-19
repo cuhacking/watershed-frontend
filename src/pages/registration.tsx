@@ -248,6 +248,7 @@ function Registration() {
             placeHolder='first name'
             displayLabel
             padded
+            required
           ></Input>
           <Input
             onChange={handleFormChange}
@@ -257,6 +258,7 @@ function Registration() {
             placeHolder='last name'
             displayLabel
             padded
+            required
           ></Input>
         </FormRow>
         <FormRow>
@@ -288,6 +290,8 @@ function Registration() {
             onClick={handleDropdownChange}
             padded
           ></Dropdown>
+        </FormRow>
+        <FormRow>
           <SelectDropdown
             label='school'
             name='school'
@@ -326,7 +330,7 @@ function Registration() {
             onClick={handleDropdownChange}
             padded
             small
-          ></Dropdown>{' '}
+          ></Dropdown>
           <ExperienceLabel>hackathons</ExperienceLabel>
         </FormRow>
         <FormRow style={{justifyContent: 'center'}}>
