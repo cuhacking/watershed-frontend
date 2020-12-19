@@ -6,7 +6,6 @@ const InputContainer = styled.div`
   /* max-width: 320px; */
   min-width: 124px;
   width: 100%;
-  box-sizing: border-box;
 
   & label {
     color: var(${themeElement('--snow', '--ikeaBlue')});
@@ -34,7 +33,6 @@ const StyledInput = styled.input`
   border: none;
   border-bottom: solid 1px var(${themeElement('--ikeaBlue', '--spaceDark')});
   font-size: 1rem;
-  box-sizing: border-box;
 
   &:focus {
     outline: none;

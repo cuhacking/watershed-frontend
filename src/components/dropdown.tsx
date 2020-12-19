@@ -1,9 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
-import styled, { css } from "styled-components";
-import darkArrow from "../assets/img/arrow-down-dark.svg";
-import lightArrow from "../assets/img/arrow-down-light.svg";
-import { globalTheme, themeElement } from "../shared/theme";
-import Input from "./Input";
+import React, {useState, useRef, useEffect} from 'react';
+import styled, {css} from 'styled-components';
+import darkArrow from '../assets/img/arrow-down-dark.svg';
+import lightArrow from '../assets/img/arrow-down-light.svg';
+import {globalTheme, themeElement} from '../shared/theme';
+import Input from './Input';
 
 const itemStyles = css`
   padding: 0.5rem 0;
@@ -12,7 +12,6 @@ const itemStyles = css`
 `;
 
 const containerStyles = css`
-  box-sizing: border-box;
   border-radius: 0.5rem;
   transition: box-shadow 300ms ease;
 `;
@@ -22,7 +21,7 @@ const DropdownContainer = styled.div`
   cursor: pointer;
   display: flex;
   position: relative;
-  min-width: 184px;
+  min-width: 200px;
   max-width: 284px;
   border: solid 1px var(${themeElement('--ikeaBlue', '--snow')});
   color: var(${themeElement('--white', '--spaceDark')});
@@ -88,13 +87,14 @@ const ItemsContainer = styled.div`
 `;
 
 interface DropdownProps {
-  label: string;
+  label?: string;
   name: string;
   options: string[];
   value: string;
   enableOther?: boolean;
   onClick: Function;
   padded?: boolean;
+  small?: boolean;
 }
 
 const Dropdown = ({
@@ -105,9 +105,10 @@ const Dropdown = ({
   label,
   enableOther,
   padded,
+  small,
 }: DropdownProps) => {
   const [open, setOpen] = useState(false);
-  const [other, setOther] = useState("");
+  const [other, setOther] = useState('');
   const dropdownRef = useRef(null);
 
   function useOuterClick(ref: any) {
@@ -117,24 +118,27 @@ const Dropdown = ({
           setOpen(false);
         }
       };
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener('mousedown', handleClickOutside);
       return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
+        document.removeEventListener('mousedown', handleClickOutside);
       };
     }, [ref]);
-  };
+  }
   useOuterClick(dropdownRef);
 
   return (
-    <div style={{ padding: `${padded ? "1rem" : 0}` }}>
-      <DropdownContainer ref={dropdownRef}>
-        <p style={{ opacity: `${value ? 1 : 0}` }}>{label}</p>
+    <div style={{padding: `${padded ? '1rem' : 0}`}}>
+      <DropdownContainer
+        style={{minWidth: small ? `116px` : '200px'}}
+        ref={dropdownRef}
+      >
+        <p style={{opacity: `${value ? 1 : 0}`}}>{label}</p>
         <LabelContainer onClick={() => setOpen(!open)}>
           <label>{value || label}</label>
           {open ? (
-            <IconUp src={globalTheme === "dark" ? darkArrow : lightArrow} />
+            <IconUp src={globalTheme === 'dark' ? darkArrow : lightArrow} />
           ) : (
-            <IconDown src={globalTheme === "dark" ? darkArrow : lightArrow} />
+            <IconDown src={globalTheme === 'dark' ? darkArrow : lightArrow} />
           )}
         </LabelContainer>
         {open && (
@@ -163,9 +167,9 @@ const Dropdown = ({
                     setOther(e.target.value);
                     onClick(name, e.target.value);
                   }}
-                  type="text"
+                  type='text'
                   value={other}
-                  placeHolder="other"
+                  placeHolder='other'
                   expand
                 ></Input>
               </li>

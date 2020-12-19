@@ -11,7 +11,6 @@ const genericButton = css`
   user-select: none;
   border-radius: 24px;
   padding: 8px 24px;
-  box-sizing: border-box;
   flex-grow: 0;
   font-family: var(--primary-font);
   cursor: pointer;

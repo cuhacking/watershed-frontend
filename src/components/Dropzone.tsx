@@ -15,7 +15,6 @@ const dropStyles = css`
   cursor: pointer;
   justify-content: center;
   border: solid 1px var(${themeElement('--snow', '--ikeaBlue')});
-  box-sizing: border-box;
 
   &:hover {
     box-shadow: var(--hover);

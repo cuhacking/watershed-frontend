@@ -26,7 +26,8 @@ const RegistrationContainer = styled.div`
   transition: box-shadow 300ms ease;
   box-shadow: var(--hover);
 
-  h3 {
+  h3,
+  p {
     color: var(${themeElement('--snow', '--spaceGrey')});
   }
 
@@ -35,6 +36,10 @@ const RegistrationContainer = styled.div`
     width: 100%;
     padding: 1rem 2rem;
   }
+`;
+
+const ExperienceLabel = styled.label`
+  color: var(${themeElement('--snow', '--spaceGrey')});
 `;
 
 const FormContainer = styled.section`
@@ -312,23 +317,29 @@ function Registration() {
     <FormContainer>
       <h3>Experience</h3>
       <Form>
-        <FormRow>
+        <FormRow style={{justifyContent: 'center'}}>
+          <ExperienceLabel>I've been to</ExperienceLabel>
           <Dropdown
-            label='hackathons'
             name='hackathonNumber'
             options={['0', '1 - 5', '6 - 10', '10 - 20', '20+']}
             value={userForm.hackathonNumber.value}
             onClick={handleDropdownChange}
             padded
-          ></Dropdown>
+            small
+          ></Dropdown>{' '}
+          <ExperienceLabel>hackathons</ExperienceLabel>
+        </FormRow>
+        <FormRow style={{justifyContent: 'center'}}>
+          <ExperienceLabel>and</ExperienceLabel>
           <Dropdown
-            label='events'
             name='eventsNumber'
             options={['0', '1 - 5', '6 - 10', '10 - 20', '20+']}
             value={userForm.eventsNumber.value}
             onClick={handleDropdownChange}
             padded
+            small
           ></Dropdown>
+          <ExperienceLabel>events in tech</ExperienceLabel>
         </FormRow>
         <FormRow>
           <Input
@@ -336,7 +347,7 @@ function Registration() {
             type='text'
             name='skills'
             value={userForm.skills.value}
-            placeHolder='skills (frontend, backend, design, etc)'
+            placeHolder='list your skills here (i.e. frontend)'
             displayLabel
             padded
             expand

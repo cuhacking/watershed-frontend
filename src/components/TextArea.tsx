@@ -31,7 +31,6 @@ const StyledTextArea = styled.textarea`
   border: none;
   border-bottom: solid 1px var(${themeElement('--ikeaBlue', '--spaceDark')});
   font-size: 1rem;
-  box-sizing: border-box;
   resize: unset;
 
   &:focus {
