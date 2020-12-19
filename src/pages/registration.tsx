@@ -145,11 +145,13 @@ const RightArrow = styled.img`
 interface FormValue {
   value: string;
   error: null | 'string';
+  required: boolean;
 }
 
 interface FileValue {
   value: File | null;
   error: null | 'string';
+  required: boolean;
 }
 
 interface UserForm {
@@ -172,34 +174,42 @@ interface UserForm {
   question3: FormValue;
 }
 
-const emptyFormValue: FormValue = {
+const formValue: FormValue = {
   value: '',
   error: null,
+  required: false
 };
 
-const emptyFileValue: FileValue = {
+const formValueRequired: FormValue = {
+  value: '',
+  error: null,
+  required: true
+};
+
+const fileValueRequired: FileValue = {
   value: null,
   error: null,
+  required: true
 };
 
 const emptyForm: UserForm = {
-  firstName: emptyFormValue,
-  lastName: emptyFormValue,
-  studyLevel: emptyFormValue,
-  pronouns: emptyFormValue,
-  school: emptyFormValue,
-  program: emptyFormValue,
-  hackathonNumber: emptyFormValue,
-  eventsNumber: emptyFormValue,
-  skills: emptyFormValue,
-  resume: emptyFileValue,
-  github: emptyFormValue,
-  website: emptyFormValue,
-  other: emptyFormValue,
-  linkedin: emptyFormValue,
-  question1: emptyFormValue,
-  question2: emptyFormValue,
-  question3: emptyFormValue,
+  firstName: formValueRequired,
+  lastName: formValueRequired,
+  pronouns: formValue,
+  studyLevel: formValueRequired,
+  school: formValueRequired,
+  program: formValue,
+  hackathonNumber: formValueRequired,
+  eventsNumber: formValueRequired,
+  skills: formValueRequired,
+  resume: fileValueRequired,
+  github: formValue,
+  linkedin: formValue,
+  website: formValue,
+  other: formValue,
+  question1: formValueRequired,
+  question2: formValueRequired,
+  question3: formValueRequired,
 };
 
 enum steps {
@@ -245,27 +255,27 @@ function Registration() {
             type='text'
             name='firstName'
             value={userForm.firstName.value}
-            placeHolder='first name'
+            placeHolder='First name'
             displayLabel
             padded
-            required
+            required={userForm.firstName.required}
           ></Input>
           <Input
             onChange={handleFormChange}
             type='text'
             name='lastName'
             value={userForm.lastName.value}
-            placeHolder='last name'
+            placeHolder='Last name'
             displayLabel
             padded
-            required
+            required={userForm.lastName.required}
           ></Input>
         </FormRow>
         <FormRow>
           <Dropdown
-            label='pronouns'
+            label='Pronouns'
             name='pronouns'
-            options={['he/him', 'she/her', 'they/them']}
+            options={['He/Him', 'She/Her', 'They/Them']}
             enableOther
             value={userForm.pronouns.value}
             onClick={handleDropdownChange}
@@ -282,7 +292,7 @@ function Registration() {
       <Form>
         <FormRow>
           <Dropdown
-            label='level of study'
+            label='Level of study'
             name='studyLevel'
             options={['Middle School', 'HS', 'UG', 'MS', 'PHD', 'College']}
             enableOther
@@ -293,7 +303,7 @@ function Registration() {
         </FormRow>
         <FormRow>
           <SelectDropdown
-            label='school'
+            label='School'
             name='school'
             options={['Carleton University', 'uOttawa']}
             value={userForm.school.value}
@@ -308,7 +318,7 @@ function Registration() {
             type='text'
             name='program'
             value={userForm.program.value}
-            placeHolder='program of study'
+            placeHolder='Program of study'
             displayLabel
             padded
           ></Input>
@@ -351,7 +361,7 @@ function Registration() {
             type='text'
             name='skills'
             value={userForm.skills.value}
-            placeHolder='list your skills here (i.e. frontend)'
+            placeHolder='List your skills (i.e. frontend)'
             displayLabel
             padded
             expand
@@ -379,7 +389,7 @@ function Registration() {
             type='text'
             name='github'
             value={userForm.github.value}
-            placeHolder='GitHub profile'
+            placeHolder='GitHub'
             displayLabel
             padded
           ></Input>
@@ -388,7 +398,7 @@ function Registration() {
             type='text'
             name='linkedin'
             value={userForm.linkedin.value}
-            placeHolder='LinkedIn profile'
+            placeHolder='LinkedIn'
             displayLabel
             padded
           ></Input>
@@ -496,12 +506,12 @@ function Registration() {
   const actions = (
     <InteractionsContainer>
       <AppButton
-        aria-label={step === steps.personalInformation ? 'cancel' : 'back'}
+        aria-label={step === steps.personalInformation ? 'Cancel' : 'Back'}
         secondary
         onClick={() => previousStep()}
       >
         <Desktop>
-          {step === steps.personalInformation ? 'cancel' : 'back'}
+          {step === steps.personalInformation ? 'Cancel' : 'Back'}
         </Desktop>
         <Mobile>
           <LeftArrow alt='left arrow' src={darkArrow}></LeftArrow>
@@ -517,10 +527,10 @@ function Registration() {
         )}
       </MarkersContainer>
       <AppButton
-        aria-label={step === steps.questions ? 'submit' : 'continue'}
+        aria-label={step === steps.questions ? 'Submit' : 'Continue'}
         onClick={() => nextStep()}
       >
-        <Desktop>{step === steps.questions ? 'submit' : 'continue'}</Desktop>
+        <Desktop>{step === steps.questions ? 'Submit' : 'Continue'}</Desktop>
         <Mobile>
           <RightArrow
             alt='right arrow'

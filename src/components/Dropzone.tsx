@@ -84,7 +84,7 @@ const DropzoneComponent = ({
         {dragText ? (
           <b>{dragText}</b>
         ) : (
-          "drop your resume here or click to select a file"
+          "Drop your resume here or click to select a file"
         )}
       </label>
       <br />
