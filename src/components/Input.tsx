@@ -4,6 +4,7 @@ import { themeElement } from "../shared/theme";
 
 const InputContainer = styled.div`
   /* max-width: 320px; */
+  min-width: 124px;
   width: 100%;
   box-sizing: border-box;
 

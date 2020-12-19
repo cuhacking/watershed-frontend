@@ -45,8 +45,8 @@ const GlobalStyle = createGlobalStyle`
     --primary-font: 'DM Sans', sans-serif;
     --secondary-font: 'Work Sans', sans-serif;
 
-    --shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
-    --hover: 0px 0px 16px rgba(49, 90, 150, 0.5);
+    --shadow: 0px 0px 12px rgba(0, 0, 0, 0.25);
+    --hover: 0px 0px 12px rgba(49, 90, 150, 0.25);
 
     font-family: var(--secondary-font);
     -webkit-font-smoothing: antialiased;

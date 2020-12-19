@@ -22,8 +22,8 @@ const DropdownContainer = styled.div`
   cursor: pointer;
   display: flex;
   position: relative;
-  width: 164px;
-  max-width: 200px;
+  min-width: 184px;
+  max-width: 284px;
   border: solid 1px var(${themeElement('--ikeaBlue', '--snow')});
   color: var(${themeElement('--white', '--spaceDark')});
   height: min-content;
@@ -60,10 +60,12 @@ const LabelContainer = styled.div`
 `;
 
 const IconUp = styled.img`
+  margin-left: 0.5rem;
   transform: rotate(180deg);
 `;
 
 const IconDown = styled.img`
+  margin-left: 0.5rem;
   transform: rotate(0deg);
 `;
 
