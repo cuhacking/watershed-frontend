@@ -1,6 +1,5 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { colors, shadows } from "../shared/constants";
 import { themeElement } from "../shared/theme";
 
 const buttonStyles = css`
@@ -17,7 +16,7 @@ const buttonStyles = css`
   justify-content: center;
 
   &:hover {
-    box-shadow: ${shadows.hover};
+    box-shadow: var(--hover);
   }
 
   @media (max-width: 768px) {
@@ -28,23 +27,23 @@ const buttonStyles = css`
 
 const PrimaryButton = styled.button<ButtonProps>`
   ${buttonStyles}
-  background-color: ${themeElement(colors.snow, colors.ikeaBlue)};
-  color: ${themeElement(colors.spaceGrey, colors.white)};
+  background-color: var(${themeElement('--snow', '--ikeaBlue')});
+  color: var(${themeElement('--spaceGrey', '--white')});
 
   &:hover {
-    background-color: ${themeElement(colors.spaceDark, colors.white)};
-    color: ${themeElement(colors.snow, colors.spaceGrey)};
+    background-color: var(${themeElement('--spaceDark', '--white')});
+    color: var(${themeElement('--snow', '--spaceGrey')});
   }
 `;
 
 const SecondaryButton = styled.button<ButtonProps>`
   ${buttonStyles}
-  background-color: ${themeElement(colors.ikeaBlue, colors.spaceGrey)};
-  color: ${colors.white};
+  background-color: var(${themeElement('--ikeaBlue', '--spaceGrey')});
+  color: var(--white);
 
   &:hover {
-    background-color: ${themeElement(colors.spaceDark, colors.white)};
-    color: ${themeElement(colors.snow, colors.spaceGrey)};
+    background-color: var(${themeElement('--spaceDark', '--white')});
+    color: var(${themeElement('--snow', '--spaceGrey')});
   }
 `;
 
@@ -68,7 +67,7 @@ const ButtonComponent = ({
 }: ButtonProps) => (
   <div
     style={{
-      padding: `${padded ? "1.5rem" : 0}`,
+      padding: `${padded ? "1rem" : 0}`,
       width: expanded ? "100%" : "unset",
     }}
   >

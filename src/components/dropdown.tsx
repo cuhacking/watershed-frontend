@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled, { css } from "styled-components";
-import { colors, shadows } from "../shared/constants";
 import darkArrow from "../assets/img/arrow-down-dark.svg";
 import lightArrow from "../assets/img/arrow-down-light.svg";
 import { globalTheme, themeElement } from "../shared/theme";
@@ -8,7 +7,7 @@ import Input from "./Input";
 
 const itemStyles = css`
   padding: 0.5rem 0;
-  background-color: ${themeElement(colors.spaceGrey, colors.white)};
+  background-color: var(${themeElement('--spaceGrey', '--white')});
   width: 100%;
 `;
 
@@ -25,12 +24,12 @@ const DropdownContainer = styled.div`
   position: relative;
   width: 164px;
   max-width: 200px;
-  border: solid 1px ${themeElement(colors.ikeaBlue, colors.snow)};
-  color: ${themeElement(colors.white, colors.spaceDark)};
+  border: solid 1px var(${themeElement('--ikeaBlue', '--snow')});
+  color: var(${themeElement('--white', '--spaceDark')});
   height: min-content;
 
   & p {
-    color: ${themeElement(colors.snow, colors.ikeaBlue)};
+    color: var(${themeElement('--snow', '--ikeaBlue')});
     position: absolute;
     transition: opacity 300ms ease;
     margin: -1rem 0 0 0.5rem;
@@ -39,7 +38,7 @@ const DropdownContainer = styled.div`
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-      box-shadow: ${shadows.hover};
+      box-shadow: var(--hover);
     }
   }
 `;
@@ -73,7 +72,7 @@ const ItemsContainer = styled.div`
   ${itemStyles};
   position: absolute;
   top: 3rem;
-  box-shadow: ${shadows.hover};
+  box-shadow: var(--hover);
   z-index: 4;
 
   & li {
@@ -81,7 +80,7 @@ const ItemsContainer = styled.div`
     list-style-type: none;
 
     &:hover {
-      background-color: ${themeElement(colors.ikeaBlue, colors.snow)};
+      background-color: var(${themeElement('--ikeaBlue', '--snow')});
     }
   }
 `;
@@ -125,7 +124,7 @@ const Dropdown = ({
   useOuterClick(dropdownRef);
 
   return (
-    <div style={{ padding: `${padded ? "1.5rem" : 0}` }}>
+    <div style={{ padding: `${padded ? "1rem" : 0}` }}>
       <DropdownContainer ref={dropdownRef}>
         <p style={{ opacity: `${value ? 1 : 0}` }}>{label}</p>
         <LabelContainer onClick={() => setOpen(!open)}>

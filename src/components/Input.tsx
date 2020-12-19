@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { colors } from "../shared/constants";
 import { themeElement } from "../shared/theme";
 
 const InputContainer = styled.div`
@@ -9,7 +8,7 @@ const InputContainer = styled.div`
   box-sizing: border-box;
 
   & label {
-    color: ${themeElement(colors.snow, colors.ikeaBlue)};
+    color: var(${themeElement('--snow', '--ikeaBlue')});
     position: absolute;
     transition: opacity 300ms ease;
     margin: -14px 0 0 0;
@@ -17,7 +16,7 @@ const InputContainer = styled.div`
   }
 
   & p:last-child {
-    color: ${themeElement(colors.wineDark, colors.wine)};
+    color: var(${themeElement('--wineDark', '--wine')});
     position: absolute;
     transition: opacity 300ms ease;
     margin: 4px 0 0 0;
@@ -30,15 +29,15 @@ const StyledInput = styled.input`
   width: 100%;
   position: relative;
   background-color: transparent;
-  color: ${themeElement(colors.white, colors.spaceDark)};
+  color: var(${themeElement('--white', '--spaceDark')});
   border: none;
-  border-bottom: solid 1px ${themeElement(colors.ikeaBlue, colors.spaceDark)};
+  border-bottom: solid 1px var(${themeElement('--ikeaBlue', '--spaceDark')});
   font-size: 1rem;
   box-sizing: border-box;
 
   &:focus {
     outline: none;
-    border-bottom: solid 1px ${themeElement(colors.snow, colors.ikeaBlue)};
+    border-bottom: solid 1px var(${themeElement('--snow', '--ikeaBlue')});
   }
 `;
 
@@ -69,7 +68,7 @@ const InputComponent = ({
   <InputContainer
     style={{
       width: `${expand ? "100%" : "auto"}`,
-      padding: `${padded ? "1.5rem" : 0}`,
+      padding: `${padded ? "1rem" : 0}`,
       ...style,
     }}
   >

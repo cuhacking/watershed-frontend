@@ -1,6 +1,6 @@
 import React, { useReducer, useState } from "react";
 import styled, { css } from "styled-components";
-import { colors, Desktop, Mobile, shadows } from "../shared/constants";
+import { Desktop, Mobile } from "../shared/util";
 import darkDrop from "../assets/img/drop-dark.svg";
 import lightDrop from "../assets/img/drop-light.svg";
 import Input from "../components/Input";
@@ -13,7 +13,7 @@ import SelectDropdown from "../components/SelectDropdown";
 import Dropzone from "../components/Dropzone";
 import AppButton from "../components/AppButton";
 
-const Container = styled.div`
+const RegistrationContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 2rem 4rem;
@@ -21,10 +21,14 @@ const Container = styled.div`
   min-width: 800px;
   border-radius: 16px;
   align-items: center;
-  background-color: ${themeElement(colors.spaceGrey, colors.white)};
+  background-color: var(${themeElement('--spaceGrey', '--white')});
   margin:auto;
   transition: box-shadow 300ms ease;
   box-shadow: var(--hover);
+
+  h3 {
+    color: var(${themeElement('--snow', '--spaceGrey')})
+  }
 
   @media (max-width: 768px) {
     min-width: 0;
@@ -62,7 +66,7 @@ const FormRow = styled.div`
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: center;
-  padding: 0.5rem 0;
+  padding: 0.25rem 0;
 
   @media (max-width: 768px) {
     & div {
@@ -97,7 +101,7 @@ const markerStyle = css`
   height: 0.5rem;
   width: 0.5rem;
   border-radius: 100%;
-  box-shadow: ${shadows.hover};
+  box-shadow: var(--hover);
 
   &:not(:first-child) {
     margin-left: 1rem;
@@ -106,12 +110,23 @@ const markerStyle = css`
 
 const StepMarker = styled.div`
   ${markerStyle};
-  background-color: ${themeElement(colors.spaceDark, colors.snow)};
+  background-color: var(${themeElement('--spaceDark', '--snow')});
 `;
 
 const StepMarkerDone = styled.div`
   ${markerStyle};
-  background-color: ${themeElement(colors.snow, colors.ikeaBlue)};
+  background-color: var(${themeElement('--snow', '--ikeaBlue')});
+`;
+
+const Container = styled.div`
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  background-color: var(${themeElement('--spaceGrey', '--snow')});
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const LeftArrow = styled.img`
@@ -202,11 +217,6 @@ function Registration() {
   const [userForm, setInfo] = useReducer(formReducer, emptyForm);
   const SECTIONS = 5;
   const finalStep = steps.questions;
-
-  // !debugging
-  // useEffect(() => {
-  //   console.log(userForm);
-  // }, [userForm]);
 
   const handleFormChange = (e: any) => {
     const name = e.target.name;
@@ -522,12 +532,14 @@ function Registration() {
 
   return (
     <Container>
-      <DropIcon
-        src={globalTheme === "dark" ? darkDrop : lightDrop}
-        alt="cuhacking icon"
-      />
-      {currentStep()}
-      {actions}
+      <RegistrationContainer>
+        <DropIcon
+          src={globalTheme === "dark" ? darkDrop : lightDrop}
+          alt="cuhacking icon"
+        />
+        {currentStep()}
+        {actions}
+      </RegistrationContainer>
     </Container>
   );
 }

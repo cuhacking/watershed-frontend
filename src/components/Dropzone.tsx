@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import styled, { css } from "styled-components";
-import { colors, shadows } from "../shared/constants";
 import { themeElement } from "../shared/theme";
 
 const dropStyles = css`
@@ -15,33 +14,33 @@ const dropStyles = css`
     color 300ms ease;
   cursor: pointer;
   justify-content: center;
-  border: solid 1px ${themeElement(colors.snow, colors.ikeaBlue)};
+  border: solid 1px var(${themeElement('--snow', '--ikeaBlue')});
   box-sizing: border-box;
 
   &:hover {
-    box-shadow: ${shadows.hover};
+    box-shadow: var(--hover);
   }
 `;
 
 const PrimaryDrop = styled.div`
   ${dropStyles}
-  background-color: ${themeElement(colors.snow, colors.ikeaBlue)};
-  color: ${themeElement(colors.spaceGrey, colors.white)};
+  background-color: var(${themeElement('--snow', '--ikeaBlue')});
+  color: var(${themeElement('--spaceGrey', '--white')});
 
   &:hover {
-    background-color: ${themeElement(colors.spaceDark, colors.white)};
-    color: ${themeElement(colors.snow, colors.spaceGrey)};
+    background-color: var(${themeElement('--spaceDark', '--white')});
+    color: var(${themeElement('--snow', '--spaceGrey')});
   }
 `;
 
 const SecondaryDrop = styled.div`
   ${dropStyles}
-  background-color: ${themeElement(colors.ikeaBlue, colors.spaceGrey)};
-  color: ${colors.white};
+  background-color: var(${themeElement('--ikeaBlue', '--spaceGrey')});
+  color: var(--white);
 
   &:hover {
-    background-color: ${themeElement(colors.spaceDark, colors.white)};
-    color: ${themeElement(colors.snow, colors.spaceGrey)};
+    background-color: var(${themeElement('--spaceDark', '--white')});
+    color: var(${themeElement('--snow', '--spaceGrey')});
   }
 `;
 
@@ -97,7 +96,7 @@ const DropzoneComponent = ({
   return (
     <div
       style={{
-        padding: `${padded ? "1.5rem" : 0}`,
+        padding: `${padded ? "1rem" : 0}`,
         width: expanded ? "100%" : "unset",
       }}
     >

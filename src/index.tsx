@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-<<<<<<< HEAD
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {createGlobalStyle} from 'styled-components';
 import 'fontsource-dm-sans';
@@ -8,6 +7,7 @@ import 'fontsource-work-sans';
 import 'fontsource-work-sans/600.css';
 import 'fontsource-montserrat-alternates/600.css';
 import {Home} from './pages';
+import Registration from './pages/registration';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -73,6 +73,16 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 300;
   }
 
+  body, textarea {
+    font-family: 'Work Sans', sans-serif;
+    color: white;
+  }
+
+  input {
+    font-family: 'Work Sans', sans-serif;
+  }
+
+
   a {
     text-decoration: none;
   }
@@ -86,26 +96,6 @@ const GlobalStyle = createGlobalStyle`
 
   .ReactCollapse--collapse {
     transition: height 500ms cubic-bezier(0.33, 1, 0.68, 1);
-=======
-import './index.css';
-import Registration from './pages/registration';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'; 
-import styled from 'styled-components';
-import { colors } from './shared/constants';
-import { themeElement } from './shared/theme';
-
-const Container = styled.div`
-  box-sizing: border-box;
-  min-width: 100%;
-  min-height: 100vh;
-  padding: 2rem;
-  max-width: 1200px;
-  background-color: ${themeElement(colors.spaceDark, colors.white)};
-  display: flex;
-
-  @media (max-width: 768px) {
-    padding: 1rem;
->>>>>>> squashing
   }
 `;
 
@@ -115,6 +105,7 @@ const App = () => (
     <Router>
       <Switch>
         <Route path='/' exact component={Home} />
+        <Route path='/registration' exact component={Registration} />
       </Switch>
     </Router>
   </>
