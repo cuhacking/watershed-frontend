@@ -41,6 +41,10 @@ const DropdownContainer = styled.div`
       box-shadow: var(--hover);
     }
   }
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
 `;
 
 const LabelContainer = styled.div`
