@@ -298,7 +298,7 @@ function Registration() {
           <Dropdown
             label='Level of study'
             name='studyLevel'
-            options={['Middle School', 'HS', 'UG', 'MS', 'PHD', 'College']}
+            options={['Middle School', 'High School', 'Bachelors', 'Masters', 'PhD', 'College']}
             enableOther
             value={userForm.studyLevel.value}
             onClick={handleDropdownChange}
@@ -362,7 +362,7 @@ function Registration() {
             small
             required={userForm.eventsNumber.required}
           ></Dropdown>
-          <ExperienceLabel>events in tech</ExperienceLabel>
+          <ExperienceLabel>other events in tech</ExperienceLabel>
         </FormRow>
         <FormRow>
           <Input
@@ -444,7 +444,7 @@ function Registration() {
 
   const questions = (
     <FormContainer>
-      <h3>Tell us a bit about yourself</h3>
+      <h3>Tell us a little more yourself</h3>
       <Form>
         <FormRow>
           <TextArea
