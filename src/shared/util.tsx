@@ -31,6 +31,7 @@ export const Required = styled.div`
   height: 4px;
   width: 4px;
   right: 0.5rem;
+  top: 0.5rem;
   border-radius: 100%;
   background-color: var(${themeElement('--wineDark', '--wine')});
   transition: opacity 300ms ease;

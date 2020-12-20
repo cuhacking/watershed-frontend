@@ -9,6 +9,7 @@ type SelectDropdownProps = {
   onChange: (e?: React.MouseEvent) => void;
   selectClick: Function;
   padded?: boolean;
+  required?: boolean;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 const SelectDropdown = ({
@@ -19,6 +20,7 @@ const SelectDropdown = ({
   value,
   label,
   padded,
+  required
 }: SelectDropdownProps) => {
   return (
     <div>
@@ -30,6 +32,7 @@ const SelectDropdown = ({
         name={name}
         placeHolder={label}
         list={`${label}-datalist`}
+        required={required}
       ></Input>
       <datalist id={`${label}-datalist`}>
         {options.map((item, index) => (

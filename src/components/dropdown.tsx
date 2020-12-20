@@ -1,4 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
+import {Required} from '../shared/util';
 import styled, {css} from 'styled-components';
 import darkArrow from '../assets/img/arrow-down-dark.svg';
 import lightArrow from '../assets/img/arrow-down-light.svg';
@@ -95,6 +96,7 @@ interface DropdownProps {
   onClick: Function;
   padded?: boolean;
   small?: boolean;
+  required?: boolean;
 }
 
 const Dropdown = ({
@@ -106,6 +108,7 @@ const Dropdown = ({
   enableOther,
   padded,
   small,
+  required,
 }: DropdownProps) => {
   const [open, setOpen] = useState(false);
   const [other, setOther] = useState('');
@@ -127,7 +130,8 @@ const Dropdown = ({
   useOuterClick(dropdownRef);
 
   return (
-    <div style={{padding: `${padded ? '1rem' : 0}`}}>
+    <div style={{position: 'relative', padding: `${padded ? '1rem' : 0}`}}>
+      {required && <Required style={{opacity: value ? 0 : 1}}></Required>}
       <DropdownContainer
         style={{minWidth: small ? `116px` : '200px'}}
         ref={dropdownRef}

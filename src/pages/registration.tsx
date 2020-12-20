@@ -127,7 +127,7 @@ const Container = styled.div`
   height: 100vh;
   width: 100%;
   display: flex;
-  background-color: var(${themeElement('--spaceGrey', '--snow')});
+  background-color: var(${themeElement('--spaceDark', '--snow')});
 
   @media (max-width: 768px) {
     padding: 1rem;
@@ -222,7 +222,10 @@ enum steps {
 
 const formReducer = (state: UserForm, entry: string[]) => ({
   ...state,
-  [entry[0]]: {value: entry[1]},
+  [entry[0]]: {
+    ...state[entry[0] as keyof UserForm],
+    value: entry[1]
+  },
 });
 
 function Registration() {
@@ -280,6 +283,7 @@ function Registration() {
             value={userForm.pronouns.value}
             onClick={handleDropdownChange}
             padded
+            required={userForm.pronouns.required}
           ></Dropdown>
         </FormRow>
       </Form>
@@ -299,6 +303,7 @@ function Registration() {
             value={userForm.studyLevel.value}
             onClick={handleDropdownChange}
             padded
+            required={userForm.studyLevel.required}
           ></Dropdown>
         </FormRow>
         <FormRow>
@@ -310,6 +315,7 @@ function Registration() {
             selectClick={handleDropdownChange}
             onChange={handleFormChange}
             padded
+            required={userForm.school.required}
           ></SelectDropdown>
         </FormRow>
         <FormRow>
@@ -321,6 +327,7 @@ function Registration() {
             placeHolder='Program of study'
             displayLabel
             padded
+            required={userForm.program.required}
           ></Input>
         </FormRow>
       </Form>
@@ -340,6 +347,7 @@ function Registration() {
             onClick={handleDropdownChange}
             padded
             small
+            required={userForm.hackathonNumber.required}
           ></Dropdown>
           <ExperienceLabel>hackathons</ExperienceLabel>
         </FormRow>
@@ -352,6 +360,7 @@ function Registration() {
             onClick={handleDropdownChange}
             padded
             small
+            required={userForm.eventsNumber.required}
           ></Dropdown>
           <ExperienceLabel>events in tech</ExperienceLabel>
         </FormRow>
@@ -365,6 +374,7 @@ function Registration() {
             displayLabel
             padded
             expand
+            required={userForm.skills.required}
           ></Input>
         </FormRow>
         <FormRow>
@@ -373,6 +383,7 @@ function Registration() {
             padded
             expanded
             onUpload={handleResumeUpload}
+            required={userForm.resume.required}
           ></Dropzone>
         </FormRow>
       </Form>
@@ -392,6 +403,7 @@ function Registration() {
             placeHolder='GitHub'
             displayLabel
             padded
+            required={userForm.github.required}
           ></Input>
           <Input
             onChange={handleFormChange}
@@ -401,6 +413,7 @@ function Registration() {
             placeHolder='LinkedIn'
             displayLabel
             padded
+            required={userForm.linkedin.required}
           ></Input>
         </FormRow>
         <FormRow>
@@ -412,6 +425,7 @@ function Registration() {
             placeHolder='Personal website'
             displayLabel
             padded
+            required={userForm.website.required}
           ></Input>
           <Input
             onChange={handleFormChange}
@@ -421,6 +435,7 @@ function Registration() {
             placeHolder='Other'
             displayLabel
             padded
+            required={userForm.other.required}
           ></Input>
         </FormRow>
       </Form>
@@ -442,6 +457,7 @@ function Registration() {
             padded
             style={{width: '100%'}}
             maxLength={300}
+            required={userForm.question1.required}
           ></TextArea>
         </FormRow>
         <FormRow>
@@ -455,6 +471,7 @@ function Registration() {
             padded
             style={{width: '100%'}}
             maxLength={300}
+            required={userForm.question2.required}
           ></TextArea>
         </FormRow>
         <FormRow>
@@ -468,6 +485,7 @@ function Registration() {
             padded
             style={{width: '100%'}}
             maxLength={300}
+            required={userForm.question3.required}
           ></TextArea>
         </FormRow>
       </Form>

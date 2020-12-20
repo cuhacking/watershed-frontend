@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { Required } from "../shared/util";
 import styled, { css } from "styled-components";
 import { themeElement } from "../shared/theme";
 
@@ -49,6 +50,7 @@ interface DropzoneProps {
   expanded?: boolean;
   secondary?: boolean;
   value: null | File;
+  required?: boolean;
 }
 
 const DropzoneComponent = ({
@@ -57,6 +59,7 @@ const DropzoneComponent = ({
   secondary,
   expanded,
   value,
+  required
 }: DropzoneProps) => {
   const [dragText, setDragText] = useState("");
   const onDrop = useCallback(
@@ -95,10 +98,12 @@ const DropzoneComponent = ({
   return (
     <div
       style={{
+        position: 'relative',
         padding: `${padded ? "1rem" : 0}`,
         width: expanded ? "100%" : "unset",
       }}
     >
+      {required && <Required style={{opacity: value ? 0 : 1}}></Required>}
       {secondary ? (
         <SecondaryDrop {...getRootProps()}>
           <input {...getInputProps()} />

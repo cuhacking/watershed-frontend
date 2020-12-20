@@ -1,4 +1,5 @@
 import React from 'react';
+import { Required } from '../shared/util';
 import styled from 'styled-components';
 import {themeElement} from '../shared/theme';
 
@@ -58,6 +59,7 @@ const TextAreaComponent = ({
   error,
   padded,
   maxLength,
+  required
 }: InputProps) => {
   const charactersLeft = () =>
     maxLength && value ? `(${maxLength - value?.length} chars left)` : '';
@@ -65,9 +67,11 @@ const TextAreaComponent = ({
   return (
     <InputContainer
       style={{
+        position: 'relative',
         padding: `${padded ? '1rem' : 0}`,
       }}
     >
+      {required && <Required style={{opacity: value ? 0 : 1}}></Required>}
       {displayLabel && (
         <label
           htmlFor={name}

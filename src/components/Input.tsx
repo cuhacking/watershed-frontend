@@ -52,6 +52,7 @@ type InputProps = {
   error?: string;
   padded?: boolean;
   list?: string;
+  required?:boolean
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 const InputComponent = ({
