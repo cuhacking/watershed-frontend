@@ -7,6 +7,7 @@ import 'fontsource-work-sans';
 import 'fontsource-work-sans/600.css';
 import 'fontsource-montserrat-alternates/600.css';
 import {Home} from './pages';
+import Registration from './pages/registration';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -44,8 +45,8 @@ const GlobalStyle = createGlobalStyle`
     --primary-font: 'DM Sans', sans-serif;
     --secondary-font: 'Work Sans', sans-serif;
 
-    --shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
-    --hover: 0px 0px 16px rgba(49, 90, 150, 0.5);
+    --shadow: 0px 0px 12px rgba(0, 0, 0, 0.25);
+    --hover: 0px 0px 12px rgba(49, 90, 150, 0.25);
 
     font-family: var(--secondary-font);
     -webkit-font-smoothing: antialiased;
@@ -72,6 +73,16 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 300;
   }
 
+  body, textarea {
+    font-family: 'Work Sans', sans-serif;
+    color: white;
+  }
+
+  input {
+    font-family: 'Work Sans', sans-serif;
+  }
+
+
   a {
     text-decoration: none;
   }
@@ -94,6 +105,7 @@ const App = () => (
     <Router>
       <Switch>
         <Route path='/' exact component={Home} />
+        <Route path='/registration' exact component={Registration} />
       </Switch>
     </Router>
   </>
