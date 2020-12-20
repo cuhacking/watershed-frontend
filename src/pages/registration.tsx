@@ -35,6 +35,8 @@ const RegistrationContainer = styled.div`
     min-width: 0;
     width: 100%;
     padding: 1rem 2rem;
+    height: 100%;
+    justify-content: space-between;
   }
 `;
 
@@ -48,6 +50,10 @@ const FormContainer = styled.section`
   align-items: center;
   padding: 1rem 0rem;
   width: 85%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const Form = styled.form`
@@ -366,7 +372,7 @@ function Registration() {
             type='text'
             name='skills'
             value={userForm.skills.value}
-            placeHolder='List your skills (e.g. frontend, etc.)'
+            placeHolder='List your skills (e.g. frontend, mobile, etc.)'
             displayLabel
             padded
             expand

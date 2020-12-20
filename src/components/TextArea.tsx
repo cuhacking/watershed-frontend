@@ -7,9 +7,10 @@ const InputContainer = styled.div`
   width: 100%;
 
   & label {
+    position: absolute;
     color: var(${themeElement('--snow', '--ikeaBlue')});
     transition: opacity 300ms ease;
-    margin: 0 0 4px 0;
+    margin: -28px 0 0 0;
     font-size: 12px;
   }
 
