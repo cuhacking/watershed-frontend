@@ -76,6 +76,8 @@ const FormRow = styled.div`
   padding: 0.25rem 0;
 
   @media (max-width: 768px) {
+    padding: 0;
+
     & div {
       width: 100%;
     }
