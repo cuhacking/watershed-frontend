@@ -34,7 +34,7 @@ const RegistrationContainer = styled.div`
   @media (max-width: 768px) {
     min-width: 0;
     width: 100%;
-    padding: 1rem 2rem;
+    padding: 0.75rem 0.75rem;
     height: 100%;
     justify-content: space-between;
   }
