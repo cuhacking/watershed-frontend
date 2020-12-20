@@ -47,11 +47,7 @@ const FormContainer = styled.section`
   flex-direction: column;
   align-items: center;
   padding: 1rem 0rem;
-  width: 80%;
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
+  width: 85%;
 `;
 
 const Form = styled.form`
