@@ -75,7 +75,7 @@ const FormRow = styled.div`
 
   @media (max-width: 768px) {
     & div {
-      width: 100% !important;
+      width: 100%;
     }
   }
 `;

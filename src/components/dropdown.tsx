@@ -140,9 +140,9 @@ const Dropdown = ({
         <LabelContainer onClick={() => setOpen(!open)}>
           <label>{value || label}</label>
           {open ? (
-            <IconUp src={globalTheme === 'dark' ? darkArrow : lightArrow} />
+            <IconUp alt="arrow up" src={globalTheme === 'dark' ? darkArrow : lightArrow} />
           ) : (
-            <IconDown src={globalTheme === 'dark' ? darkArrow : lightArrow} />
+            <IconDown alt="arrow down" src={globalTheme === 'dark' ? darkArrow : lightArrow} />
           )}
         </LabelContainer>
         {open && (

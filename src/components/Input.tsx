@@ -70,7 +70,7 @@ const InputComponent = ({
 }: InputProps) => (
   <InputContainer
     style={{
-      width: `${expand ? '100%' : 'auto'}`,
+      width: `${expand ? '100%' : 'unset'}`,
       padding: `${padded ? '1rem' : 0}`,
       ...style,
     }}
