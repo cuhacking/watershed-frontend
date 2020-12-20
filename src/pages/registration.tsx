@@ -366,7 +366,7 @@ function Registration() {
             type='text'
             name='skills'
             value={userForm.skills.value}
-            placeHolder='List your skills (i.e. frontend)'
+            placeHolder='List your skills (e.g. frontend, etc.)'
             displayLabel
             padded
             expand
