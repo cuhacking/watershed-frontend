@@ -25,6 +25,10 @@ const InputContainer = styled.div`
     font-weight: 500;
     font-size: 12px;
   }
+
+  @media (max-width: 768px) {
+    width: 100% !important;
+  }
 `;
 
 const StyledInput = styled.input`
