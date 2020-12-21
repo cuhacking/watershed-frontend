@@ -113,7 +113,7 @@ const Header = (props: {fixed: boolean; banner?: boolean}) => {
   return (
     <StyledHeader isOpen={isOpen} isDark={isDark} fixed={props.fixed}>
       <NavBar banner={props.banner === true}>
-        <Link aria-label="Home" to='/'>
+        <Link aria-label='Home' to='/'>
           <StyledLogo />
         </Link>
         <MenuButton isOpen={isOpen} onClick={() => setOpen(!isOpen)} />
@@ -122,7 +122,7 @@ const Header = (props: {fixed: boolean; banner?: boolean}) => {
           <NavButton href='/#schedule'>Schedule</NavButton>
           <NavButton href='/#sponsors'>Sponsors</NavButton>
           <NavButton href='/#FAQ'>FAQ</NavButton>
-          {/* <NavButton href='/dashboard/login'>Login</NavButton> */}
+          <NavButton href='/dashboard/login'>Login</NavButton>
         </ButtonDiv>
       </NavBar>
       <NavMenu>
@@ -130,7 +130,7 @@ const Header = (props: {fixed: boolean; banner?: boolean}) => {
         <NavButton href='/#schedule'>Schedule</NavButton>
         <NavButton href='/#sponsors'>Sponsors</NavButton>
         <NavButton href='/#FAQ'>FAQ</NavButton>
-        {/* <NavButton href='/dashboard/login'>Login</NavButton> */}
+        <NavButton href='/dashboard/login'>Login</NavButton>
       </NavMenu>
     </StyledHeader>
   );

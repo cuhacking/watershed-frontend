@@ -6,7 +6,7 @@ import 'fontsource-dm-sans';
 import 'fontsource-work-sans';
 import 'fontsource-work-sans/600.css';
 import 'fontsource-montserrat-alternates/600.css';
-import {Home} from './pages';
+import {Home, Dashboard} from './pages';
 import Registration from './pages/registration';
 
 const GlobalStyle = createGlobalStyle`
@@ -105,6 +105,7 @@ const App = () => (
     <Router>
       <Switch>
         <Route path='/' exact component={Home} />
+        <Route path='/dashboard' component={Dashboard} />
         <Route path='/registration' exact component={Registration} />
       </Switch>
     </Router>
