@@ -127,7 +127,7 @@ const useProvideAuth = (): AuthObject => {
     }
 
     getAccessTokenHelper(refreshToken);
-  }, [getAccessTokenHelper]);
+  }, []);
 
   const signIn = async (
     email: string,
