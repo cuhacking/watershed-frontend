@@ -85,14 +85,14 @@ export default () => {
         <ErrorMessage visible={error}>Invalid email or password.</ErrorMessage>
         <SubmitButton type='submit'>Log In</SubmitButton>
       </LoginForm>
-      <DiscordButton>Sign in with Discord</DiscordButton>
+      {/* <DiscordButton>Sign in with Discord</DiscordButton> */}
       <OptionButtons>
         <OptionButton to='/dashboard/sign-up'>
           I don't have an account.
         </OptionButton>
-        <OptionButton to='/dashboard/forgot-password'>
+        {/* <OptionButton to='/dashboard/forgot-password'>
           I forgot my password.
-        </OptionButton>
+        </OptionButton> */}
       </OptionButtons>
     </ModalLayout>
   );

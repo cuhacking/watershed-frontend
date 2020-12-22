@@ -18,7 +18,7 @@ const SubmitButton = styled.button``;
 
 const DiscordButton = styled.button``;
 
-const BackButton = styled.button``;
+const OptionButton = styled(Link)``;
 
 export default () => {
   const history = useHistory();
@@ -106,7 +106,9 @@ export default () => {
         </ErrorMessage>
         <SubmitButton type='submit'>Continue</SubmitButton>
       </LoginForm>
-      <BackButton>Choose a different sign up method.</BackButton>
+      <OptionButton to='/dashboard/login'>
+        I want to log in instead.
+      </OptionButton>
     </ModalLayout>
   );
 };
