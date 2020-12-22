@@ -16,7 +16,17 @@ const ErrorMessage = styled.p<{visible: boolean}>`
 
 const SubmitButton = styled.button``;
 
-const DiscordButton = styled.button``;
+const OAuthButtons = styled.div`
+  display: block;
+`;
+
+const DiscordButton = styled.a`
+  display: block;
+`;
+
+const GitHubButton = styled.a`
+  display: block;
+`;
 
 const OptionButtons = styled.div``;
 
@@ -62,7 +72,6 @@ export default () => {
       <Helmet>
         <title>Login</title>
       </Helmet>
-
       <h1>Welcome back!</h1>
       <LoginForm onSubmit={handleSubmit}>
         <Input
@@ -92,7 +101,13 @@ export default () => {
           <SubmitButton type='submit'>Log In</SubmitButton>
         )}
       </LoginForm>
-      {/* <DiscordButton>Sign in with Discord</DiscordButton> */}
+      <OAuthButtons>
+        <strong>OR</strong>
+        <DiscordButton href='/api/auth/discord'>
+          Sign in with Discord
+        </DiscordButton>
+        <GitHubButton href='/api/auth/github'>Sign in with GitHub</GitHubButton>
+      </OAuthButtons>{' '}
       <OptionButtons>
         <OptionButton to='/dashboard/sign-up'>
           I don't have an account.
