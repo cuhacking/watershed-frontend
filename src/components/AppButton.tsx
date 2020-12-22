@@ -63,12 +63,14 @@ const ButtonComponent = ({
   secondary,
   padded,
   expanded,
+  style,
   ...other
 }: ButtonProps) => (
   <div
     style={{
       padding: `${padded ? "1rem" : 0}`,
       width: expanded ? "100%" : "unset",
+      ...style
     }}
   >
     {secondary ? (

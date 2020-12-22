@@ -1,5 +1,5 @@
-import React from "react";
-import Input from "./Input";
+import React from 'react';
+import Input from './Input';
 
 type SelectDropdownProps = {
   label: string;
@@ -10,6 +10,8 @@ type SelectDropdownProps = {
   selectClick: Function;
   padded?: boolean;
   required?: boolean;
+  expand?: boolean;
+  grow?: boolean;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 const SelectDropdown = ({
@@ -20,10 +22,11 @@ const SelectDropdown = ({
   value,
   label,
   padded,
-  required
+  required,
+  expand,
 }: SelectDropdownProps) => {
   return (
-    <div>
+    <>
       <Input
         padded={padded}
         value={value}
@@ -33,7 +36,9 @@ const SelectDropdown = ({
         placeHolder={label}
         list={`${label}-datalist`}
         required={required}
-      ></Input>
+        expand={expand}
+        grow
+      />
       <datalist id={`${label}-datalist`}>
         {options.map((item, index) => (
           <option
@@ -45,7 +50,7 @@ const SelectDropdown = ({
           />
         ))}
       </datalist>
-    </div>
+    </>
   );
 };
 

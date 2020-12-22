@@ -48,42 +48,49 @@ const StyledInput = styled.input`
 
 type InputProps = {
   placeHolder?: string;
+  label?: string;
   value?: string;
   name?: string;
   onChange: (e?: React.MouseEvent) => void;
   displayLabel?: boolean;
+  forceLabel?: boolean;
   expand?: boolean;
   error?: string;
   padded?: boolean;
   list?: string;
   required?: boolean;
+  grow?: boolean;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 const InputComponent = ({
   placeHolder,
+  label,
   onChange,
   value,
   name,
   displayLabel,
+  forceLabel,
   expand,
   error,
   padded,
   list,
   style,
   required,
+  grow,
   ...rest
 }: InputProps) => (
   <InputContainer
     style={{
       width: `${expand ? '100%' : 'unset'}`,
-      padding: `${padded ? '1rem' : 0}`,
+      padding: `${padded ? '1rem 8px' : 0}`,
+      flexGrow: grow ? 1 : 0,
       ...style,
     }}
   >
     {required && <Required style={{opacity: value ? 0 : 1}}></Required>}
-    {displayLabel && (
-      <label htmlFor={name} style={{opacity: `${value ? 1 : 0}`}}>
-        {placeHolder}
+    {(displayLabel || forceLabel) && (
+      <label htmlFor={name} style={{opacity: `${value || forceLabel ? 1 : 0}`}}>
+        {label ?? placeHolder}
       </label>
     )}
     <StyledInput

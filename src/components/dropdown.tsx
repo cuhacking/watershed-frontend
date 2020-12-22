@@ -23,7 +23,6 @@ const DropdownContainer = styled.div`
   display: flex;
   position: relative;
   min-width: 200px;
-  max-width: 284px;
   border: solid 1px var(${themeElement('--ikeaBlue', '--snow')});
   color: var(${themeElement('--white', '--spaceDark')});
   height: min-content;
@@ -101,6 +100,7 @@ interface DropdownProps {
   padded?: boolean;
   small?: boolean;
   required?: boolean;
+  grow?: boolean;
 }
 
 const Dropdown = ({
@@ -113,6 +113,7 @@ const Dropdown = ({
   padded,
   small,
   required,
+  grow,
 }: DropdownProps) => {
   const [open, setOpen] = useState(false);
   const [other, setOther] = useState('');
@@ -134,7 +135,13 @@ const Dropdown = ({
   useOuterClick(dropdownRef);
 
   return (
-    <div style={{position: 'relative', padding: `${padded ? '1rem' : 0}`}}>
+    <div
+      style={{
+        position: 'relative',
+        padding: `${padded ? '1rem' : 0}`,
+        flexGrow: grow ? 1 : 0,
+      }}
+    >
       {required && <Required style={{opacity: value ? 0 : 1}}></Required>}
       <DropdownContainer
         style={{minWidth: small ? `116px` : '200px'}}
@@ -144,9 +151,15 @@ const Dropdown = ({
         <LabelContainer onClick={() => setOpen(!open)}>
           <label>{value || label}</label>
           {open ? (
-            <IconUp alt="arrow up" src={globalTheme === 'dark' ? darkArrow : lightArrow} />
+            <IconUp
+              alt='arrow up'
+              src={globalTheme === 'dark' ? darkArrow : lightArrow}
+            />
           ) : (
-            <IconDown alt="arrow down" src={globalTheme === 'dark' ? darkArrow : lightArrow} />
+            <IconDown
+              alt='arrow down'
+              src={globalTheme === 'dark' ? darkArrow : lightArrow}
+            />
           )}
         </LabelContainer>
         {open && (
@@ -177,7 +190,7 @@ const Dropdown = ({
                   }}
                   type='text'
                   value={other}
-                  placeHolder='other'
+                  placeHolder='Other'
                   expand
                 ></Input>
               </li>

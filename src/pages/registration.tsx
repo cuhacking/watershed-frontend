@@ -1,8 +1,6 @@
 import React, {useReducer, useState} from 'react';
 import styled, {css} from 'styled-components';
 import {Desktop, Mobile} from '../shared/util';
-import darkDrop from '../assets/img/drop-dark.svg';
-import lightDrop from '../assets/img/drop-light.svg';
 import Input from '../components/Input';
 import Dropdown from '../components/dropdown';
 import {globalTheme, themeElement} from '../shared/theme';
@@ -12,35 +10,13 @@ import TextArea from '../components/TextArea';
 import SelectDropdown from '../components/SelectDropdown';
 import Dropzone from '../components/Dropzone';
 import AppButton from '../components/AppButton';
+import schools from '../schools.json';
+import countries from '../countries.json';
+import {Prompt} from 'react-router-dom';
+import {ModalLayout} from '../layouts';
+import {useAuth} from '../hooks';
 
-const RegistrationContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 2rem 4rem;
-  max-width: 100%;
-  min-width: 800px;
-  border-radius: 16px;
-  align-items: center;
-  background-color: var(${themeElement('--spaceGrey', '--white')});
-  margin: auto;
-  transition: box-shadow 300ms ease;
-  box-shadow: var(--hover);
-
-  h3,
-  p {
-    color: var(${themeElement('--snow', '--spaceGrey')});
-  }
-
-  @media (max-width: 768px) {
-    min-width: 0;
-    width: 100%;
-    padding: 0.75rem 0.75rem;
-    height: 100%;
-    justify-content: space-between;
-  }
-`;
-
-const ExperienceLabel = styled.label`
+const ExperienceLabel = styled.div`
   color: var(${themeElement('--snow', '--spaceGrey')});
 `;
 
@@ -49,7 +25,6 @@ const FormContainer = styled.section`
   flex-direction: column;
   align-items: center;
   padding: 1rem 0rem;
-  width: 85%;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -93,10 +68,6 @@ const InteractionsContainer = styled.div`
   width: 100%;
 `;
 
-const DropIcon = styled.img`
-  width: 2.5rem;
-`;
-
 const MarkersContainer = styled.div`
   position: absolute;
   left: calc(50% - 52px);
@@ -117,25 +88,31 @@ const markerStyle = css`
   }
 `;
 
-const StepMarker = styled.div`
-  ${markerStyle};
-  background-color: var(${themeElement('--spaceDark', '--snow')});
-`;
-
-const StepMarkerDone = styled.div`
-  ${markerStyle};
-  background-color: var(${themeElement('--snow', '--ikeaBlue')});
-`;
-
-const Container = styled.div`
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  background-color: var(${themeElement('--spaceDark', '--snow')});
-
-  @media (max-width: 768px) {
-    padding: 1rem;
+const BackButton = styled(AppButton)`
+  @media (min-width: 769px) {
+    margin-right: 196px;
   }
+`;
+
+const ForwardButton = styled(AppButton)`
+  @media (min-width: 769px) {
+    margin-left: 196px;
+  }
+`;
+
+const StepMarker = styled.div<{done?: boolean}>`
+  ${markerStyle};
+  transition: background-color 500ms cubic-bezier(0.33, 1, 0.68, 1);
+  background-color: var(${themeElement('--snow', '--ikeaBlue')});
+  background-color: ${({done}) =>
+    done && `var(${themeElement('--spaceDark', '--snow')})`};
+`;
+
+const FeedbackText = styled.div`
+  color: var(${themeElement('--snow', '--spaceGrey')});
+  max-width: 400px;
+  text-align: center;
+  flex-grow: 1;
 `;
 
 const LeftArrow = styled.img`
@@ -161,6 +138,8 @@ interface FileValue {
 interface UserForm {
   firstName: FormValue;
   lastName: FormValue;
+  email: FormValue;
+  country: FormValue;
   studyLevel: FormValue;
   pronouns: FormValue;
   school: FormValue;
@@ -176,29 +155,32 @@ interface UserForm {
   question1: FormValue;
   question2: FormValue;
   question3: FormValue;
+  feedback: FormValue;
 }
 
 const formValue: FormValue = {
   value: '',
   error: null,
-  required: false
+  required: false,
 };
 
 const formValueRequired: FormValue = {
   value: '',
   error: null,
-  required: true
+  required: true,
 };
 
 const fileValueRequired: FileValue = {
   value: null,
   error: null,
-  required: true
+  required: true,
 };
 
 const emptyForm: UserForm = {
   firstName: formValueRequired,
   lastName: formValueRequired,
+  email: formValueRequired,
+  country: formValueRequired,
   pronouns: formValue,
   studyLevel: formValueRequired,
   school: formValueRequired,
@@ -214,21 +196,22 @@ const emptyForm: UserForm = {
   question1: formValueRequired,
   question2: formValueRequired,
   question3: formValueRequired,
+  feedback: formValueRequired,
 };
 
 enum steps {
   personalInformation,
   education,
   experience,
-  additional,
   questions,
+  additional,
 }
 
 const formReducer = (state: UserForm, entry: string[]) => ({
   ...state,
   [entry[0]]: {
     ...state[entry[0] as keyof UserForm],
-    value: entry[1]
+    value: entry[1],
   },
 });
 
@@ -236,7 +219,7 @@ function Registration() {
   const [step, setStep] = useState(0);
   const [userForm, setInfo] = useReducer(formReducer, emptyForm);
   const SECTIONS = 5;
-  const finalStep = steps.questions;
+  const finalStep = steps.additional;
 
   const handleFormChange = (e: any) => {
     const name = e.target.name;
@@ -252,10 +235,28 @@ function Registration() {
     setInfo(['resume', file]);
   };
 
+  const auth = useAuth();
+  React.useEffect(() => {
+    setInfo(['email', auth.user?.email ?? '']);
+  }, []);
+
   const personalInformation = (
     <FormContainer>
       <h3>Personal information</h3>
       <Form>
+        <FormRow>
+          <Input
+            onChange={handleFormChange}
+            type='email'
+            name='email'
+            value={userForm.email.value}
+            placeHolder='Email' // TODO: Display user's default email
+            displayLabel
+            padded
+            required={userForm.email.required}
+            expand
+          />
+        </FormRow>
         <FormRow>
           <Input
             onChange={handleFormChange}
@@ -265,6 +266,7 @@ function Registration() {
             placeHolder='First name'
             displayLabel
             padded
+            grow
             required={userForm.firstName.required}
           ></Input>
           <Input
@@ -275,12 +277,13 @@ function Registration() {
             placeHolder='Last name'
             displayLabel
             padded
+            grow
             required={userForm.lastName.required}
           ></Input>
         </FormRow>
         <FormRow>
           <Dropdown
-            label='Pronouns'
+            label='Pronouns (Optional*)'
             name='pronouns'
             options={['He/Him', 'She/Her', 'They/Them']}
             enableOther
@@ -288,8 +291,23 @@ function Registration() {
             onClick={handleDropdownChange}
             padded
             required={userForm.pronouns.required}
-          ></Dropdown>
+            grow
+          />
+          <SelectDropdown
+            label='Country of Residence'
+            name='country'
+            options={countries as string[]}
+            value={userForm.country.value}
+            selectClick={handleDropdownChange}
+            onChange={handleFormChange}
+            padded
+            required={userForm.pronouns.required}
+            grow
+          />
         </FormRow>
+        <ExperienceLabel>
+          *If selected, this will be displayed on your public profile
+        </ExperienceLabel>
       </Form>
     </FormContainer>
   );
@@ -300,27 +318,35 @@ function Registration() {
       <Form>
         <FormRow>
           <Dropdown
-            label='Level of study'
+            label='Current Level of study'
             name='studyLevel'
-            options={['Middle School', 'High School', 'Bachelors', 'Masters', 'PhD', 'College']}
+            options={[
+              'Middle School',
+              'High School',
+              "Bachelor's",
+              "Master's",
+              'PhD',
+              'College',
+            ]}
             enableOther
             value={userForm.studyLevel.value}
             onClick={handleDropdownChange}
             padded
             required={userForm.studyLevel.required}
-          ></Dropdown>
+          />
         </FormRow>
         <FormRow>
           <SelectDropdown
             label='School'
             name='school'
-            options={['Carleton University', 'uOttawa']}
+            options={schools as string[]}
             value={userForm.school.value}
             selectClick={handleDropdownChange}
             onChange={handleFormChange}
             padded
             required={userForm.school.required}
-          ></SelectDropdown>
+            expand
+          />
         </FormRow>
         <FormRow>
           <Input
@@ -328,10 +354,11 @@ function Registration() {
             type='text'
             name='program'
             value={userForm.program.value}
-            placeHolder='Program of study'
+            placeHolder='Program (if applicable)'
             displayLabel
             padded
             required={userForm.program.required}
+            expand
           ></Input>
         </FormRow>
       </Form>
@@ -353,10 +380,10 @@ function Registration() {
             small
             required={userForm.hackathonNumber.required}
           ></Dropdown>
-          <ExperienceLabel>hackathons</ExperienceLabel>
+          <ExperienceLabel>previous hackathons,</ExperienceLabel>
         </FormRow>
         <FormRow style={{justifyContent: 'center'}}>
-          <ExperienceLabel>and</ExperienceLabel>
+          <ExperienceLabel>and in the past year I've been to</ExperienceLabel>
           <Dropdown
             name='eventsNumber'
             options={['0', '1 - 5', '6 - 10', '10 - 20', '20+']}
@@ -366,7 +393,7 @@ function Registration() {
             small
             required={userForm.eventsNumber.required}
           ></Dropdown>
-          <ExperienceLabel>other events in tech</ExperienceLabel>
+          <ExperienceLabel>online tech events.</ExperienceLabel>
         </FormRow>
         <FormRow>
           <Input
@@ -374,7 +401,7 @@ function Registration() {
             type='text'
             name='skills'
             value={userForm.skills.value}
-            placeHolder='List your skills (e.g. frontend, mobile, etc.)'
+            placeHolder='List some of your skills (e.g. frontend, mobile, etc.)'
             displayLabel
             padded
             expand
@@ -383,12 +410,13 @@ function Registration() {
         </FormRow>
         <FormRow>
           <Dropzone
+            name='resume'
             value={userForm.resume.value}
             padded
             expanded
             onUpload={handleResumeUpload}
             required={userForm.resume.required}
-          ></Dropzone>
+          />
         </FormRow>
       </Form>
     </FormContainer>
@@ -404,21 +432,27 @@ function Registration() {
             type='text'
             name='github'
             value={userForm.github.value}
-            placeHolder='GitHub'
-            displayLabel
+            label='Github Profile'
+            placeHolder='https://github.com/'
+            forceLabel
             padded
             required={userForm.github.required}
-          ></Input>
+            expand
+          />
+        </FormRow>
+        <FormRow>
           <Input
             onChange={handleFormChange}
             type='text'
             name='linkedin'
             value={userForm.linkedin.value}
-            placeHolder='LinkedIn'
-            displayLabel
+            label='Linkedin Page'
+            placeHolder='https://linkedin.com/'
+            forceLabel
             padded
             required={userForm.linkedin.required}
-          ></Input>
+            expand
+          />
         </FormRow>
         <FormRow>
           <Input
@@ -426,21 +460,30 @@ function Registration() {
             type='text'
             name='website'
             value={userForm.website.value}
-            placeHolder='Personal website'
-            displayLabel
+            label='Personal Website'
+            placeHolder='https://'
+            forceLabel
             padded
             required={userForm.website.required}
-          ></Input>
-          <Input
-            onChange={handleFormChange}
-            type='text'
-            name='other'
-            value={userForm.other.value}
-            placeHolder='Other'
-            displayLabel
+            expand
+          />
+        </FormRow>
+        <FormRow>
+          <FeedbackText>
+            After the event, we're looking to interview some hackers regarding
+            their experience. Would you be willing to participate?
+          </FeedbackText>
+        </FormRow>
+        <FormRow>
+          <Dropdown
+            name='feedback'
+            label='Select a response'
+            options={['Yes', 'No']}
+            required={userForm.feedback.required}
+            value={userForm.feedback.value}
+            onClick={handleDropdownChange}
             padded
-            required={userForm.other.required}
-          ></Input>
+          />
         </FormRow>
       </Form>
     </FormContainer>
@@ -448,7 +491,7 @@ function Registration() {
 
   const questions = (
     <FormContainer>
-      <h3>Tell us a little more yourself</h3>
+      <h3>About yourself</h3>
       <Form>
         <FormRow>
           <TextArea
@@ -470,7 +513,7 @@ function Registration() {
             type='text'
             name='question2'
             value={userForm.question2.value}
-            placeHolder='What are you passionate about? What are you interested in?'
+            placeHolder='Describe a passion of yours.'
             displayLabel
             padded
             style={{width: '100%'}}
@@ -484,7 +527,7 @@ function Registration() {
             type='text'
             name='question3'
             value={userForm.question3.value}
-            placeHolder="Describe a big milestone you've recently achieved"
+            placeHolder='Tell us about a recent accomplishment you are proud of.'
             displayLabel
             padded
             style={{width: '100%'}}
@@ -527,7 +570,7 @@ function Registration() {
 
   const actions = (
     <InteractionsContainer>
-      <AppButton
+      <BackButton
         aria-label={step === steps.personalInformation ? 'Cancel' : 'Back'}
         secondary
         onClick={() => previousStep()}
@@ -538,42 +581,33 @@ function Registration() {
         <Mobile>
           <LeftArrow alt='left arrow' src={darkArrow}></LeftArrow>
         </Mobile>
-      </AppButton>
+      </BackButton>
       <MarkersContainer>
-        {[...Array(SECTIONS)].map((_, index) =>
-          step < index ? (
-            <StepMarker key={index}></StepMarker>
-          ) : (
-            <StepMarkerDone key={index}></StepMarkerDone>
-          )
-        )}
+        {[...Array(SECTIONS)].map((_, index) => (
+          <StepMarker key={index} done={step < index}></StepMarker>
+        ))}
       </MarkersContainer>
-      <AppButton
-        aria-label={step === steps.questions ? 'Submit' : 'Continue'}
+      <ForwardButton
+        aria-label={step === steps.additional ? 'Submit' : 'Continue'}
         onClick={() => nextStep()}
       >
-        <Desktop>{step === steps.questions ? 'Submit' : 'Continue'}</Desktop>
+        <Desktop>{step === steps.additional ? 'Submit' : 'Continue'}</Desktop>
         <Mobile>
           <RightArrow
             alt='right arrow'
             src={globalTheme === 'dark' ? lightArrow : darkArrow}
           ></RightArrow>
         </Mobile>
-      </AppButton>
+      </ForwardButton>
     </InteractionsContainer>
   );
 
   return (
-    <Container>
-      <RegistrationContainer>
-        <DropIcon
-          src={globalTheme === 'dark' ? darkDrop : lightDrop}
-          alt='cuhacking icon'
-        />
-        {currentStep()}
-        {actions}
-      </RegistrationContainer>
-    </Container>
+    <ModalLayout>
+      <Prompt message='Are you sure you want to leave?' />
+      {currentStep()}
+      {actions}
+    </ModalLayout>
   );
 }
 
