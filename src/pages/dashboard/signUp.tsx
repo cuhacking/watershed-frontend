@@ -37,9 +37,12 @@ const SignUpButtons = styled.div`
 `;
 
 const buttonStyle = css`
-  display: inline-block;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
 
   padding: 8px 16px;
+  min-width: 215px;
 
   border: none;
   border-radius: calc(0.5em + 8px);
