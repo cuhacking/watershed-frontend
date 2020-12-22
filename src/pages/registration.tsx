@@ -404,12 +404,13 @@ function Registration() {
         </FormRow>
         <FormRow>
           <Dropzone
+            name='resume'
             value={userForm.resume.value}
             padded
             expanded
             onUpload={handleResumeUpload}
             required={userForm.resume.required}
-          ></Dropzone>
+          />
         </FormRow>
       </Form>
     </FormContainer>
