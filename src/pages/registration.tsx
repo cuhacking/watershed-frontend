@@ -14,6 +14,7 @@ import schools from '../schools.json';
 import countries from '../countries.json';
 import {Prompt} from 'react-router-dom';
 import {ModalLayout} from '../layouts';
+import {useAuth} from '../hooks';
 
 const ExperienceLabel = styled.div`
   color: var(${themeElement('--snow', '--spaceGrey')});
@@ -233,6 +234,11 @@ function Registration() {
   const handleResumeUpload = (file: string) => {
     setInfo(['resume', file]);
   };
+
+  const auth = useAuth();
+  React.useEffect(() => {
+    setInfo(['email', auth.user?.email ?? '']);
+  }, []);
 
   const personalInformation = (
     <FormContainer>
