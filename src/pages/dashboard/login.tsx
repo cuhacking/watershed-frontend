@@ -3,7 +3,7 @@ import {Helmet} from 'react-helmet';
 import styled from 'styled-components';
 import {Link, useHistory} from 'react-router-dom';
 import {ModalLayout} from '../../layouts';
-import {Input} from '../../components';
+import {Input, LoadingSymbol} from '../../components';
 import {useAuth} from '../../hooks';
 
 const LoginForm = styled.form``;
@@ -25,6 +25,7 @@ const OptionButton = styled(Link)``;
 export default () => {
   const history = useHistory();
   const {signIn} = useAuth();
+  const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -40,14 +41,18 @@ export default () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
     setError(null);
 
     switch (await signIn(email, password)) {
       case 'ok':
+        setLoading(false);
         return history.replace('/dashboard');
       case 'expected-failure':
+        setLoading(false);
         return setError('Your email or password is incorrect.');
       case 'error':
+        setLoading(false);
         return setError('Something went wrong, please try again later.');
     }
   };
@@ -81,7 +86,11 @@ export default () => {
           required={true}
         />
         <ErrorMessage visible={error !== null}>{error ?? 'sas'}</ErrorMessage>
-        <SubmitButton type='submit'>Log In</SubmitButton>
+        {isLoading ? (
+          <LoadingSymbol />
+        ) : (
+          <SubmitButton type='submit'>Log In</SubmitButton>
+        )}
       </LoginForm>
       {/* <DiscordButton>Sign in with Discord</DiscordButton> */}
       <OptionButtons>

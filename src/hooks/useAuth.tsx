@@ -25,7 +25,7 @@ type AuthObject = {
 };
 
 const useProvideAuth = (): AuthObject => {
-  const [isInitiallyLoading, setLoading] = useState(false);
+  const [isInitiallyLoading, setLoading] = useState(true);
   const [accessToken, setToken] = useState<AccessTokenObject | null>(null);
   const [user, setUser] = useState<UserObject | null>(null);
 
@@ -117,8 +117,6 @@ const useProvideAuth = (): AuthObject => {
   };
 
   useEffect(() => {
-    setLoading(true);
-
     const refreshToken = Cookies.get('refreshToken');
 
     if (!refreshToken) {
