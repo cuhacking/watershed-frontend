@@ -59,6 +59,7 @@ type InputProps = {
   padded?: boolean;
   list?: string;
   required?: boolean;
+  grow?: boolean;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 const InputComponent = ({
@@ -75,12 +76,14 @@ const InputComponent = ({
   list,
   style,
   required,
+  grow,
   ...rest
 }: InputProps) => (
   <InputContainer
     style={{
       width: `${expand ? '100%' : 'unset'}`,
       padding: `${padded ? '1rem' : 0}`,
+      flexGrow: grow ? 1 : 0,
       ...style,
     }}
   >

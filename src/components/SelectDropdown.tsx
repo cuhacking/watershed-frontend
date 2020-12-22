@@ -11,6 +11,7 @@ type SelectDropdownProps = {
   padded?: boolean;
   required?: boolean;
   expand?: boolean;
+  grow?: boolean;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 const SelectDropdown = ({
@@ -35,8 +36,9 @@ const SelectDropdown = ({
         placeHolder={label}
         list={`${label}-datalist`}
         required={required}
-        expand
-      ></Input>
+        expand={expand}
+        grow
+      />
       <datalist id={`${label}-datalist`}>
         {options.map((item, index) => (
           <option

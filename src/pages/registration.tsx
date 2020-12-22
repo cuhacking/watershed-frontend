@@ -13,6 +13,8 @@ import SelectDropdown from '../components/SelectDropdown';
 import Dropzone from '../components/Dropzone';
 import AppButton from '../components/AppButton';
 import schools from '../schools.json';
+import countries from '../countries.json';
+import { Prompt } from 'react-router-dom';
 
 const RegistrationContainer = styled.div`
   display: flex;
@@ -121,9 +123,9 @@ const markerStyle = css`
 const StepMarker = styled.div<{done?: boolean}>`
   ${markerStyle};
   transition: background-color 500ms cubic-bezier(0.33, 1, 0.68, 1);
-  background-color: var(${themeElement('--spaceDark', '--snow')});
+  background-color: var(${themeElement('--snow', '--ikeaBlue')});
   background-color: ${({done}) =>
-    done && `var(${themeElement('--snow', '--ikeaBlue')})`};
+    done && `var(${themeElement('--spaceDark', '--snow')})`};
 `;
 
 const Container = styled.div`
@@ -135,6 +137,12 @@ const Container = styled.div`
   @media (max-width: 768px) {
     padding: 1rem;
   }
+`;
+
+const FeedbackText = styled.div`
+  color: var(${themeElement('--snow', '--spaceGrey')});
+  max-width: 400px;
+  text-align: center;
 `;
 
 const LeftArrow = styled.img`
@@ -161,6 +169,7 @@ interface UserForm {
   firstName: FormValue;
   lastName: FormValue;
   email: FormValue;
+  country: FormValue;
   studyLevel: FormValue;
   pronouns: FormValue;
   school: FormValue;
@@ -176,6 +185,7 @@ interface UserForm {
   question1: FormValue;
   question2: FormValue;
   question3: FormValue;
+  feedback: FormValue;
 }
 
 const formValue: FormValue = {
@@ -200,6 +210,7 @@ const emptyForm: UserForm = {
   firstName: formValueRequired,
   lastName: formValueRequired,
   email: formValueRequired,
+  country: formValueRequired,
   pronouns: formValue,
   studyLevel: formValueRequired,
   school: formValueRequired,
@@ -215,6 +226,7 @@ const emptyForm: UserForm = {
   question1: formValueRequired,
   question2: formValueRequired,
   question3: formValueRequired,
+  feedback: formValueRequired,
 };
 
 enum steps {
@@ -279,6 +291,7 @@ function Registration() {
             placeHolder='First name'
             displayLabel
             padded
+            grow
             required={userForm.firstName.required}
           ></Input>
           <Input
@@ -289,6 +302,7 @@ function Registration() {
             placeHolder='Last name'
             displayLabel
             padded
+            grow
             required={userForm.lastName.required}
           ></Input>
         </FormRow>
@@ -302,6 +316,18 @@ function Registration() {
             onClick={handleDropdownChange}
             padded
             required={userForm.pronouns.required}
+            grow
+          />
+          <SelectDropdown
+            label='Country of Residence'
+            name='country'
+            options={countries as string[]}
+            value={userForm.country.value}
+            selectClick={handleDropdownChange}
+            onChange={handleFormChange}
+            padded
+            required={userForm.pronouns.required}
+            grow
           />
           <ExperienceLabel>
             *If selected, this will be displayed on your public profile
@@ -466,13 +492,28 @@ function Registration() {
             expand
           />
         </FormRow>
+        <FormRow>
+          <FeedbackText>
+            After the event, we're looking to interview some hackers regarding
+            their experience. Would you be willing to participate?
+          </FeedbackText>
+          <Dropdown
+            name='feedback'
+            label=''
+            options={['Yes', 'No']}
+            required={userForm.feedback.required}
+            value={userForm.feedback.value}
+            onClick={handleDropdownChange}
+            padded
+          />
+        </FormRow>
       </Form>
     </FormContainer>
   );
 
   const questions = (
     <FormContainer>
-      <h3>Tell us a little more yourself</h3>
+      <h3>About yourself</h3>
       <Form>
         <FormRow>
           <TextArea
@@ -494,7 +535,7 @@ function Registration() {
             type='text'
             name='question2'
             value={userForm.question2.value}
-            placeHolder='What are you passionate about? What are you interested in?'
+            placeHolder='Describe a passion of yours.'
             displayLabel
             padded
             style={{width: '100%'}}
@@ -508,7 +549,7 @@ function Registration() {
             type='text'
             name='question3'
             value={userForm.question3.value}
-            placeHolder="Describe a big milestone you've recently achieved"
+            placeHolder='Tell us about a recent accomplishment you are proud of.'
             displayLabel
             padded
             style={{width: '100%'}}
@@ -585,6 +626,7 @@ function Registration() {
 
   return (
     <Container>
+      <Prompt message="Are you sure you want to leave?"/>
       <RegistrationContainer>
         <DropIcon
           src={globalTheme === 'dark' ? darkDrop : lightDrop}
