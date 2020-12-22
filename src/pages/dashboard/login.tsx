@@ -1,36 +1,95 @@
 import React, {useState} from 'react';
 import {Helmet} from 'react-helmet';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import {Link, useHistory} from 'react-router-dom';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faDiscord, faGithub} from '@fortawesome/free-brands-svg-icons';
 import {ModalLayout} from '../../layouts';
 import {Input, LoadingSymbol} from '../../components';
 import {useAuth} from '../../hooks';
 
-const LoginForm = styled.form``;
+const LoginForm = styled.form`
+  padding-top: 16px;
+`;
 
 const ErrorMessage = styled.p<{visible: boolean}>`
   color: var(--wineDark);
-
+  font-size: 0.8em;
+  margin-top: 0;
   opacity: ${({visible}) => (visible ? 1 : 0)};
 `;
 
-const SubmitButton = styled.button``;
-
 const OAuthButtons = styled.div`
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 8px 0;
+
+  & > * {
+    margin: 8px 0;
+  }
+`;
+
+const buttonStyle = css`
+  display: inline-block;
+
+  padding: 8px 16px;
+
+  border: none;
+  border-radius: calc(0.5em + 8px);
+
+  font-size: 1em;
+  font-family: var(--secondary-font);
+
+  transition: box-shadow, 300ms ease, background-color 300ms ease,
+    color 300ms ease;
+
+  svg {
+    margin-right: 8px;
+  }
+
+  @media only screen and (min-width: 700px) {
+    &:hover {
+      box-shadow: var(--hover);
+      background-color: var(--spaceDark);
+    }
+  }
+`;
+
+const LoginButton = styled.button`
+  ${buttonStyle}
+
+  background-color :var(--snow);
+
+  @media only screen and (min-width: 700px) {
+    &:hover {
+      cursor: pointer;
+      color: var(--snow);
+    }
+  }
 `;
 
 const DiscordButton = styled.a`
-  display: block;
+  ${buttonStyle}
+  background-color: #738adb;
 `;
 
 const GitHubButton = styled.a`
-  display: block;
+  ${buttonStyle}
+  background-color: #171515;
 `;
 
-const OptionButtons = styled.div``;
+const OptionButtons = styled.div`
+  margin-top: 24px;
+`;
 
-const OptionButton = styled(Link)``;
+const OptionButton = styled(Link)`
+  @media only screen and (min-width: 700px) {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
 
 export default () => {
   const history = useHistory();
@@ -94,20 +153,26 @@ export default () => {
           padded
           required={true}
         />
-        <ErrorMessage visible={error !== null}>{error ?? 'sas'}</ErrorMessage>
         {isLoading ? (
           <LoadingSymbol />
         ) : (
-          <SubmitButton type='submit'>Log In</SubmitButton>
+          <>
+            <ErrorMessage visible={error !== null}>{error ?? '_'}</ErrorMessage>
+            <LoginButton type='submit'>Log In</LoginButton>
+          </>
         )}
       </LoginForm>
       <OAuthButtons>
         <strong>OR</strong>
         <DiscordButton href='/api/auth/discord'>
+          <FontAwesomeIcon icon={faDiscord} />
           Sign in with Discord
         </DiscordButton>
-        <GitHubButton href='/api/auth/github'>Sign in with GitHub</GitHubButton>
-      </OAuthButtons>{' '}
+        <GitHubButton href='/api/auth/github'>
+          <FontAwesomeIcon icon={faGithub} />
+          Sign in with GitHub
+        </GitHubButton>
+      </OAuthButtons>
       <OptionButtons>
         <OptionButton to='/dashboard/sign-up'>
           I don't have an account.
