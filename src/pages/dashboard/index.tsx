@@ -1,8 +1,17 @@
 import React from 'react';
 import {Helmet} from 'react-helmet';
-import {Route, Switch, useRouteMatch} from 'react-router-dom';
+import {
+  Redirect,
+  Route,
+  RouteProps,
+  Switch,
+  useRouteMatch,
+} from 'react-router-dom';
 
+import {ProvideAuth, useAuth} from '../../hooks';
 import Login from './login';
+import SignUp from './signUp';
+import Home from './home';
 
 export default () => {
   const {path, url} = useRouteMatch();
@@ -10,9 +19,67 @@ export default () => {
   return (
     <>
       <Helmet titleTemplate={`%s — cuHacking 2021 Dashboard`} />
-      <Switch>
-        <Route path={`${path}/login`} component={Login} />
-      </Switch>
+      <ProvideAuth>
+        <Switch>
+          <PrivateRoute path={`${path}/`} exact>
+            <Home />
+          </PrivateRoute>
+          <UnprivateRoute path={`${path}/login`}>
+            <Login />
+          </UnprivateRoute>
+          <UnprivateRoute path={`${path}/sign-up`}>
+            <SignUp />
+          </UnprivateRoute>
+        </Switch>
+      </ProvideAuth>
     </>
+  );
+};
+
+const PrivateRoute = ({children, ...rest}: RouteProps) => {
+  const {user} = useAuth();
+
+  console.log(user);
+  return (
+    <Route
+      {...rest}
+      render={({location}: any) => {
+        if (user === null) {
+          return (
+            <Redirect
+              to={{
+                pathname: '/dashboard/login',
+                state: {from: location},
+              }}
+            />
+          );
+        }
+
+        return children;
+      }}
+    />
+  );
+};
+
+const UnprivateRoute = ({children, ...rest}: RouteProps) => {
+  const {user} = useAuth();
+
+  return (
+    <Route
+      {...rest}
+      render={() => {
+        if (user !== null) {
+          return (
+            <Redirect
+              to={{
+                pathname: '/dashboard',
+              }}
+            />
+          );
+        }
+
+        return children;
+      }}
+    />
   );
 };
