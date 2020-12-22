@@ -48,10 +48,12 @@ const StyledInput = styled.input`
 
 type InputProps = {
   placeHolder?: string;
+  label?: string;
   value?: string;
   name?: string;
   onChange: (e?: React.MouseEvent) => void;
   displayLabel?: boolean;
+  forceLabel?: boolean;
   expand?: boolean;
   error?: string;
   padded?: boolean;
@@ -61,10 +63,12 @@ type InputProps = {
 
 const InputComponent = ({
   placeHolder,
+  label,
   onChange,
   value,
   name,
   displayLabel,
+  forceLabel,
   expand,
   error,
   padded,
@@ -81,9 +85,9 @@ const InputComponent = ({
     }}
   >
     {required && <Required style={{opacity: value ? 0 : 1}}></Required>}
-    {displayLabel && (
-      <label htmlFor={name} style={{opacity: `${value ? 1 : 0}`}}>
-        {placeHolder}
+    {(displayLabel || forceLabel) && (
+      <label htmlFor={name} style={{opacity: `${value || forceLabel ? 1 : 0}`}}>
+        {label ?? placeHolder}
       </label>
     )}
     <StyledInput

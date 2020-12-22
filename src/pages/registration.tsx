@@ -12,6 +12,7 @@ import TextArea from '../components/TextArea';
 import SelectDropdown from '../components/SelectDropdown';
 import Dropzone from '../components/Dropzone';
 import AppButton from '../components/AppButton';
+import schools from '../schools.json';
 
 const RegistrationContainer = styled.div`
   display: flex;
@@ -117,14 +118,12 @@ const markerStyle = css`
   }
 `;
 
-const StepMarker = styled.div`
+const StepMarker = styled.div<{done?: boolean}>`
   ${markerStyle};
+  transition: background-color 500ms cubic-bezier(0.33, 1, 0.68, 1);
   background-color: var(${themeElement('--spaceDark', '--snow')});
-`;
-
-const StepMarkerDone = styled.div`
-  ${markerStyle};
-  background-color: var(${themeElement('--snow', '--ikeaBlue')});
+  background-color: ${({done}) =>
+    done && `var(${themeElement('--snow', '--ikeaBlue')})`};
 `;
 
 const Container = styled.div`
@@ -161,6 +160,7 @@ interface FileValue {
 interface UserForm {
   firstName: FormValue;
   lastName: FormValue;
+  email: FormValue;
   studyLevel: FormValue;
   pronouns: FormValue;
   school: FormValue;
@@ -181,24 +181,25 @@ interface UserForm {
 const formValue: FormValue = {
   value: '',
   error: null,
-  required: false
+  required: false,
 };
 
 const formValueRequired: FormValue = {
   value: '',
   error: null,
-  required: true
+  required: true,
 };
 
 const fileValueRequired: FileValue = {
   value: null,
   error: null,
-  required: true
+  required: true,
 };
 
 const emptyForm: UserForm = {
   firstName: formValueRequired,
   lastName: formValueRequired,
+  email: formValueRequired,
   pronouns: formValue,
   studyLevel: formValueRequired,
   school: formValueRequired,
@@ -220,15 +221,15 @@ enum steps {
   personalInformation,
   education,
   experience,
-  additional,
   questions,
+  additional,
 }
 
 const formReducer = (state: UserForm, entry: string[]) => ({
   ...state,
   [entry[0]]: {
     ...state[entry[0] as keyof UserForm],
-    value: entry[1]
+    value: entry[1],
   },
 });
 
@@ -236,7 +237,7 @@ function Registration() {
   const [step, setStep] = useState(0);
   const [userForm, setInfo] = useReducer(formReducer, emptyForm);
   const SECTIONS = 5;
-  const finalStep = steps.questions;
+  const finalStep = steps.additional;
 
   const handleFormChange = (e: any) => {
     const name = e.target.name;
@@ -256,6 +257,19 @@ function Registration() {
     <FormContainer>
       <h3>Personal information</h3>
       <Form>
+        <FormRow>
+          <Input
+            onChange={handleFormChange}
+            type='email'
+            name='email'
+            value={userForm.email.value}
+            placeHolder='Email' // TODO: Display user's default email
+            displayLabel
+            padded
+            required={userForm.email.required}
+            expand
+          />
+        </FormRow>
         <FormRow>
           <Input
             onChange={handleFormChange}
@@ -280,7 +294,7 @@ function Registration() {
         </FormRow>
         <FormRow>
           <Dropdown
-            label='Pronouns'
+            label='Pronouns (Optional*)'
             name='pronouns'
             options={['He/Him', 'She/Her', 'They/Them']}
             enableOther
@@ -288,7 +302,10 @@ function Registration() {
             onClick={handleDropdownChange}
             padded
             required={userForm.pronouns.required}
-          ></Dropdown>
+          />
+          <ExperienceLabel>
+            *If selected, this will be displayed on your public profile
+          </ExperienceLabel>
         </FormRow>
       </Form>
     </FormContainer>
@@ -300,27 +317,35 @@ function Registration() {
       <Form>
         <FormRow>
           <Dropdown
-            label='Level of study'
+            label='Current Level of study'
             name='studyLevel'
-            options={['Middle School', 'High School', 'Bachelors', 'Masters', 'PhD', 'College']}
+            options={[
+              'Middle School',
+              'High School',
+              "Bachelor's",
+              "Master's",
+              'PhD',
+              'College',
+            ]}
             enableOther
             value={userForm.studyLevel.value}
             onClick={handleDropdownChange}
             padded
             required={userForm.studyLevel.required}
-          ></Dropdown>
+          />
         </FormRow>
         <FormRow>
           <SelectDropdown
             label='School'
             name='school'
-            options={['Carleton University', 'uOttawa']}
+            options={schools as string[]}
             value={userForm.school.value}
             selectClick={handleDropdownChange}
             onChange={handleFormChange}
             padded
             required={userForm.school.required}
-          ></SelectDropdown>
+            expand
+          />
         </FormRow>
         <FormRow>
           <Input
@@ -328,10 +353,11 @@ function Registration() {
             type='text'
             name='program'
             value={userForm.program.value}
-            placeHolder='Program of study'
+            placeHolder='Program (if applicable)'
             displayLabel
             padded
             required={userForm.program.required}
+            expand
           ></Input>
         </FormRow>
       </Form>
@@ -374,7 +400,7 @@ function Registration() {
             type='text'
             name='skills'
             value={userForm.skills.value}
-            placeHolder='List your skills (e.g. frontend, mobile, etc.)'
+            placeHolder='List some of your skills (e.g. frontend, mobile, etc.)'
             displayLabel
             padded
             expand
@@ -404,21 +430,27 @@ function Registration() {
             type='text'
             name='github'
             value={userForm.github.value}
-            placeHolder='GitHub'
-            displayLabel
+            label='Github Profile'
+            placeHolder='https://github.com/'
+            forceLabel
             padded
             required={userForm.github.required}
-          ></Input>
+            expand
+          />
+        </FormRow>
+        <FormRow>
           <Input
             onChange={handleFormChange}
             type='text'
             name='linkedin'
             value={userForm.linkedin.value}
-            placeHolder='LinkedIn'
-            displayLabel
+            label='Linkedin Page'
+            placeHolder='https://linkedin.com/'
+            forceLabel
             padded
             required={userForm.linkedin.required}
-          ></Input>
+            expand
+          />
         </FormRow>
         <FormRow>
           <Input
@@ -426,21 +458,13 @@ function Registration() {
             type='text'
             name='website'
             value={userForm.website.value}
-            placeHolder='Personal website'
-            displayLabel
+            label='Personal Website'
+            placeHolder='https://'
+            forceLabel
             padded
             required={userForm.website.required}
-          ></Input>
-          <Input
-            onChange={handleFormChange}
-            type='text'
-            name='other'
-            value={userForm.other.value}
-            placeHolder='Other'
-            displayLabel
-            padded
-            required={userForm.other.required}
-          ></Input>
+            expand
+          />
         </FormRow>
       </Form>
     </FormContainer>
@@ -540,19 +564,15 @@ function Registration() {
         </Mobile>
       </AppButton>
       <MarkersContainer>
-        {[...Array(SECTIONS)].map((_, index) =>
-          step < index ? (
-            <StepMarker key={index}></StepMarker>
-          ) : (
-            <StepMarkerDone key={index}></StepMarkerDone>
-          )
-        )}
+        {[...Array(SECTIONS)].map((_, index) => (
+          <StepMarker key={index} done={step < index}></StepMarker>
+        ))}
       </MarkersContainer>
       <AppButton
-        aria-label={step === steps.questions ? 'Submit' : 'Continue'}
+        aria-label={step === steps.additional ? 'Submit' : 'Continue'}
         onClick={() => nextStep()}
       >
-        <Desktop>{step === steps.questions ? 'Submit' : 'Continue'}</Desktop>
+        <Desktop>{step === steps.additional ? 'Submit' : 'Continue'}</Desktop>
         <Mobile>
           <RightArrow
             alt='right arrow'

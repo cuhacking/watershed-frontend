@@ -177,7 +177,7 @@ const Dropdown = ({
                   }}
                   type='text'
                   value={other}
-                  placeHolder='other'
+                  placeHolder='Other'
                   expand
                 ></Input>
               </li>
