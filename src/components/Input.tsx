@@ -56,7 +56,7 @@ type InputProps = {
   error?: string;
   padded?: boolean;
   list?: string;
-  required?:boolean
+  required?: boolean;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 const InputComponent = ({
@@ -71,6 +71,7 @@ const InputComponent = ({
   list,
   style,
   required,
+  ...rest
 }: InputProps) => (
   <InputContainer
     style={{
@@ -92,6 +93,7 @@ const InputComponent = ({
       value={value}
       placeholder={placeHolder}
       name={name}
+      {...rest}
     ></StyledInput>
     {error && <p>{error}</p>}
   </InputContainer>
