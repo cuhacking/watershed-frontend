@@ -1,9 +1,8 @@
+import {useAuth} from '../hooks';
 import {UserForm} from '../pages/registration';
 
-const CUHACKING_URL = 'https://dev.cuhacking.com/';
-
 export const registerUser = async (registrationForm: UserForm) => {
-  const registrationInfo = ({
+  const filterInto = ({
     firstName,
     lastName,
     pronouns,
@@ -15,7 +14,12 @@ export const registerUser = async (registrationForm: UserForm) => {
     question3,
     hackathonNumber,
     website,
+    github,
+    linkedin,
     resume,
+    country,
+    feedback,
+    skills,
   }: UserForm) => ({
     completed: true,
     firstName: firstName.value,
@@ -28,14 +32,36 @@ export const registerUser = async (registrationForm: UserForm) => {
     shortAnswer2: question2.value,
     shortAnswer3: question3.value,
     numHackathongs: hackathonNumber.value,
-    personalSiteUrl: website.value,
-    resumeName: resume.value,
+    website: website.value,
+    github: github.value,
+    linkedin: linkedin.value,
+    skills: skills.value,
+    country: country.value,
+    willingToInterview: feedback.value,
   });
+  const registrationRequestBody = filterInto(registrationForm);
+
+  const payload = new FormData();
+  payload.append('body', JSON.stringify(registrationRequestBody));
+  if (registrationForm.resume.value) {
+    payload.append(
+      'resume',
+      registrationForm.resume.value,
+      registrationForm.resume.value?.name
+    );
+  }
+
+  const accessToken =
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZCI6IjEzZDc4MTMzLTNlMWYtNDBmNy1hODI3LTUwNmMxMGUyZjY2MCIsImlzc3VlRGF0ZSI6MTYwODY3MzQ2OTUyMCwiZXhwaXJ5RGF0ZSI6MTYwODY3NTI2OTUyMH0.3BcQRvvDpXUZP7rcGRK6HwcJRzn9C9kJZl_QE8btDmJkwlJVde9UMaZ2mXv6hcPvMTbUKF_4Ky-Pq8bA5gBnHA';
 
   return new Promise((resolve) => {
-    fetch(`${CUHACKING_URL}/application`, {
+    fetch(`/api/application`, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${accessToken}`,
+      },
       method: 'POST',
-      body: JSON.stringify(registrationInfo),
+      body: payload,
     }).then((res) => {
       resolve(res.json());
     });

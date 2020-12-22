@@ -15,6 +15,7 @@ import countries from '../countries.json';
 import {Prompt} from 'react-router-dom';
 import {ModalLayout} from '../layouts';
 import {useAuth} from '../hooks';
+import { registerUser } from '../services/cuhacking.service';
 
 const ExperienceLabel = styled.div`
   color: var(${themeElement('--snow', '--spaceGrey')});
@@ -113,12 +114,6 @@ const FeedbackText = styled.div`
   max-width: 400px;
   text-align: center;
   flex-grow: 1;
-`;
-
-const FeedbackText = styled.div`
-  color: var(${themeElement('--snow', '--spaceGrey')});
-  max-width: 400px;
-  text-align: center;
 `;
 
 const LeftArrow = styled.img`
@@ -569,6 +564,7 @@ function Registration() {
     if (step === finalStep) {
       console.log('verify the form');
       console.log('send request to API');
+      registerUser(userForm);
       return;
     }
     setStep(step + 1);
