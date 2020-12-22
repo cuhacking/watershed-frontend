@@ -115,6 +115,12 @@ const FeedbackText = styled.div`
   flex-grow: 1;
 `;
 
+const FeedbackText = styled.div`
+  color: var(${themeElement('--snow', '--spaceGrey')});
+  max-width: 400px;
+  text-align: center;
+`;
+
 const LeftArrow = styled.img`
   transform: rotate(90deg);
 `;
