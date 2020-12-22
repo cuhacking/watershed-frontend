@@ -4,85 +4,125 @@ import Cookies from 'js-cookie';
 interface UserObject {
   uuid: string;
   email: string;
-  firstName: string;
-  lastName: string;
   role: number;
-  githubId: string;
-  discordId: string;
+  githubId: string | null;
+  discordId: string | null;
 }
 
-interface TokensObject {
-  accessToken: string;
-  refreshToken: string;
+interface AccessTokenObject {
+  token: string;
   expiryDate: Date;
 }
 
 type AuthObject = {
-  tokens: TokensObject;
+  isInitiallyLoading: boolean;
   user: UserObject | null;
   signIn: (email: string, password: string) => Promise<boolean | Error>;
   signUp: (email: string, password: string) => Promise<boolean | Error>;
 };
 
-const useProvideAuth = () => {
-  const [isLoading, setLoading] = useState(false);
-  const [tokens, setTokens] = useState<TokensObject | null>(null);
+const useProvideAuth = (): AuthObject => {
+  const [isInitiallyLoading, setLoading] = useState(false);
+  const [accessToken, setToken] = useState<AccessTokenObject | null>(null);
   const [user, setUser] = useState<UserObject | null>(null);
 
-  // useEffect(() => {
-  //   setLoading(true)
+  // Helper methods
+  const getUserInfoHelper = async (token: string) => {
+    //TODO: should I do a try/catch here?
+    const userResponse = await fetch('/api/user/me', {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-  //   const refreshToken = Cookies.get('refreshToken')
+    switch (userResponse.status) {
+      case 200:
+        const _userInfo = await userResponse.json();
 
-  //   if (!refreshToken) {
-  //     setLoading(false)
-  //     return;
-  //   }
+        setUser({
+          uuid: _userInfo.uuid,
+          email: _userInfo.email,
+          role: _userInfo.role,
+          githubId: _userInfo.githubId,
+          discordId: _userInfo.discordId,
+        });
+        return true;
+      case 401:
+        return false; // TODO: sign in again
+      default:
+        return false; // TODO: return a better error
+    }
+  };
 
-  //   const getAccessToken = async () => {
-  //     try {
-  //       const response = await fetch('https://dev.cuhacking.com/api/auth/refresh', {
-  //         method: 'POST',
-  //         mode:'cors',
-  //         body: JSON.stringify({
-  //           refreshToken
-  //         })
-  //       })
+  useEffect(() => {
+    setLoading(true);
 
-  //       switch (response.status) {
-  //         case 401:
-  //           setLoading(false)
-  //           return; //TODO: something better, I think?
-  //         case 200:
+    const refreshToken = Cookies.get('refreshToken');
 
-  //         default:
-  //       }
+    if (!refreshToken) {
+      setLoading(false);
+      return;
+    }
 
-  //       if (response.status === 401) {
-  //       }
-
-  //     }
-  //   }
-
-  // }, [])
-
-  const signIn = async (email: string, password: string) => {
-    try {
-      //TODO: use env variables
-      const tokenResponse = await fetch(
-        'https://dev.cuhacking.com/api/auth/login',
-        {
+    const getAccessToken = async () => {
+      try {
+        const accessTokenResponse = await fetch('/api/auth/refresh', {
           method: 'POST',
           mode: 'cors',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            email,
-            password,
+            token: refreshToken,
           }),
+        });
+
+        switch (accessTokenResponse.status) {
+          case 200:
+            break;
+          case 401:
+            setLoading(false);
+            Cookies.remove('refreshToken');
+            return false;
+          default:
+            setLoading(false);
+            return false; //TODO: somehow let upstack know that this is different than a 401
         }
-      );
+
+        const {accessToken: _accessToken} = await accessTokenResponse.json();
+
+        setToken({
+          token: _accessToken.token,
+          expiryDate: new Date(_accessToken.expiryDate),
+        });
+
+        return await getUserInfoHelper(_accessToken.token);
+      } catch (error) {
+        console.log('Uh oh!');
+        console.error(error);
+        // return new Error('unexpected-error');
+      }
+    };
+
+    getAccessToken();
+  }, []);
+
+  const signIn = async (email: string, password: string) => {
+    try {
+      //TODO: use env variables
+      const tokenResponse = await fetch('/api/auth/login', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
       switch (tokenResponse.status) {
         case 200:
@@ -95,37 +135,13 @@ const useProvideAuth = () => {
 
       const _tokens = await tokenResponse.json();
 
-      const userResponse = await fetch(
-        'https://dev.cuhacking.com/api/user/me',
-        {
-          method: 'GET',
-          mode: 'cors',
-          headers: {
-            Authorization: `Bearer ${_tokens.accessToken.token}`,
-          },
-        }
-      );
+      Cookies.set('refreshToken', _tokens.refreshToken.token);
+      setToken({
+        token: _tokens.refreshToken.token,
+        expiryDate: new Date(_tokens.refreshToken.expiryDate),
+      });
 
-      switch (userResponse.status) {
-        case 200:
-          Cookies.set('refreshToken', _tokens.refreshToken.token);
-
-          setTokens({
-            accessToken: _tokens.accessToken.token,
-            refreshToken: _tokens.refreshToken.token,
-            expiryDate: new Date(_tokens.accessToken.expiryDate),
-          });
-
-          const _userInfo = await userResponse.json();
-          setUser({
-            ..._userInfo,
-          });
-          return true;
-        case 401:
-          return false;
-        default:
-          return false; // TODO: return a better error
-      }
+      return await getUserInfoHelper(_tokens.accessToken.token);
     } catch (error) {
       console.error(error);
       return new Error('unexpected-error');
@@ -134,8 +150,7 @@ const useProvideAuth = () => {
 
   const signUp = async (email: string, password: string) => {
     try {
-      console.log(email, password);
-      const response = await fetch('https://dev.cuhacking.com/api/user', {
+      const tokenResponse = await fetch('/api/user', {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -147,24 +162,25 @@ const useProvideAuth = () => {
         }),
       });
 
-      switch (response.status) {
+      switch (tokenResponse.status) {
         case 201:
-          const _tokens = await response.json();
-          Cookies.set('refreshToken', _tokens.refreshToken.token);
-
-          setTokens({
-            accessToken: _tokens.accessToken.token,
-            refreshToken: _tokens.refreshToken.token,
-            expiryDate: new Date(_tokens.accessToken.expiryDate),
-          });
-
-          return true;
+          break;
 
         case 400:
           return false; //TODO: Email already taken
         default:
           return false; // TODO: Something went wrong
       }
+
+      const _tokens = await tokenResponse.json();
+
+      Cookies.set('refreshToken', _tokens.refreshToken.token);
+      setToken({
+        token: _tokens.refreshToken.token,
+        expiryDate: new Date(_tokens.refreshToken.expiryDate),
+      });
+
+      return await getUserInfoHelper(_tokens.accessToken.token);
     } catch (error) {
       console.error(error);
       return new Error('unexpected-error');
@@ -172,6 +188,7 @@ const useProvideAuth = () => {
   };
 
   return {
+    isInitiallyLoading,
     user,
     signIn,
     signUp,
@@ -181,7 +198,7 @@ const useProvideAuth = () => {
 const AuthContext = createContext<Partial<AuthObject>>({});
 
 export const ProvideAuth = (props: {children: React.ReactNode}) => {
-  const auth = useProvideAuth() as AuthObject;
+  const auth = useProvideAuth();
 
   return (
     <AuthContext.Provider value={auth}>{props.children}</AuthContext.Provider>

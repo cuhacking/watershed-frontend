@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Helmet} from 'react-helmet';
 import {
   Redirect,
@@ -39,7 +39,6 @@ export default () => {
 const PrivateRoute = ({children, ...rest}: RouteProps) => {
   const {user} = useAuth();
 
-  console.log(user);
   return (
     <Route
       {...rest}
