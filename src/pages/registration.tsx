@@ -1,8 +1,6 @@
 import React, {useReducer, useState} from 'react';
 import styled, {css} from 'styled-components';
 import {Desktop, Mobile} from '../shared/util';
-import darkDrop from '../assets/img/drop-dark.svg';
-import lightDrop from '../assets/img/drop-light.svg';
 import Input from '../components/Input';
 import Dropdown from '../components/dropdown';
 import {globalTheme, themeElement} from '../shared/theme';
@@ -14,36 +12,10 @@ import Dropzone from '../components/Dropzone';
 import AppButton from '../components/AppButton';
 import schools from '../schools.json';
 import countries from '../countries.json';
-import { Prompt } from 'react-router-dom';
+import {Prompt} from 'react-router-dom';
+import {ModalLayout} from '../layouts';
 
-const RegistrationContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 2rem 4rem;
-  max-width: 100%;
-  min-width: 800px;
-  border-radius: 16px;
-  align-items: center;
-  background-color: var(${themeElement('--spaceGrey', '--white')});
-  margin: auto;
-  transition: box-shadow 300ms ease;
-  box-shadow: var(--hover);
-
-  h3,
-  p {
-    color: var(${themeElement('--snow', '--spaceGrey')});
-  }
-
-  @media (max-width: 768px) {
-    min-width: 0;
-    width: 100%;
-    padding: 0.75rem 0.75rem;
-    height: 100%;
-    justify-content: space-between;
-  }
-`;
-
-const ExperienceLabel = styled.label`
+const ExperienceLabel = styled.div`
   color: var(${themeElement('--snow', '--spaceGrey')});
 `;
 
@@ -52,7 +24,6 @@ const FormContainer = styled.section`
   flex-direction: column;
   align-items: center;
   padding: 1rem 0rem;
-  width: 85%;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -96,10 +67,6 @@ const InteractionsContainer = styled.div`
   width: 100%;
 `;
 
-const DropIcon = styled.img`
-  width: 2.5rem;
-`;
-
 const MarkersContainer = styled.div`
   position: absolute;
   left: calc(50% - 52px);
@@ -120,6 +87,18 @@ const markerStyle = css`
   }
 `;
 
+const BackButton = styled(AppButton)`
+  @media (min-width: 769px) {
+    margin-right: 196px;
+  }
+`;
+
+const ForwardButton = styled(AppButton)`
+  @media (min-width: 769px) {
+    margin-left: 196px;
+  }
+`;
+
 const StepMarker = styled.div<{done?: boolean}>`
   ${markerStyle};
   transition: background-color 500ms cubic-bezier(0.33, 1, 0.68, 1);
@@ -128,21 +107,11 @@ const StepMarker = styled.div<{done?: boolean}>`
     done && `var(${themeElement('--spaceDark', '--snow')})`};
 `;
 
-const Container = styled.div`
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  background-color: var(${themeElement('--spaceDark', '--snow')});
-
-  @media (max-width: 768px) {
-    padding: 1rem;
-  }
-`;
-
 const FeedbackText = styled.div`
   color: var(${themeElement('--snow', '--spaceGrey')});
   max-width: 400px;
   text-align: center;
+  flex-grow: 1;
 `;
 
 const LeftArrow = styled.img`
@@ -329,10 +298,10 @@ function Registration() {
             required={userForm.pronouns.required}
             grow
           />
-          <ExperienceLabel>
-            *If selected, this will be displayed on your public profile
-          </ExperienceLabel>
         </FormRow>
+        <ExperienceLabel>
+          *If selected, this will be displayed on your public profile
+        </ExperienceLabel>
       </Form>
     </FormContainer>
   );
@@ -405,10 +374,10 @@ function Registration() {
             small
             required={userForm.hackathonNumber.required}
           ></Dropdown>
-          <ExperienceLabel>hackathons</ExperienceLabel>
+          <ExperienceLabel>previous hackathons,</ExperienceLabel>
         </FormRow>
         <FormRow style={{justifyContent: 'center'}}>
-          <ExperienceLabel>and</ExperienceLabel>
+          <ExperienceLabel>and in the past year I've been to</ExperienceLabel>
           <Dropdown
             name='eventsNumber'
             options={['0', '1 - 5', '6 - 10', '10 - 20', '20+']}
@@ -418,7 +387,7 @@ function Registration() {
             small
             required={userForm.eventsNumber.required}
           ></Dropdown>
-          <ExperienceLabel>other events in tech</ExperienceLabel>
+          <ExperienceLabel>online tech events.</ExperienceLabel>
         </FormRow>
         <FormRow>
           <Input
@@ -497,9 +466,11 @@ function Registration() {
             After the event, we're looking to interview some hackers regarding
             their experience. Would you be willing to participate?
           </FeedbackText>
+        </FormRow>
+        <FormRow>
           <Dropdown
             name='feedback'
-            label=''
+            label='Select a response'
             options={['Yes', 'No']}
             required={userForm.feedback.required}
             value={userForm.feedback.value}
@@ -592,7 +563,7 @@ function Registration() {
 
   const actions = (
     <InteractionsContainer>
-      <AppButton
+      <BackButton
         aria-label={step === steps.personalInformation ? 'Cancel' : 'Back'}
         secondary
         onClick={() => previousStep()}
@@ -603,13 +574,13 @@ function Registration() {
         <Mobile>
           <LeftArrow alt='left arrow' src={darkArrow}></LeftArrow>
         </Mobile>
-      </AppButton>
+      </BackButton>
       <MarkersContainer>
         {[...Array(SECTIONS)].map((_, index) => (
           <StepMarker key={index} done={step < index}></StepMarker>
         ))}
       </MarkersContainer>
-      <AppButton
+      <ForwardButton
         aria-label={step === steps.additional ? 'Submit' : 'Continue'}
         onClick={() => nextStep()}
       >
@@ -620,22 +591,16 @@ function Registration() {
             src={globalTheme === 'dark' ? lightArrow : darkArrow}
           ></RightArrow>
         </Mobile>
-      </AppButton>
+      </ForwardButton>
     </InteractionsContainer>
   );
 
   return (
-    <Container>
-      <Prompt message="Are you sure you want to leave?"/>
-      <RegistrationContainer>
-        <DropIcon
-          src={globalTheme === 'dark' ? darkDrop : lightDrop}
-          alt='cuhacking icon'
-        />
-        {currentStep()}
-        {actions}
-      </RegistrationContainer>
-    </Container>
+    <ModalLayout>
+      <Prompt message='Are you sure you want to leave?' />
+      {currentStep()}
+      {actions}
+    </ModalLayout>
   );
 }
 

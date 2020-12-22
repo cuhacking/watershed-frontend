@@ -25,7 +25,7 @@ const Content = styled.div`
 const Modal = styled.main`
   width: var(--mobile-width);
   min-width: 330px;
-  padding: 32px;
+  padding: 32px 16px;
   margin-bottom: 32px;
   background-color: var(--spaceGrey);
   border-radius: 20px;

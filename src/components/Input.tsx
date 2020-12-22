@@ -82,7 +82,7 @@ const InputComponent = ({
   <InputContainer
     style={{
       width: `${expand ? '100%' : 'unset'}`,
-      padding: `${padded ? '1rem' : 0}`,
+      padding: `${padded ? '1rem 8px' : 0}`,
       flexGrow: grow ? 1 : 0,
       ...style,
     }}
