@@ -21,6 +21,7 @@ type AuthObject = {
   tokens: TokensObject;
   user: UserObject | null;
   signIn: (email: string, password: string) => Promise<boolean | Error>;
+  signUp: (email: string, password: string) => Promise<boolean | Error>;
 };
 
 const useProvideAuth = () => {
@@ -87,7 +88,7 @@ const useProvideAuth = () => {
         case 200:
           break;
         case 401:
-          return false;
+          return false; // TODO: incorrect email/password
         default:
           return false; // TODO: return a better error
       }
@@ -131,9 +132,49 @@ const useProvideAuth = () => {
     }
   };
 
+  const signUp = async (email: string, password: string) => {
+    try {
+      console.log(email, password);
+      const response = await fetch('https://dev.cuhacking.com/api/user', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      switch (response.status) {
+        case 201:
+          const _tokens = await response.json();
+          Cookies.set('refreshToken', _tokens.refreshToken.token);
+
+          setTokens({
+            accessToken: _tokens.accessToken.token,
+            refreshToken: _tokens.refreshToken.token,
+            expiryDate: new Date(_tokens.accessToken.expiryDate),
+          });
+
+          return true;
+
+        case 400:
+          return false; //TODO: Email already taken
+        default:
+          return false; // TODO: Something went wrong
+      }
+    } catch (error) {
+      console.error(error);
+      return new Error('unexpected-error');
+    }
+  };
+
   return {
     user,
     signIn,
+    signUp,
   };
 };
 

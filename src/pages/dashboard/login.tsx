@@ -38,7 +38,7 @@ export default () => {
     }
   };
 
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(false);
 
