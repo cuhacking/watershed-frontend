@@ -61,8 +61,8 @@ const Content = styled.div`
 const Modal = styled.main`
   width: var(--mobile-width);
   min-width: 330px;
-  padding: 30px;
-  margin-bottom: 30px;
+  padding: 32px;
+  margin-bottom: 32px;
   background-color: var(--spaceDark);
   border-radius: 20px;
 
@@ -71,7 +71,7 @@ const Modal = styled.main`
 
   @media only screen and (min-width: 700px) {
     width: unset;
-    padding: 45px 30px;
+    padding: 48px 32px;
   }
 `;
 
