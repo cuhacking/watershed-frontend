@@ -1,17 +1,17 @@
 import React, {useReducer, useState} from 'react';
 import styled, {css} from 'styled-components';
-import {Desktop, Mobile} from '../shared/util';
-import darkDrop from '../assets/img/drop-dark.svg';
-import lightDrop from '../assets/img/drop-light.svg';
-import Input from '../components/Input';
-import Dropdown from '../components/dropdown';
-import {globalTheme, themeElement} from '../shared/theme';
-import darkArrow from '../assets/img/arrow-down-dark.svg';
-import lightArrow from '../assets/img/arrow-down-light.svg';
-import TextArea from '../components/TextArea';
-import SelectDropdown from '../components/SelectDropdown';
-import Dropzone from '../components/Dropzone';
-import AppButton from '../components/AppButton';
+import {Desktop, Mobile} from '../../shared/util';
+import darkDrop from 'assets/img/drop-dark.svg';
+import lightDrop from 'assets/img/drop-light.svg';
+import Input from '../../components/Input';
+import Dropdown from '../../components/dropdown';
+import {globalTheme, themeElement} from '../../shared/theme';
+import darkArrow from 'assets/img/arrow-down-dark.svg';
+import lightArrow from 'assets/img/arrow-down-light.svg';
+import TextArea from '../../components/TextArea';
+import SelectDropdown from '../../components/SelectDropdown';
+import Dropzone from '../../components/Dropzone';
+import AppButton from '../../components/AppButton';
 
 const RegistrationContainer = styled.div`
   display: flex;

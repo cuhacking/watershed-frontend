@@ -13,6 +13,7 @@ import {LoadingSymbol} from '../../components';
 import Login from './login';
 import SignUp from './signUp';
 import Home from './home';
+import Registration from './registration';
 
 const LoadingWindow = styled.div`
   display: flex;
@@ -32,6 +33,9 @@ export default () => {
         <Switch>
           <PrivateRoute path={`${path}/`} exact>
             <Home />
+          </PrivateRoute>
+          <PrivateRoute path={`${path}/registration`}>
+            <Registration />
           </PrivateRoute>
           <UnprivateRoute path={`${path}/login`}>
             <Login />
@@ -107,3 +111,7 @@ const UnprivateRoute = ({children, ...rest}: RouteProps) => {
     />
   );
 };
+
+const RegistrationRoute = ({children, ...rest}: RouteProps) => {
+  // TODO: Redirect to login if not authenticated, redirect to /dashboard if already registered
+}

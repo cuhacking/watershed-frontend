@@ -3,8 +3,8 @@ import styled, {css} from 'styled-components';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons';
 
-const genericButton = css`
-  background: var(--wine);
+const genericButton = css<{color: string}>`
+  background: ${({color}) => color};
   border: 0px;
   color: var(--white);
   font-size: 1rem;
@@ -15,13 +15,13 @@ const genericButton = css`
   font-family: var(--primary-font);
   cursor: pointer;
 
-  border: 2px solid var(--wine);
+  border: 2px solid ${({color}) => color};
   transition: 0.1s ease-in;
 
   @media only screen and (min-width: 700px) {
     &:hover {
       background-color: var(--white);
-      color: var(--wine) !important;
+      color: ${({color}) => color} !important;
       cursor: pointer;
     }
   }
@@ -47,19 +47,20 @@ interface ButtonProps {
   external?: boolean;
   disabled?: boolean;
   link?: string;
+  color: string;
 }
 
 const Button = (props: ButtonProps) => {
-  if (props.external) {
+  if (props.link) {
     return (
       <StyledAnchor
-        target='_blank'
+        target={props.external ? '_blank' : ''}
         rel='noopener noreferrer external'
         href={props.link}
         {...props}
       >
         {props.children}
-        <StyledIcon icon={faExternalLinkAlt} size='1x' />
+        {props.external && <StyledIcon icon={faExternalLinkAlt} size='1x' />}
       </StyledAnchor>
     );
   }
