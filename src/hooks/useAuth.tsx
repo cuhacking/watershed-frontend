@@ -19,6 +19,7 @@ type AuthObject = {
   user: UserObject | null;
   signIn: (email: string, password: string) => Promise<boolean | Error>;
   signUp: (email: string, password: string) => Promise<boolean | Error>;
+  signOut: () => void;
 };
 
 const useProvideAuth = (): AuthObject => {
@@ -31,7 +32,6 @@ const useProvideAuth = (): AuthObject => {
     //TODO: should I do a try/catch here?
     const userResponse = await fetch('/api/user/me', {
       method: 'GET',
-      mode: 'cors',
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -70,7 +70,6 @@ const useProvideAuth = (): AuthObject => {
       try {
         const accessTokenResponse = await fetch('/api/auth/refresh', {
           method: 'POST',
-          mode: 'cors',
           headers: {
             'Content-Type': 'application/json',
           },
@@ -114,7 +113,6 @@ const useProvideAuth = (): AuthObject => {
       //TODO: use env variables
       const tokenResponse = await fetch('/api/auth/login', {
         method: 'POST',
-        mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -152,7 +150,6 @@ const useProvideAuth = (): AuthObject => {
     try {
       const tokenResponse = await fetch('/api/user', {
         method: 'POST',
-        mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -187,11 +184,34 @@ const useProvideAuth = (): AuthObject => {
     }
   };
 
+  const signOut = async () => {
+    try {
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken?.token}`,
+        },
+        body: JSON.stringify({
+          refreshToken: Cookies.get('refreshToken'),
+        }),
+      });
+    } catch (error) {
+      console.error(error);
+      // return new Error('unexpected-error');
+    }
+
+    Cookies.remove('refreshToken');
+    setToken(null);
+    setUser(null);
+  };
+
   return {
     isInitiallyLoading,
     user,
     signIn,
     signUp,
+    signOut,
   };
 };
 

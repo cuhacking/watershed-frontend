@@ -44,7 +44,6 @@ export default () => {
 
     const result = await signIn(email, password);
 
-    console.log(result);
     if (result instanceof Error) {
       setError(true);
       // TODO: display "something went wrong"

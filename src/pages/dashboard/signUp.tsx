@@ -53,7 +53,6 @@ export default () => {
     // Create account
     const result = await signUp(email, passwordA);
 
-    console.log(result);
     if (result instanceof Error) {
       setError(true);
       // TODO: display "something went wrong"
