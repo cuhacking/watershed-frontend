@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import {Link} from 'react-router-dom';
 import {ReactComponent as Logo} from 'assets/img/word-and-year-logo-white.svg';
 import bkgSLWebP from 'assets/img/hero/webp-720/base.webp';
 import bkgMWebP from 'assets/img/hero/webp-1080/base.webp';
@@ -11,6 +11,16 @@ import bkgMPng from 'assets/img/hero/png-1080/base.png';
 import bkgLPng from 'assets/img/hero/png-1440/base.png';
 import bkgXLPng from 'assets/img/hero/png-original/base.png';
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-width: 100%;
+  min-height: 100vh;
+
+  position: relative;
+  background-color: var(--spaceDark);
+`;
+
 const BackgroundPicture = styled.picture`
   width: 100%;
   height: 100vh;
@@ -18,7 +28,6 @@ const BackgroundPicture = styled.picture`
   display: flex;
   justify-content: center;
   pointer-events: none;
-  z-index: -1;
 `;
 
 const HeroImg = styled.img`
@@ -33,27 +42,41 @@ const HeroImg = styled.img`
 
 const StyledLogo = styled(Logo)`
   width: 300px;
+  height: 50px;
 `;
 
-const Container = styled.div`
+const LogoLink = styled(Link)`
+  margin: 75px 0;
+`;
+
+const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+
+  z-index: 1;
 `;
 
 const Modal = styled.main`
   width: var(--mobile-width);
-  padding: 30px;
+  min-width: 330px;
+  padding: 32px;
+  margin-bottom: 32px;
   background-color: var(--spaceDark);
   border-radius: 20px;
-  box-shadow: var(--hover);
 
+  box-shadow: var(--hover);
   text-align: center;
+
+  @media only screen and (min-width: 700px) {
+    width: unset;
+    padding: 48px 32px;
+  }
 `;
 
 export default (props: {children: React.ReactNode}) => (
-  <>
+  <Container>
     <BackgroundPicture>
       <source
         type='image/webp'
@@ -86,9 +109,11 @@ export default (props: {children: React.ReactNode}) => (
         src={bkgLPng}
       />
     </BackgroundPicture>
-    <Container>
-      <StyledLogo />
+    <Content>
+      <LogoLink to='/'>
+        <StyledLogo />
+      </LogoLink>
       <Modal>{props.children}</Modal>
-    </Container>
-  </>
+    </Content>
+  </Container>
 );
