@@ -3,7 +3,7 @@ import {Helmet} from 'react-helmet';
 import styled from 'styled-components';
 import {Link, useHistory} from 'react-router-dom';
 import {ModalLayout} from '../../layouts';
-import {Input} from '../../components';
+import {Input, LoadingSymbol} from '../../components';
 import {useAuth} from '../../hooks';
 
 const LoginForm = styled.form``;
@@ -23,8 +23,8 @@ const OptionButton = styled(Link)``;
 export default () => {
   const history = useHistory();
   const {signUp} = useAuth();
-
-  const [error, setError] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>();
   const [email, setEmail] = useState('');
   const [passwordA, setPasswordA] = useState('');
   const [passwordB, setPasswordB] = useState('');
@@ -42,24 +42,27 @@ export default () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setError(false);
+    setLoading(true);
+    setError(null);
 
     // Compare passwords
     if (passwordA !== passwordB) {
-      setError(true);
+      setLoading(false);
+      setError('Passwords do not match.');
       return;
     }
 
     // Create account
-    const result = await signUp(email, passwordA);
-
-    if (result instanceof Error) {
-      setError(true);
-      // TODO: display "something went wrong"
-    } else if (!result) {
-      setError(true);
-    } else {
-      history.replace('/registration');
+    switch (await signUp(email, passwordA)) {
+      case 'ok':
+        setLoading(false);
+        return history.replace('/registration');
+      case 'expected-failure':
+        setLoading(false);
+        return setError('This email is already taken.');
+      case 'error':
+        setLoading(false);
+        return setError('Something went wrong, please try again later.');
     }
   };
 
@@ -100,11 +103,12 @@ export default () => {
           padded
           required={true}
         />
-        <ErrorMessage visible={error}>
-          Either your passwords don't match or an account with that email
-          already exists.
-        </ErrorMessage>
-        <SubmitButton type='submit'>Continue</SubmitButton>
+        <ErrorMessage visible={error !== null}>{error}</ErrorMessage>
+        {isLoading ? (
+          <LoadingSymbol />
+        ) : (
+          <SubmitButton type='submit'>Continue</SubmitButton>
+        )}
       </LoginForm>
       <OptionButton to='/dashboard/login'>
         I want to log in instead.

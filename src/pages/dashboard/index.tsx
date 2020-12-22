@@ -7,11 +7,20 @@ import {
   Switch,
   useRouteMatch,
 } from 'react-router-dom';
-
+import styled from 'styled-components';
 import {ProvideAuth, useAuth} from '../../hooks';
+import {LoadingSymbol} from '../../components';
 import Login from './login';
 import SignUp from './signUp';
 import Home from './home';
+
+const LoadingWindow = styled.div`
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default () => {
   const {path, url} = useRouteMatch();
@@ -37,7 +46,15 @@ export default () => {
 };
 
 const PrivateRoute = ({children, ...rest}: RouteProps) => {
-  const {user} = useAuth();
+  const {isInitiallyLoading, user} = useAuth();
+
+  if (isInitiallyLoading) {
+    return (
+      <LoadingWindow>
+        <LoadingSymbol />
+      </LoadingWindow>
+    );
+  }
 
   return (
     <Route
@@ -61,7 +78,15 @@ const PrivateRoute = ({children, ...rest}: RouteProps) => {
 };
 
 const UnprivateRoute = ({children, ...rest}: RouteProps) => {
-  const {user} = useAuth();
+  const {isInitiallyLoading, user} = useAuth();
+
+  if (isInitiallyLoading) {
+    return (
+      <LoadingWindow>
+        <LoadingSymbol />
+      </LoadingWindow>
+    );
+  }
 
   return (
     <Route

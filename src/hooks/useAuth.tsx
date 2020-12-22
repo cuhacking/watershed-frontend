@@ -14,22 +14,22 @@ interface AccessTokenObject {
   expiryDate: Date;
 }
 
+type AuthResponse = 'ok' | 'expected-failure' | 'error';
+
 type AuthObject = {
   isInitiallyLoading: boolean;
   user: UserObject | null;
-  signIn: (email: string, password: string) => Promise<boolean | Error>;
-  signUp: (email: string, password: string) => Promise<boolean | Error>;
+  signIn: (email: string, password: string) => Promise<AuthResponse>;
+  signUp: (email: string, password: string) => Promise<AuthResponse>;
   signOut: () => void;
 };
 
 const useProvideAuth = (): AuthObject => {
-  const [isInitiallyLoading, setLoading] = useState(false);
+  const [isInitiallyLoading, setLoading] = useState(true);
   const [accessToken, setToken] = useState<AccessTokenObject | null>(null);
   const [user, setUser] = useState<UserObject | null>(null);
 
-  // Helper methods
-  const getUserInfoHelper = async (token: string) => {
-    //TODO: should I do a try/catch here?
+  const getUserInfoHelper = async (token: string): Promise<AuthResponse> => {
     const userResponse = await fetch('/api/user/me', {
       method: 'GET',
       headers: {
@@ -48,17 +48,75 @@ const useProvideAuth = (): AuthObject => {
           githubId: _userInfo.githubId,
           discordId: _userInfo.discordId,
         });
-        return true;
+        return 'ok';
       case 401:
-        return false; // TODO: sign in again
+        return 'expected-failure';
       default:
-        return false; // TODO: return a better error
+        return 'error';
     }
   };
 
-  useEffect(() => {
-    setLoading(true);
+  const resetHelper = () => {
+    Cookies.remove('refreshToken');
+    setToken(null);
+    setUser(null);
+  };
 
+  const getAccessTokenHelper = async (token: string): Promise<boolean> => {
+    try {
+      const accessTokenResponse = await fetch('/api/auth/refresh', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          token,
+        }),
+      });
+
+      if (accessTokenResponse.status !== 200) {
+        resetHelper();
+        setLoading(false);
+        return false;
+      }
+
+      const {accessToken: _accessToken} = await accessTokenResponse.json();
+
+      setToken({
+        token: _accessToken.token,
+        expiryDate: new Date(_accessToken.expiryDate),
+      });
+
+      const result = await getUserInfoHelper(_accessToken.token);
+
+      if (result === 'expected-failure') {
+        resetHelper();
+        setLoading(false);
+        return false;
+      }
+      setLoading(false);
+      return true;
+    } catch (error) {
+      resetHelper();
+      console.error('Unexpected error retrieving access token: ', error);
+      setLoading(false);
+      return false;
+    }
+  };
+
+  const verifyNotExpiredHelper = async (): Promise<boolean> => {
+    if (accessToken && new Date() > accessToken?.expiryDate) {
+      const refreshToken = Cookies.get('refreshToken');
+
+      if (!refreshToken) return false;
+
+      return await getAccessTokenHelper(refreshToken);
+    }
+
+    return true;
+  };
+
+  useEffect(() => {
     const refreshToken = Cookies.get('refreshToken');
 
     if (!refreshToken) {
@@ -66,51 +124,14 @@ const useProvideAuth = (): AuthObject => {
       return;
     }
 
-    const getAccessToken = async () => {
-      try {
-        const accessTokenResponse = await fetch('/api/auth/refresh', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            token: refreshToken,
-          }),
-        });
-
-        switch (accessTokenResponse.status) {
-          case 200:
-            break;
-          case 401:
-            setLoading(false);
-            Cookies.remove('refreshToken');
-            return false;
-          default:
-            setLoading(false);
-            return false; //TODO: somehow let upstack know that this is different than a 401
-        }
-
-        const {accessToken: _accessToken} = await accessTokenResponse.json();
-
-        setToken({
-          token: _accessToken.token,
-          expiryDate: new Date(_accessToken.expiryDate),
-        });
-
-        return await getUserInfoHelper(_accessToken.token);
-      } catch (error) {
-        console.log('Uh oh!');
-        console.error(error);
-        // return new Error('unexpected-error');
-      }
-    };
-
-    getAccessToken();
+    getAccessTokenHelper(refreshToken);
   }, []);
 
-  const signIn = async (email: string, password: string) => {
+  const signIn = async (
+    email: string,
+    password: string
+  ): Promise<AuthResponse> => {
     try {
-      //TODO: use env variables
       const tokenResponse = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
@@ -126,9 +147,9 @@ const useProvideAuth = (): AuthObject => {
         case 200:
           break;
         case 401:
-          return false; // TODO: incorrect email/password
+          return 'expected-failure';
         default:
-          return false; // TODO: return a better error
+          return 'error';
       }
 
       const _tokens = await tokenResponse.json();
@@ -141,12 +162,15 @@ const useProvideAuth = (): AuthObject => {
 
       return await getUserInfoHelper(_tokens.accessToken.token);
     } catch (error) {
-      console.error(error);
-      return new Error('unexpected-error');
+      console.error('Unexpected error on sign in: ', error);
+      return 'error';
     }
   };
 
-  const signUp = async (email: string, password: string) => {
+  const signUp = async (
+    email: string,
+    password: string
+  ): Promise<AuthResponse> => {
     try {
       const tokenResponse = await fetch('/api/user', {
         method: 'POST',
@@ -160,13 +184,12 @@ const useProvideAuth = (): AuthObject => {
       });
 
       switch (tokenResponse.status) {
-        case 201:
+        case 200:
           break;
-
         case 400:
-          return false; //TODO: Email already taken
+          return 'expected-failure';
         default:
-          return false; // TODO: Something went wrong
+          return 'error';
       }
 
       const _tokens = await tokenResponse.json();
@@ -179,12 +202,14 @@ const useProvideAuth = (): AuthObject => {
 
       return await getUserInfoHelper(_tokens.accessToken.token);
     } catch (error) {
-      console.error(error);
-      return new Error('unexpected-error');
+      console.error('Unexpected error on sign up: ', error);
+      return 'error';
     }
   };
 
   const signOut = async () => {
+    if (!verifyNotExpiredHelper()) return;
+
     try {
       await fetch('/api/auth/logout', {
         method: 'POST',
@@ -197,13 +222,10 @@ const useProvideAuth = (): AuthObject => {
         }),
       });
     } catch (error) {
-      console.error(error);
-      // return new Error('unexpected-error');
+      console.error('Unexpected error on log out: ', error);
     }
 
-    Cookies.remove('refreshToken');
-    setToken(null);
-    setUser(null);
+    resetHelper();
   };
 
   return {
