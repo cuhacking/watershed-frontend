@@ -141,7 +141,7 @@ interface FileValue {
   required: boolean;
 }
 
-interface UserForm {
+export interface UserForm {
   firstName: FormValue;
   lastName: FormValue;
   email: FormValue;
