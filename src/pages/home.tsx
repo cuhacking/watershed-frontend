@@ -174,9 +174,9 @@ const HeroBanner = () => {
         <Date>January 29–31, 2021</Date>
         <Location>Virtual, Worldwide</Location>
         <HeroActions>
-          <Button kind='link' color='var(--ikeaBlue)' link='/dashboard/sign-up'>
-            Registration Opens Dec. 22
-          </Button>
+          {/* <Button kind='link' color='var(--ikeaBlue)' link='/dashboard/sign-up'> */}
+          Registration Opens Dec. 22
+          {/* </Button> */}
         </HeroActions>
       </HeroText>
     </HeroLayerWrapper>
