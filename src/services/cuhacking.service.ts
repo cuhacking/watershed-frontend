@@ -16,28 +16,31 @@ export const registerUser = async (registrationForm: UserForm) => {
     website,
     github,
     linkedin,
-    resume,
     country,
     feedback,
     skills,
+    school,
+    eventsNumber,
   }: UserForm) => ({
     completed: true,
     firstName: firstName.value,
     lastName: lastName.value,
     pronouns: pronouns.value,
     email: email.value,
-    levelOfStudy: studyLevel.value,
+    studyLevel: studyLevel.value,
     program: program.value,
-    shortAnswer1: question1.value,
-    shortAnswer2: question2.value,
-    shortAnswer3: question3.value,
-    numHackathongs: hackathonNumber.value,
+    question1: question1.value,
+    question2: question2.value,
+    question3: question3.value,
+    hackathonNumber: hackathonNumber.value,
     website: website.value,
     github: github.value,
     linkedin: linkedin.value,
     skills: skills.value,
     country: country.value,
     willingToInterview: feedback.value,
+    school: school.value,
+    eventsNumber: eventsNumber.value,
   });
   const registrationRequestBody = filterInto(registrationForm);
 
@@ -52,18 +55,17 @@ export const registerUser = async (registrationForm: UserForm) => {
   }
 
   const accessToken =
-    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZCI6IjEzZDc4MTMzLTNlMWYtNDBmNy1hODI3LTUwNmMxMGUyZjY2MCIsImlzc3VlRGF0ZSI6MTYwODY3MzQ2OTUyMCwiZXhwaXJ5RGF0ZSI6MTYwODY3NTI2OTUyMH0.3BcQRvvDpXUZP7rcGRK6HwcJRzn9C9kJZl_QE8btDmJkwlJVde9UMaZ2mXv6hcPvMTbUKF_4Ky-Pq8bA5gBnHA';
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZCI6ImQ4MzFkM2NhLTE2MGMtNGI4OC05ZmMyLWJlYzk4MzMxZmQ5YiIsImlzc3VlRGF0ZSI6MTYwODY4MTM2NjAxNCwiZXhwaXJ5RGF0ZSI6MTYwODY4MzE2NjAxNH0.5Qep9xVzkfKjEAPoJOXse1697WyZZdrCJWvEQT_Nry2e8UzmuWktpWyKhrpkRZAkS4GJKAweLA90lmXlrjukSA';
 
   return new Promise((resolve) => {
     fetch(`/api/application`, {
       headers: {
-        'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${accessToken}`,
       },
       method: 'POST',
       body: payload,
     }).then((res) => {
-      resolve(res.json());
+      resolve(res.text());
     });
   });
 };

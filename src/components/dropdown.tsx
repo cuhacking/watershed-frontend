@@ -90,11 +90,16 @@ const ItemsContainer = styled.div`
   }
 `;
 
+interface DropdownOption {
+  value: string | boolean;
+  label: string;
+}
+
 interface DropdownProps {
   label?: string;
   name: string;
-  options: string[];
-  value: string;
+  options: DropdownOption[];
+  value: string | boolean;
   enableOther?: boolean;
   onClick: Function;
   padded?: boolean;
@@ -134,6 +139,14 @@ const Dropdown = ({
   }
   useOuterClick(dropdownRef);
 
+  const labelValue = (value: string | boolean) => {
+    if (typeof value === 'string') {
+      return value;
+    } else {
+      return value ? 'Yes' : 'No';
+    }
+  };
+
   return (
     <div
       style={{
@@ -149,7 +162,7 @@ const Dropdown = ({
       >
         <p style={{opacity: `${value ? 1 : 0}`}}>{label}</p>
         <LabelContainer onClick={() => setOpen(!open)}>
-          <label>{value || label}</label>
+          <label>{labelValue(value) || label}</label>
           {open ? (
             <IconUp
               alt='arrow up'
@@ -164,15 +177,15 @@ const Dropdown = ({
         </LabelContainer>
         {open && (
           <ItemsContainer>
-            {options.map((item, index) => (
+            {options.map((option, index) => (
               <li
                 key={index}
                 onClick={() => {
-                  onClick(name, item);
+                  onClick(name, option.value);
                   setOpen(!open);
                 }}
               >
-                {item}
+                {option.label}
               </li>
             ))}
             {enableOther && (
