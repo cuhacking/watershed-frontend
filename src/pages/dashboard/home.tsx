@@ -3,6 +3,17 @@ import styled from 'styled-components';
 import {useHistory} from 'react-router-dom';
 import {useAuth, useApplication} from '../../hooks';
 import {Button, LoadingSymbol} from '../../components';
+import {Link} from 'react-router-dom';
+import {ReactComponent as Logo} from 'assets/img/word-and-year-logo-white.svg';
+
+const StyledLogo = styled(Logo)`
+  width: 300px;
+  height: 50px;
+`;
+
+const LogoLink = styled(Link)`
+  margin: 75px 0;
+`;
 
 const Container = styled.div`
   display: flex;
@@ -56,6 +67,9 @@ export default () => {
     return (
       <Container>
         <Content>
+          <LogoLink to='/'>
+            <StyledLogo />
+          </LogoLink>
           <h1>Register now!</h1>
           <p>Don't wait! Start registration by pressing the button below.</p>
           <StyledButton
@@ -80,6 +94,9 @@ export default () => {
   return (
     <Container>
       <Content>
+        <LogoLink to='/'>
+          <StyledLogo />
+        </LogoLink>
         <h1>Almost done...</h1>
         <p>
           The hackathon will take place on our Discord along with this website.
