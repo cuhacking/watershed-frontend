@@ -123,8 +123,50 @@ const RightArrow = styled.img`
   transform: rotate(-90deg);
 `;
 
-interface FormValue {
+const NumberInput = styled.input`
+  max-width: 5ch;
+  margin: 0 0.5em;
+`;
+
+const BasicLink = styled.a`
+  color: var(--snow);
+
+  @media (max-width: 768px) {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
+const CheckboxStyle = styled.label`
+  input {
+    margin-right: 0.25em;
+  }
+`;
+
+const Checkbox = ({
+  children,
+  ...rest
+}: React.DetailedHTMLProps<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+>) => {
+  return (
+    <CheckboxStyle>
+      <input type='checkbox' {...rest} />
+      {children}
+    </CheckboxStyle>
+  );
+};
+
+interface StringValue {
   value: string;
+  error: null | 'string';
+  required: boolean;
+}
+
+interface NumberValue {
+  value: number;
   error: null | 'string';
   required: boolean;
 }
@@ -142,36 +184,43 @@ interface FileValue {
 }
 
 export interface UserForm {
-  firstName: FormValue;
-  lastName: FormValue;
-  email: FormValue;
-  country: FormValue;
-  studyLevel: FormValue;
-  pronouns: FormValue;
-  school: FormValue;
-  program: FormValue;
-  hackathonNumber: FormValue;
-  eventsNumber: FormValue;
-  skills: FormValue;
+  firstName: StringValue;
+  lastName: StringValue;
+  email: StringValue;
+  country: StringValue;
+  studyLevel: StringValue;
+  pronouns: StringValue;
+  school: StringValue;
+  program: StringValue;
+  hackathonNumber: NumberValue;
+  eventsNumber: NumberValue;
   resume: FileValue;
-  github: FormValue;
-  linkedin: FormValue;
-  website: FormValue;
-  other: FormValue;
-  question1: FormValue;
-  question2: FormValue;
-  question3: FormValue;
-  feedback: BooleanValue;
+  github: StringValue;
+  linkedin: StringValue;
+  website: StringValue;
+  other: StringValue;
+  question1: StringValue;
+  question2: StringValue;
+  question3: StringValue;
+  willingToInterview: BooleanValue;
+  MLHCode: BooleanValue;
+  MLHPrivacy: BooleanValue;
 }
 
-const formValue: FormValue = {
+const stringValue: StringValue = {
   value: '',
   error: null,
   required: false,
 };
 
-const formValueRequired: FormValue = {
+const stringValueRequired: StringValue = {
   value: '',
+  error: null,
+  required: true,
+};
+
+const numberValueRequired: NumberValue = {
+  value: 0,
   error: null,
   required: true,
 };
@@ -182,6 +231,12 @@ const fileValueRequired: FileValue = {
   required: true,
 };
 
+const booleanValue: BooleanValue = {
+  value: false,
+  error: null,
+  required: false,
+};
+
 const booleanValueRequired: BooleanValue = {
   value: false,
   error: null,
@@ -189,26 +244,27 @@ const booleanValueRequired: BooleanValue = {
 };
 
 const emptyForm: UserForm = {
-  firstName: formValueRequired,
-  lastName: formValueRequired,
-  email: formValueRequired,
-  country: formValueRequired,
-  pronouns: formValue,
-  studyLevel: formValueRequired,
-  school: formValueRequired,
-  program: formValue,
-  hackathonNumber: formValueRequired,
-  eventsNumber: formValueRequired,
-  skills: formValueRequired,
+  firstName: stringValueRequired,
+  lastName: stringValueRequired,
+  email: stringValueRequired,
+  country: stringValueRequired,
+  pronouns: stringValue,
+  studyLevel: stringValueRequired,
+  school: stringValueRequired,
+  program: stringValue,
+  hackathonNumber: numberValueRequired,
+  eventsNumber: numberValueRequired,
   resume: fileValueRequired,
-  github: formValue,
-  linkedin: formValue,
-  website: formValue,
-  other: formValue,
-  question1: formValueRequired,
-  question2: formValueRequired,
-  question3: formValueRequired,
-  feedback: booleanValueRequired,
+  github: stringValue,
+  linkedin: stringValue,
+  website: stringValue,
+  other: stringValue,
+  question1: stringValueRequired,
+  question2: stringValueRequired,
+  question3: stringValueRequired,
+  willingToInterview: booleanValue,
+  MLHCode: booleanValueRequired,
+  MLHPrivacy: booleanValueRequired,
 };
 
 const filterInto = ({
@@ -226,8 +282,7 @@ const filterInto = ({
   github,
   linkedin,
   country,
-  feedback,
-  skills,
+  willingToInterview,
   school,
   eventsNumber,
 }: UserForm) => ({
@@ -241,15 +296,14 @@ const filterInto = ({
   question1: question1.value,
   question2: question2.value,
   question3: question3.value,
-  hackathonNumber: hackathonNumber.value,
+  hackathonNumber: hackathonNumber.value as number,
   website: website.value,
   github: github.value,
   linkedin: linkedin.value,
-  skills: skills.value,
   country: country.value,
-  willingToInterview: feedback.value,
+  willingToInterview: willingToInterview.value,
   school: school.value,
-  eventsNumber: eventsNumber.value,
+  eventsNumber: eventsNumber.value as number,
 });
 
 enum steps {
@@ -273,6 +327,7 @@ function Registration() {
   const auth = useAuth();
   const {sendApplication} = useApplication();
   const [step, setStep] = useState(0);
+  const [formIsOk, setFormOk] = useState(false);
   const [userForm, setInfo] = useReducer(formReducer, emptyForm);
   const SECTIONS = 5;
   const finalStep = steps.additional;
@@ -281,15 +336,30 @@ function Registration() {
     setInfo(['email', auth.user?.email ?? '']);
   }, []);
 
+  useEffect(() => {
+    formIsVerified();
+  }, [userForm]);
+
   const formIsVerified = (): boolean => {
     let complete = true;
 
-    Object.values(userForm).forEach((formValue) => {
-      if (formValue.required && formValue.value === null) {
-        complete = false;
+    Object.values(userForm).forEach((entry) => {
+      if (entry.required) {
+        if (typeof entry.value === 'string' && entry.value === '') {
+          complete = false;
+        }
+
+        if (typeof entry.value === 'boolean' && entry.value === false) {
+          complete = false;
+        }
+
+        if (entry.value === null) {
+          complete = false;
+        }
       }
     });
 
+    setFormOk(complete);
     return complete;
   };
 
@@ -369,7 +439,7 @@ function Registration() {
         </FormRow>
         <FormRow>
           <Dropdown
-            label='Pronouns (Optional*)'
+            label='Pronouns (optional*)'
             name='pronouns'
             options={[
               {value: 'He/Him', label: 'He/Him'},
@@ -391,12 +461,12 @@ function Registration() {
             selectClick={handleDropdownChange}
             onChange={handleFormChange}
             padded
-            required={userForm.pronouns.required}
+            required={userForm.country.required}
             grow
           />
         </FormRow>
         <ExperienceLabel>
-          *If selected, this will be displayed on your public profile
+          *If selected, this will available to other hackers during the event.
         </ExperienceLabel>
       </Form>
     </FormContainer>
@@ -461,7 +531,18 @@ function Registration() {
       <Form>
         <FormRow style={{justifyContent: 'center'}}>
           <ExperienceLabel>I've been to</ExperienceLabel>
-          <Dropdown
+          <NumberInput
+            name='hackathonNumber'
+            type='number'
+            value={userForm.hackathonNumber.value}
+            min={0}
+            max={99}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setInfo([event.target.name, parseInt(event.target.value)]);
+            }}
+            required={userForm.hackathonNumber.required}
+          />
+          {/* <Dropdown
             name='hackathonNumber'
             options={[
               {label: '0', value: '0'},
@@ -475,12 +556,23 @@ function Registration() {
             padded
             small
             required={userForm.hackathonNumber.required}
-          ></Dropdown>
+          ></Dropdown> */}
           <ExperienceLabel>previous hackathons,</ExperienceLabel>
         </FormRow>
         <FormRow style={{justifyContent: 'center'}}>
           <ExperienceLabel>and in the past year I've been to</ExperienceLabel>
-          <Dropdown
+          <NumberInput
+            name='eventsNumber'
+            type='number'
+            value={userForm.eventsNumber.value}
+            min={0}
+            max={99}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setInfo([event.target.name, parseInt(event.target.value)]);
+            }}
+            required={userForm.hackathonNumber.required}
+          />
+          {/* <Dropdown
             name='eventsNumber'
             options={[
               {label: '0', value: '0'},
@@ -494,21 +586,8 @@ function Registration() {
             padded
             small
             required={userForm.eventsNumber.required}
-          ></Dropdown>
+          ></Dropdown> */}
           <ExperienceLabel>online tech events.</ExperienceLabel>
-        </FormRow>
-        <FormRow>
-          <Input
-            onChange={handleFormChange}
-            type='text'
-            name='skills'
-            value={userForm.skills.value}
-            placeHolder='List some of your skills (e.g. frontend, mobile, etc.)'
-            displayLabel
-            padded
-            expand
-            required={userForm.skills.required}
-          ></Input>
         </FormRow>
         <FormRow>
           <Dropzone
@@ -578,17 +657,55 @@ function Registration() {
         </FormRow>
         <FormRow>
           <Dropdown
-            name='feedback'
+            name='willingToInterview'
             label='Select a response'
             options={[
               {label: 'Yes', value: true},
               {label: 'No', value: false},
             ]}
-            required={userForm.feedback.required}
-            value={userForm.feedback.value}
+            required={userForm.willingToInterview.required}
+            value={userForm.willingToInterview.value}
             onClick={handleDropdownChange}
             padded
           />
+        </FormRow>
+        <FormRow>
+          <Checkbox
+            required
+            name='MLHCode'
+            checked={userForm.MLHCode.value}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setInfo([event.target.name, event.target.checked]);
+            }}
+          >
+            I have read and agree to the{' '}
+            <BasicLink
+              href='https://static.mlh.io/docs/mlh-code-of-conduct.pdf'
+              rel='noopener noreferrer external'
+              target='_blank'
+            >
+              MLH Code of Conduct
+            </BasicLink>
+          </Checkbox>
+        </FormRow>
+        <FormRow>
+          <Checkbox
+            required
+            name='MLHPrivacy'
+            checked={userForm.MLHPrivacy.value}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setInfo([event.target.name, event.target.checked]);
+            }}
+          >
+            I have read and agree to the MLH{' '}
+            <BasicLink
+              href='https://mlh.io/privacy'
+              rel='noopener noreferrer external'
+              target='_blank'
+            >
+              Privacy Policy
+            </BasicLink>
+          </Checkbox>
         </FormRow>
       </Form>
     </FormContainer>
@@ -666,7 +783,7 @@ function Registration() {
 
   const nextStep = () => {
     if (step === finalStep) {
-      if (formIsVerified()) {
+      if (formIsOk) {
         submitForm(userForm);
       } else {
         alert('Please fill out all required fields');
@@ -697,7 +814,7 @@ function Registration() {
         ))}
       </MarkersContainer>
       <ForwardButton
-        disabled={step === steps.additional && !formIsVerified()}
+        disabled={step === steps.additional && !formIsOk}
         aria-label={step === steps.additional ? 'Submit' : 'Continue'}
         onClick={() => nextStep()}
       >
@@ -715,7 +832,7 @@ function Registration() {
   return (
     <ModalLayout>
       <Prompt
-        when={step === steps.additional && !formIsVerified()}
+        when={step === steps.additional && !formIsOk}
         message='Are you sure you want to leave?'
       />
       {currentStep()}

@@ -10,9 +10,8 @@ interface ApplicationObject {
   pronouns: string;
   school: string;
   program: string;
-  hackathonNumber: string;
-  eventsNumber: string;
-  skills: string;
+  hackathonNumber: number;
+  eventsNumber: number;
   resumeName: string;
   github: string;
   linkedin: string;
@@ -68,6 +67,7 @@ const useProvideApplication = (): ApplicationContextObject => {
     if (user !== null) {
       getApplication();
     }
+    setLoading(false);
   }, [user]);
 
   const sendApplication = async (
