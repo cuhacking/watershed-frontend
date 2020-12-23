@@ -1,6 +1,9 @@
-import {UserForm} from '../pages/registration';
+import {UserForm} from '../pages/dashboard/registration';
 
-export const registerUser = async (registrationForm: UserForm, accessToken: string) => {
+export const registerUser = async (
+  registrationForm: UserForm,
+  accessToken: string
+) => {
   const filterInto = ({
     firstName,
     lastName,
