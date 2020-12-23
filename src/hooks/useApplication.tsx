@@ -1,48 +1,6 @@
 import React, {useState, useEffect, useContext, createContext} from 'react';
 import {useAuth} from './useAuth';
-
-interface FormValue {
-  value: string;
-  error: null | 'string';
-  required: boolean;
-}
-
-interface BooleanValue {
-  value: boolean;
-  error: null | 'string';
-  required: boolean;
-}
-
-interface FileValue {
-  value: File | null;
-  error: null | 'string';
-  required: boolean;
-}
-
-export interface ApplicationForm {
-  firstName: FormValue;
-  lastName: FormValue;
-  email: FormValue;
-  country: FormValue;
-  studyLevel: FormValue;
-  pronouns: FormValue;
-  school: FormValue;
-  program: FormValue;
-  hackathonNumber: FormValue;
-  eventsNumber: FormValue;
-  skills: FormValue;
-  resume: FileValue;
-  github: FormValue;
-  linkedin: FormValue;
-  website: FormValue;
-  other: FormValue;
-  question1: FormValue;
-  question2: FormValue;
-  question3: FormValue;
-  feedback: BooleanValue;
-}
-
-export interface ApplicationObject {
+interface ApplicationObject {
   completed: boolean;
   firstName: string;
   lastName: string;
@@ -66,52 +24,12 @@ export interface ApplicationObject {
   other: null;
 }
 
-const filterInto = ({
-  firstName,
-  lastName,
-  pronouns,
-  email,
-  studyLevel,
-  program,
-  question1,
-  question2,
-  question3,
-  hackathonNumber,
-  website,
-  github,
-  linkedin,
-  country,
-  feedback,
-  skills,
-  school,
-  eventsNumber,
-}: ApplicationForm): Omit<ApplicationObject, 'resumeName' | 'other'> => ({
-  completed: true,
-  firstName: firstName.value,
-  lastName: lastName.value,
-  pronouns: pronouns.value,
-  email: email.value,
-  studyLevel: studyLevel.value,
-  program: program.value,
-  question1: question1.value,
-  question2: question2.value,
-  question3: question3.value,
-  hackathonNumber: hackathonNumber.value,
-  website: website.value,
-  github: github.value,
-  linkedin: linkedin.value,
-  skills: skills.value,
-  country: country.value,
-  willingToInterview: feedback.value,
-  school: school.value,
-  eventsNumber: eventsNumber.value,
-});
-
 type ApplicationContextObject = {
   isLoading: boolean;
   application: ApplicationObject | null;
   sendApplication: (
-    form: ApplicationForm
+    form: Omit<ApplicationObject, 'resumeName' | 'other'>,
+    resume: File | null
   ) => Promise<'ok' | 'invalid-form' | 'error'>;
 };
 
@@ -122,47 +40,46 @@ const useProvideApplication = (): ApplicationContextObject => {
     null
   );
 
-  useEffect(() => {
+  const getApplication = async () => {
     setLoading(true);
+    try {
+      const response = await request('/api/application/my');
 
-    const getApplication = async () => {
-      try {
-        const response = await request('/api/application/my');
-
-        switch (response.status) {
-          case 200:
-            const _application = await response.json();
-            setApplication(_application);
-            break;
-          case 404:
-            setApplication(null);
-            break;
-          case 401:
-          default:
-            throw response;
-        }
-      } catch (error) {
-        console.error('Unexpected error retrieving application: ', error);
+      switch (response.status) {
+        case 200:
+          const _application = await response.json();
+          console.log('success!', _application);
+          setApplication(_application);
+          break;
+        case 404:
+          setApplication(null);
+          break;
+        case 401:
+        default:
+          throw response;
       }
+    } catch (error) {
+      console.error('Unexpected error retrieving application: ', error);
+    }
 
-      setLoading(false);
-    };
+    setLoading(false);
+  };
 
+  useEffect(() => {
     if (user !== null) {
       getApplication();
     }
   }, [user]);
 
   const sendApplication = async (
-    form: ApplicationForm
+    form: Omit<ApplicationObject, 'resumeName' | 'other'>,
+    resume: File | null
   ): Promise<'ok' | 'invalid-form' | 'error'> => {
-    const registrationRequestBody = filterInto(form);
-
     const payload = new FormData();
-    payload.append('body', JSON.stringify(registrationRequestBody));
+    payload.append('body', JSON.stringify({...form}));
 
-    if (form.resume.value) {
-      payload.append('resume', form.resume.value, form.resume.value?.name);
+    if (resume) {
+      payload.append('resume', resume, resume.name);
     }
 
     try {
@@ -173,6 +90,7 @@ const useProvideApplication = (): ApplicationContextObject => {
 
       switch (response.status) {
         case 201:
+          getApplication();
           return 'ok';
         case 400:
           return 'invalid-form';
@@ -196,10 +114,10 @@ const useProvideApplication = (): ApplicationContextObject => {
 const ApplicationContext = createContext<Partial<ApplicationContextObject>>({});
 
 export const ProvideApplication = (props: {children: React.ReactNode}) => {
-  const auth = useProvideApplication();
+  const applicationContext = useProvideApplication();
 
   return (
-    <ApplicationContext.Provider value={auth}>
+    <ApplicationContext.Provider value={applicationContext}>
       {props.children}
     </ApplicationContext.Provider>
   );
