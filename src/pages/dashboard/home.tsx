@@ -8,7 +8,7 @@ export default () => {
 
   const handleClick = async () => {
     await signOut();
-    history.push('/dashboard/login');
+    history.push('/');
   };
 
   return (
