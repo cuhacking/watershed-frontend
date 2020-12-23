@@ -102,7 +102,7 @@ const RegistrationRoute = ({children, ...rest}: RouteProps) => {
           return (
             <Redirect
               to={{
-                pathname: '/dashboard/login',
+                pathname: '/dashboard/sign-up',
                 state: {from: location},
               }}
             />
