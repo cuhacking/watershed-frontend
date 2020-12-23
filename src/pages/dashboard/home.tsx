@@ -97,7 +97,7 @@ export default () => {
         <LogoLink to='/'>
           <StyledLogo />
         </LogoLink>
-        <h1>Almost done...</h1>
+        <h1>All set!</h1>
         <p>
           The hackathon will take place on our Discord along with this website.
           We'll be sending frequent updates leading up to the event there.

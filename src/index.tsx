@@ -44,7 +44,7 @@ const GlobalStyle = createGlobalStyle`
     --indoor: #130101;
 
     --max-width: 1200px;
-    --reading-width: 80ch;
+    --reading-width: 65ch;
     --mobile-width: 90vw;
 
     --primary-font: 'DM Sans', sans-serif;

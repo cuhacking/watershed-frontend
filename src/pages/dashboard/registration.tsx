@@ -478,7 +478,7 @@ function Registration() {
       <Form>
         <FormRow>
           <Dropdown
-            label='Current Level of study'
+            label='Current Level of Study'
             name='studyLevel'
             options={[
               {value: 'Middle School', label: 'Middle School'},
