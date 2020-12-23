@@ -14,6 +14,21 @@ const Container = styled.div`
   min-height: 100vh;
 `;
 
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: var(--mobile-width);
+
+  text-align: center;
+
+  @media only screen and (min-width: 700px) {
+    max-width: var(--reading-width);
+  }
+`;
+
 const StyledButton = styled(Button)`
   margin-top: 16px;
 `;
@@ -40,14 +55,46 @@ export default () => {
   if (application === null) {
     return (
       <Container>
-        <h1>Register now!</h1>
-        <p>Don't wait! Start registration by pressing the button below.</p>
+        <Content>
+          <h1>Register now!</h1>
+          <p>Don't wait! Start registration by pressing the button below.</p>
+          <StyledButton
+            kind='link'
+            color='var(--wine)'
+            link='/dashboard/registration'
+          >
+            Start Registration
+          </StyledButton>
+          <StyledButton
+            kind='button'
+            color='var(--wineDark)'
+            action={handleSignOut}
+          >
+            Sign Out
+          </StyledButton>
+        </Content>
+      </Container>
+    );
+  }
+
+  return (
+    <Container>
+      <Content>
+        <h1>Almost done...</h1>
+        <p>
+          The hackathon will take place over Discord alongside this website, and
+          it's where we'll be sending frequent updates leading up to the event.
+          <br />
+          <br />
+          Join now so you don't miss out!
+        </p>
         <StyledButton
-          kind='link'
+          kind='anchor'
           color='var(--wine)'
-          link='/dashboard/registration'
+          external
+          link='https://discord.gg/TGvYPnD'
         >
-          Start Registration
+          Join our Discord Server
         </StyledButton>
         <StyledButton
           kind='button'
@@ -56,29 +103,7 @@ export default () => {
         >
           Sign Out
         </StyledButton>
-      </Container>
-    );
-  }
-
-  return (
-    <Container>
-      <h1>All set!</h1>
-      <p>You're good to go. Join our Discord Server for further updates.</p>
-      <StyledButton
-        kind='anchor'
-        color='var(--wine)'
-        external
-        link='https://discord.gg/TGvYPnD'
-      >
-        Join our Discord Server
-      </StyledButton>
-      <StyledButton
-        kind='button'
-        color='var(--wineDark)'
-        action={handleSignOut}
-      >
-        Sign Out
-      </StyledButton>
+      </Content>
     </Container>
   );
 };
