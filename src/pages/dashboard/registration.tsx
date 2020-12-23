@@ -131,7 +131,7 @@ interface FormValue {
 }
 
 interface BooleanValue {
-  value: boolean;
+  value: boolean | null;
   error: null | 'string';
   required: boolean;
 }
@@ -184,7 +184,7 @@ const fileValueRequired: FileValue = {
 };
 
 const booleanValueRequired: BooleanValue = {
-  value: false,
+  value: null,
   error: null,
   required: true,
 };
@@ -237,6 +237,10 @@ function Registration() {
   const history = useHistory();
 
   useEffect(() => {
+    console.log(userForm);
+  }, [userForm]);
+
+  useEffect(() => {
     if (registered) {
       alert(`You've been registered!`);
       history.push('/dashborad');
@@ -247,8 +251,7 @@ function Registration() {
     let complete = true;
 
     Object.values(userForm).forEach((formValue) => {
-      if (formValue.required && !formValue.value) {
-        // Set error here
+      if (formValue.required && formValue.value === null) {
         complete = false;
       }
     });
@@ -262,7 +265,7 @@ function Registration() {
     setInfo([name, value]);
   };
 
-  const handleDropdownChange = (name: string, value: string) => {
+  const handleDropdownChange = (name: string, value: string | boolean) => {
     setInfo([name, value]);
   };
 

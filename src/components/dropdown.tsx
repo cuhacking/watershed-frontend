@@ -99,7 +99,7 @@ interface DropdownProps {
   label?: string;
   name: string;
   options: DropdownOption[];
-  value: string | boolean;
+  value: string | boolean | null;
   enableOther?: boolean;
   onClick: Function;
   padded?: boolean;
@@ -139,7 +139,7 @@ const Dropdown = ({
   }
   useOuterClick(dropdownRef);
 
-  const labelValue = (value: string | boolean) => {
+  const labelValue = (value: string | boolean | null) => {
     if (typeof value === 'string') {
       return value;
     } else {
@@ -155,7 +155,7 @@ const Dropdown = ({
         flexGrow: grow ? 1 : 0,
       }}
     >
-      {required && <Required style={{opacity: value ? 0 : 1}}></Required>}
+      {required && <Required style={{opacity: value !== null ? 0 : 1}}></Required>}
       <DropdownContainer
         style={{minWidth: small ? `116px` : '200px'}}
         ref={dropdownRef}

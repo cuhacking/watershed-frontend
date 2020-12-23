@@ -34,6 +34,11 @@ const PrimaryButton = styled.button<ButtonProps>`
     background-color: var(${themeElement('--spaceDark', '--white')});
     color: var(${themeElement('--snow', '--spaceGrey')});
   }
+
+  &:disabled {
+    color: var(${themeElement('--spaceGrey', '--white')});
+    background-color: var(--parksCanada);
+  }
 `;
 
 const SecondaryButton = styled.button<ButtonProps>`
@@ -44,6 +49,11 @@ const SecondaryButton = styled.button<ButtonProps>`
   &:hover {
     background-color: var(${themeElement('--spaceDark', '--white')});
     color: var(${themeElement('--snow', '--spaceGrey')});
+  }
+
+  &:disabled {
+    color: var(--white);
+    background-color: var(--parksCanada);
   }
 `;
 
