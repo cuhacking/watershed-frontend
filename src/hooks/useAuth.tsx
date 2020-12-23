@@ -152,8 +152,8 @@ const useProvideAuth = (): AuthObject => {
 
       Cookies.set('refreshToken', _tokens.refreshToken.token);
       setToken({
-        token: _tokens.refreshToken.token,
-        expiryDate: new Date(_tokens.refreshToken.expiryDate),
+        token: _tokens.accessToken.token,
+        expiryDate: new Date(_tokens.accessToken.expiryDate),
       });
 
       return await getUserInfoHelper(_tokens.accessToken.token);
