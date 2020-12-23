@@ -32,7 +32,7 @@ const StyledHeader = styled.header<{
 
   transition: 0.2s cubic-bezier(0.17, 0.84, 0.44, 1);
 
-  @media only screen and (min-width: 700px) {
+  @media only screen and (min-width: 900px) {
     height: 65px;
     transition: 0.3s cubic-bezier(0.17, 0.84, 0.44, 1);
     background-color: ${({fixed}) => (fixed ? 'var(--black)' : 'transparent')};
@@ -49,9 +49,12 @@ const NavBar = styled.nav<{banner: boolean}>`
 
   width: var(--mobile-width);
 
+  @media only screen and (min-width: 900px) {
+    padding-right: ${({banner}) => (banner ? '164px' : '0')};
+  }
+
   @media only screen and (min-width: 1200px) {
     max-width: var(--max-width);
-    padding-right: ${({banner}) => (banner ? '164px' : '0')};
   }
 `;
 
@@ -63,7 +66,7 @@ const StyledLogo = styled(WordLogo)`
 const ButtonDiv = styled.div`
   display: none;
 
-  @media only screen and (min-width: 700px) {
+  @media only screen and (min-width: 900px) {
     display: flex;
     flex-direction: row;
   }
@@ -75,9 +78,11 @@ const NavMenu = styled.nav`
   justify-content: flex-start;
   align-items: flex-end;
   width: var(--mobile-width);
+  padding-top: 32px;
+
   color: var(--white);
 
-  @media only screen and (min-width: 700px) {
+  @media only screen and (min-width: 900px) {
     display: none;
   }
 `;
@@ -87,7 +92,7 @@ const NavButton = styled.a`
   font-size: 2rem;
   margin: 0.5rem 0;
 
-  @media only screen and (min-width: 700px) {
+  @media only screen and (min-width: 900px) {
     font-size: 1.125rem;
     margin: 0 0 0 40px;
 
