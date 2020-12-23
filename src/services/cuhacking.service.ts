@@ -1,7 +1,6 @@
-import {useAuth} from '../hooks';
 import {UserForm} from '../pages/registration';
 
-export const registerUser = async (registrationForm: UserForm) => {
+export const registerUser = async (registrationForm: UserForm, accessToken: string) => {
   const filterInto = ({
     firstName,
     lastName,
@@ -53,8 +52,6 @@ export const registerUser = async (registrationForm: UserForm) => {
       registrationForm.resume.value?.name
     );
   }
-
-  const {accessToken} = useAuth();
 
   return new Promise((resolve) => {
     fetch(`/api/application`, {

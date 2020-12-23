@@ -14,7 +14,7 @@ import schools from '../schools.json';
 import countries from '../countries.json';
 import {ModalLayout} from '../layouts';
 import {useAuth} from '../hooks';
-import {Prompt, Redirect, useHistory} from 'react-router-dom';
+import {Prompt, useHistory} from 'react-router-dom';
 import {registerUser} from '../services/cuhacking.service';
 
 const ExperienceLabel = styled.div`
@@ -603,7 +603,7 @@ function Registration() {
   const nextStep = () => {
     if (step === finalStep) {
       console.log('verify the form');
-      registerUser(userForm).then((res) => {
+      registerUser(userForm, auth.accessToken?.token ?? '').then((res) => {
         if (res === 'Created') {
           setRegistered(true);
         }
