@@ -30,7 +30,7 @@ const PrimaryButton = styled.button<ButtonProps>`
   background-color: var(${themeElement('--snow', '--ikeaBlue')});
   color: var(${themeElement('--spaceGrey', '--white')});
 
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: var(${themeElement('--spaceDark', '--white')});
     color: var(${themeElement('--snow', '--spaceGrey')});
   }
@@ -46,7 +46,7 @@ const SecondaryButton = styled.button<ButtonProps>`
   background-color: var(${themeElement('--ikeaBlue', '--spaceGrey')});
   color: var(--white);
 
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: var(${themeElement('--spaceDark', '--white')});
     color: var(${themeElement('--snow', '--spaceGrey')});
   }

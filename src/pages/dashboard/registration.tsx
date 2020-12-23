@@ -237,10 +237,6 @@ function Registration() {
   const history = useHistory();
 
   useEffect(() => {
-    console.log(userForm);
-  }, [userForm]);
-
-  useEffect(() => {
     if (registered) {
       alert(`You've been registered!`);
       history.push('/dashborad');
@@ -625,7 +621,7 @@ function Registration() {
           }
         });
       } else {
-        alert('Please complete all mandatory fields');
+        alert('Please fill out all required fields');
       }
 
       return;
