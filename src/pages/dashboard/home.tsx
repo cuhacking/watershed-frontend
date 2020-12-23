@@ -82,8 +82,8 @@ export default () => {
       <Content>
         <h1>Almost done...</h1>
         <p>
-          The hackathon will take place over Discord alongside this website, and
-          it's where we'll be sending frequent updates leading up to the event.
+          The hackathon will take place on our Discord along with this website.
+          We'll be sending frequent updates leading up to the event there.
           <br />
           <br />
           Join now so you don't miss out!
