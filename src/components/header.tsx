@@ -127,7 +127,7 @@ const Header = (props: {fixed: boolean; banner?: boolean}) => {
           <NavButton href='/#schedule'>Schedule</NavButton>
           <NavButton href='/#sponsors'>Sponsors</NavButton>
           <NavButton href='/#FAQ'>FAQ</NavButton>
-          <NavButton href='/dashboard/login'>Login</NavButton>
+          <NavButton href='/dashboard'>Dashboard</NavButton>
         </ButtonDiv>
       </NavBar>
       <NavMenu>
@@ -135,7 +135,7 @@ const Header = (props: {fixed: boolean; banner?: boolean}) => {
         <NavButton href='/#schedule'>Schedule</NavButton>
         <NavButton href='/#sponsors'>Sponsors</NavButton>
         <NavButton href='/#FAQ'>FAQ</NavButton>
-        <NavButton href='/dashboard/login'>Login</NavButton>
+        <NavButton href='/dashboard'>Dashboard</NavButton>
       </NavMenu>
     </StyledHeader>
   );

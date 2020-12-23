@@ -20,6 +20,7 @@ import indoorWebP from 'assets/img/indoor/original.webp';
 import macadamian from 'assets/img/sponsors/macadamian.svg';
 import fdmGroup from 'assets/img/sponsors/fdm-group.svg';
 import kinaxis from 'assets/img/sponsors/kinaxis.png';
+import pinnacle from 'assets/img/sponsors/pinnacle.svg';
 
 const faqs: FAQEntry[] = [
   {
@@ -174,9 +175,9 @@ const HeroBanner = () => {
         <Date>January 29–31, 2021</Date>
         <Location>Virtual, Worldwide</Location>
         <HeroActions>
-          {/* <Button kind='link' color='var(--ikeaBlue)' link='/dashboard/sign-up'> */}
-          Registration Opens Dec. 22
-          {/* </Button> */}
+          <Button kind='link' color='var(--ikeaBlue)' link='/dashboard/sign-up'>
+            Register Now
+          </Button>
         </HeroActions>
       </HeroText>
     </HeroLayerWrapper>
@@ -589,6 +590,17 @@ export default () => (
             name='Kinaxis'
             size={1}
             url='https://kinaxis.com/'
+          />
+        </LogoRow>
+      </SponsorLogos>
+      <SponsorTitle>Partners</SponsorTitle>
+      <SponsorLogos>
+        <LogoRow>
+          <Sponsor
+            logo={pinnacle}
+            name='Pinnacle'
+            size={1}
+            url='https://pinnacle.us.org/'
           />
         </LogoRow>
       </SponsorLogos>
