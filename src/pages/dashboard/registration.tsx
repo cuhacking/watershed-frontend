@@ -139,8 +139,20 @@ const BasicLink = styled.a`
 `;
 
 const CheckboxStyle = styled.label`
+  display: flex;
+  margin-bottom: 16px;
+  font-size: 0.9em;
+  font-style: italic;
+
+  width: 100%;
+  max-width: 425px;
+
   input {
-    margin-right: 0.25em;
+    margin-right: 1em;
+  }
+
+  div {
+    text-align: left;
   }
 `;
 
@@ -154,10 +166,27 @@ const Checkbox = ({
   return (
     <CheckboxStyle>
       <input type='checkbox' {...rest} />
-      {children}
+      <div>{children}</div>
     </CheckboxStyle>
   );
 };
+
+const RequiredNotice = styled.p`
+  margin: 0;
+  font-style: italic;
+  font-size: 0.8em;
+
+  span {
+    color: var(--wineDark);
+  }
+`;
+
+const RequiredMessage = styled.p`
+  font-weight: bold;
+  span {
+    color: var(--wineDark);
+  }
+`;
 
 interface StringValue {
   value: string;
@@ -399,6 +428,9 @@ function Registration() {
   const personalInformation = (
     <FormContainer>
       <h3>Personal information</h3>
+      <RequiredNotice>
+        Required fields are marked with a <span>•</span> symbol.
+      </RequiredNotice>
       <Form>
         <FormRow>
           <Input
@@ -686,6 +718,7 @@ function Registration() {
             >
               MLH Code of Conduct
             </BasicLink>
+            .
           </Checkbox>
         </FormRow>
         <FormRow>
@@ -697,7 +730,10 @@ function Registration() {
               setInfo([event.target.name, event.target.checked]);
             }}
           >
-            I have read and agree to the{' '}
+            I authorize you to share my application/registration information for
+            event administration, ranking, MLH administration, pre- and
+            post-event informational e-mails, and occasional messages about
+            hackathons in-line with the 
             <BasicLink
               href='https://mlh.io/privacy'
               rel='noopener noreferrer external'
@@ -705,8 +741,34 @@ function Registration() {
             >
               MLH Privacy Policy
             </BasicLink>
+            . I further agree to the terms of both the 
+            <BasicLink
+              href='https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions'
+              rel='noopener noreferrer external'
+              target='_blank'
+            >
+              MLH Contest Terms and Conditions
+            </BasicLink>
+             and the 
+            <BasicLink
+              href='https://mlh.io/privacy'
+              rel='noopener noreferrer external'
+              target='_blank'
+            >
+              MLH Privacy Policy
+            </BasicLink>
+            .
           </Checkbox>
         </FormRow>
+        {!formIsOk ? (
+          <RequiredMessage>
+            All required fields must be filled.
+            <br />
+            Required fields are marked with a <span>•</span> symbol.
+          </RequiredMessage>
+        ) : (
+          <></>
+        )}
       </Form>
     </FormContainer>
   );
