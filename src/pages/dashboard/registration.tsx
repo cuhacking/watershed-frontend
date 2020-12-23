@@ -243,6 +243,19 @@ function Registration() {
     }
   }, [registered]);
 
+  const formIsVerified = (): boolean => {
+    let complete = true;
+
+    Object.values(userForm).forEach((formValue) => {
+      if (formValue.required && !formValue.value) {
+        // Set error here
+        complete = false;
+      }
+    });
+
+    return complete;
+  };
+
   const handleFormChange = (e: any) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -602,12 +615,16 @@ function Registration() {
 
   const nextStep = () => {
     if (step === finalStep) {
-      console.log('verify the form');
-      registerUser(userForm, auth.accessToken?.token ?? '').then((res) => {
-        if (res === 'Created') {
-          setRegistered(true);
-        }
-      });
+      if (formIsVerified()) {
+        registerUser(userForm, auth.accessToken?.token ?? '').then((res) => {
+          if (res === 'Created') {
+            setRegistered(true);
+          }
+        });
+      } else {
+        alert('Please complete all mandatory fields');
+      }
+
       return;
     }
     setStep(step + 1);
@@ -633,6 +650,7 @@ function Registration() {
         ))}
       </MarkersContainer>
       <ForwardButton
+        disabled={step === steps.additional && !formIsVerified()}
         aria-label={step === steps.additional ? 'Submit' : 'Continue'}
         onClick={() => nextStep()}
       >
