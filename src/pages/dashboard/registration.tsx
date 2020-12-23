@@ -129,9 +129,9 @@ const NumberInput = styled.input`
 `;
 
 const BasicLink = styled.a`
-  color: var(--snow);
+  font-weight: bold;
 
-  @media (max-width: 768px) {
+  @media (min-width: 768px) {
     &:hover {
       text-decoration: underline;
     }
@@ -697,13 +697,13 @@ function Registration() {
               setInfo([event.target.name, event.target.checked]);
             }}
           >
-            I have read and agree to the MLH{' '}
+            I have read and agree to the{' '}
             <BasicLink
               href='https://mlh.io/privacy'
               rel='noopener noreferrer external'
               target='_blank'
             >
-              Privacy Policy
+              MLH Privacy Policy
             </BasicLink>
           </Checkbox>
         </FormRow>

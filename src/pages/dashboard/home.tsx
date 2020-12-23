@@ -12,7 +12,7 @@ const StyledLogo = styled(Logo)`
 `;
 
 const LogoLink = styled(Link)`
-  margin: 75px 0;
+  margin-bottom: 50px;
 `;
 
 const Container = styled.div`
