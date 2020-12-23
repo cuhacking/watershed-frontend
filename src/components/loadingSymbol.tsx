@@ -21,8 +21,8 @@ const ripple = keyframes`
 const Symbol = styled.div`
   display: inline-block;
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 72px;
+  height: 72px;
 
   & div {
     position: absolute;
