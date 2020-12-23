@@ -23,7 +23,7 @@ const Badge = styled.a`
   right: 68px;
   top: 0px;
   width: 10%;
-  z-index: 0;
+  z-index: 1;
 
   @media only screen and (min-width: 1200px) {
     right: calc(50% - 600px + 16px);
