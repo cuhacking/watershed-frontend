@@ -236,15 +236,14 @@ const useProvideAuth = (): AuthObject => {
 
     const token = await getCorrectToken();
 
-    const options = init
-      ? {
+    let options = init ?? {};
+    options =  {
           ...init,
           headers: {
             ...init.headers,
             Authorization: `Bearer ${token?.token}`,
           },
-        }
-      : {headers: {Authorization: `Bearer ${token?.token}`}};
+        };
 
     return fetch(input, options);
   };
