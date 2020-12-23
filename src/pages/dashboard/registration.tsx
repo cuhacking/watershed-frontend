@@ -12,7 +12,7 @@ import SelectDropdown from '../../components/SelectDropdown';
 import Dropzone from '../../components/Dropzone';
 import AppButton from '../../components/AppButton';
 import {globalTheme, themeElement} from '../../shared/theme';
-import {Desktop, Mobile} from '../../shared/util';
+import {Desktop, Mobile, Required} from '../../shared/util';
 import schools from '../../schools.json';
 import countries from '../../countries.json';
 
@@ -143,6 +143,7 @@ const CheckboxStyle = styled.label`
   margin-bottom: 16px;
   font-size: 0.9em;
   font-style: italic;
+  position: relative;
 
   width: 100%;
   max-width: 425px;
@@ -165,6 +166,7 @@ const Checkbox = ({
 >) => {
   return (
     <CheckboxStyle>
+      <Required style={{opacity: rest.checked ? 0 : 1, top: 0, right: 0}} />
       <input type='checkbox' {...rest} />
       <div>{children}</div>
     </CheckboxStyle>
