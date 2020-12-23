@@ -31,7 +31,9 @@ const OAuthButtons = styled.div`
 `;
 
 const buttonStyle = css`
-  display: inline-block;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
 
   padding: 8px 16px;
 
@@ -71,11 +73,13 @@ const LoginButton = styled.button`
 
 const DiscordButton = styled.a`
   ${buttonStyle}
+  min-width: 215px;
   background-color: #738adb;
 `;
 
 const GitHubButton = styled.a`
   ${buttonStyle}
+  min-width: 215px;
   background-color: #171515;
 `;
 
