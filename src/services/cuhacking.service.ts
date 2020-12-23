@@ -54,8 +54,7 @@ export const registerUser = async (registrationForm: UserForm) => {
     );
   }
 
-  const accessToken =
-    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZCI6ImQ4MzFkM2NhLTE2MGMtNGI4OC05ZmMyLWJlYzk4MzMxZmQ5YiIsImlzc3VlRGF0ZSI6MTYwODY4MTM2NjAxNCwiZXhwaXJ5RGF0ZSI6MTYwODY4MzE2NjAxNH0.5Qep9xVzkfKjEAPoJOXse1697WyZZdrCJWvEQT_Nry2e8UzmuWktpWyKhrpkRZAkS4GJKAweLA90lmXlrjukSA';
+  const accessToken = useAuth();
 
   return new Promise((resolve) => {
     fetch(`/api/application`, {
