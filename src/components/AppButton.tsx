@@ -15,7 +15,7 @@ const buttonStyles = css`
   cursor: pointer;
   justify-content: center;
 
-  &:hover {
+  &:hover:not(:disabled) {
     box-shadow: var(--hover);
   }
 
