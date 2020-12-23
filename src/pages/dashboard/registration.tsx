@@ -337,7 +337,6 @@ function Registration() {
   }, []);
 
   useEffect(() => {
-    console.log(userForm);
     formIsVerified();
   }, [userForm]);
 
@@ -467,7 +466,7 @@ function Registration() {
           />
         </FormRow>
         <ExperienceLabel>
-          *If selected, this will be displayed on your public profile
+          *If selected, this will available to other hackers during the event.
         </ExperienceLabel>
       </Form>
     </FormContainer>
