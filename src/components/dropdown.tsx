@@ -155,7 +155,11 @@ const Dropdown = ({
         flexGrow: grow ? 1 : 0,
       }}
     >
-      {required && <Required style={{opacity: value !== null ? 0 : 1}}></Required>}
+      {required && (
+        <Required
+          style={{opacity: value === null || value === '' ? 1 : 0}}
+        ></Required>
+      )}
       <DropdownContainer
         style={{minWidth: small ? `116px` : '200px'}}
         ref={dropdownRef}
