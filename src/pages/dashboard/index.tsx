@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Helmet} from 'react-helmet';
 import {
   Redirect,
@@ -13,6 +13,7 @@ import {LoadingSymbol} from '../../components';
 import Login from './login';
 import SignUp from './signUp';
 import Home from './home';
+import Registration from './registration';
 
 const LoadingWindow = styled.div`
   display: flex;
@@ -23,7 +24,7 @@ const LoadingWindow = styled.div`
 `;
 
 export default () => {
-  const {path, url} = useRouteMatch();
+  const {path} = useRouteMatch();
 
   return (
     <>
@@ -33,12 +34,16 @@ export default () => {
           <PrivateRoute path={`${path}/`} exact>
             <Home />
           </PrivateRoute>
+          <PrivateRoute path={`${path}/registration`} exact>
+            <Registration />
+          </PrivateRoute>
           <UnprivateRoute path={`${path}/login`}>
             <Login />
           </UnprivateRoute>
           <UnprivateRoute path={`${path}/sign-up`}>
             <SignUp />
           </UnprivateRoute>
+          <Redirect to={`${path}/`} />
         </Switch>
       </ProvideAuth>
     </>

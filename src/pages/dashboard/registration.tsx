@@ -1,21 +1,21 @@
 import React, {useEffect, useReducer, useState} from 'react';
 import styled, {css} from 'styled-components';
-import {Desktop, Mobile} from '../shared/util';
-import Input from '../components/Input';
-import Dropdown from '../components/dropdown';
-import {globalTheme, themeElement} from '../shared/theme';
-import darkArrow from '../assets/img/arrow-down-dark.svg';
-import lightArrow from '../assets/img/arrow-down-light.svg';
-import TextArea from '../components/TextArea';
-import SelectDropdown from '../components/SelectDropdown';
-import Dropzone from '../components/Dropzone';
-import AppButton from '../components/AppButton';
-import schools from '../schools.json';
-import countries from '../countries.json';
-import {ModalLayout} from '../layouts';
-import {useAuth} from '../hooks';
 import {Prompt, useHistory} from 'react-router-dom';
-import {registerUser} from '../services/cuhacking.service';
+import darkArrow from 'assets/img/arrow-down-dark.svg';
+import lightArrow from 'assets/img/arrow-down-light.svg';
+import {ModalLayout} from '../../layouts';
+import {useAuth} from '../../hooks';
+import Input from '../../components/Input';
+import Dropdown from '../../components/dropdown';
+import TextArea from '../../components/TextArea';
+import SelectDropdown from '../../components/SelectDropdown';
+import Dropzone from '../../components/Dropzone';
+import AppButton from '../../components/AppButton';
+import {registerUser} from '../../services/cuhacking.service';
+import {globalTheme, themeElement} from '../../shared/theme';
+import {Desktop, Mobile} from '../../shared/util';
+import schools from '../../schools.json';
+import countries from '../../countries.json';
 
 const ExperienceLabel = styled.div`
   color: var(${themeElement('--snow', '--spaceGrey')});

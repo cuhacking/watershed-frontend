@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Redirect,
+  Route,
+} from 'react-router-dom';
 import {createGlobalStyle} from 'styled-components';
 import 'fontsource-dm-sans';
 import 'fontsource-work-sans';
 import 'fontsource-work-sans/600.css';
 import 'fontsource-montserrat-alternates/600.css';
 import {Home, Dashboard} from './pages';
-import Registration from './pages/registration';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -106,7 +110,7 @@ const App = () => (
       <Switch>
         <Route path='/' exact component={Home} />
         <Route path='/dashboard' component={Dashboard} />
-        <Route path='/registration' exact component={Registration} />
+        <Redirect to='/' />
       </Switch>
     </Router>
   </>
