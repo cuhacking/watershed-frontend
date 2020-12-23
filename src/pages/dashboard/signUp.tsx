@@ -207,8 +207,7 @@ const SignInWithEmail = (props: {prevPage: () => void}) => {
     // Create account
     switch (await signUp(email, passwordA)) {
       case 'ok':
-        setLoading(false);
-        return history.replace('/registration');
+        return history.push('/dashboard/registration');
       case 'expected-failure':
         setLoading(false);
         return setError('This email is already taken.');
