@@ -180,7 +180,7 @@ const useProvideAuth = (): AuthObject => {
       });
 
       switch (tokenResponse.status) {
-        case 201:
+        case 200:
           break;
         case 400:
           return 'expected-failure';
@@ -192,8 +192,8 @@ const useProvideAuth = (): AuthObject => {
 
       Cookies.set('refreshToken', _tokens.refreshToken.token);
       setToken({
-        token: _tokens.accessToken.token,
-        expiryDate: new Date(_tokens.accessToken.expiryDate),
+        token: _tokens.refreshToken.token,
+        expiryDate: new Date(_tokens.refreshToken.expiryDate),
       });
 
       return await getUserInfoHelper(_tokens.accessToken.token);

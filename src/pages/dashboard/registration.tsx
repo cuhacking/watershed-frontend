@@ -4,7 +4,7 @@ import {Prompt, useHistory} from 'react-router-dom';
 import darkArrow from 'assets/img/arrow-down-dark.svg';
 import lightArrow from 'assets/img/arrow-down-light.svg';
 import {ModalLayout} from '../../layouts';
-import {useApplication, useAuth} from '../../hooks';
+import {useAuth} from '../../hooks';
 import Input from '../../components/Input';
 import Dropdown from '../../components/dropdown';
 import TextArea from '../../components/TextArea';
@@ -131,7 +131,7 @@ interface FormValue {
 }
 
 interface BooleanValue {
-  value: boolean;
+  value: boolean | null;
   error: null | 'string';
   required: boolean;
 }
@@ -184,7 +184,7 @@ const fileValueRequired: FileValue = {
 };
 
 const booleanValueRequired: BooleanValue = {
-  value: false,
+  value: null,
   error: null,
   required: true,
 };
@@ -212,47 +212,6 @@ const emptyForm: UserForm = {
   feedback: booleanValueRequired,
 };
 
-const filterInto = ({
-  firstName,
-  lastName,
-  pronouns,
-  email,
-  studyLevel,
-  program,
-  question1,
-  question2,
-  question3,
-  hackathonNumber,
-  website,
-  github,
-  linkedin,
-  country,
-  feedback,
-  skills,
-  school,
-  eventsNumber,
-}: UserForm) => ({
-  completed: true,
-  firstName: firstName.value,
-  lastName: lastName.value,
-  pronouns: pronouns.value,
-  email: email.value,
-  studyLevel: studyLevel.value,
-  program: program.value,
-  question1: question1.value,
-  question2: question2.value,
-  question3: question3.value,
-  hackathonNumber: hackathonNumber.value,
-  website: website.value,
-  github: github.value,
-  linkedin: linkedin.value,
-  skills: skills.value,
-  country: country.value,
-  willingToInterview: feedback.value,
-  school: school.value,
-  eventsNumber: eventsNumber.value,
-});
-
 enum steps {
   personalInformation,
   education,
@@ -270,25 +229,19 @@ const formReducer = (state: UserForm, entry: any[]) => ({
 });
 
 function Registration() {
-  const history = useHistory();
-  const auth = useAuth();
-  const {sendApplication} = useApplication();
   const [step, setStep] = useState(0);
   const [userForm, setInfo] = useReducer(formReducer, emptyForm);
-  // const [registered, setRegistered] = useState(false);
+  const [registered, setRegistered] = useState(false);
   const SECTIONS = 5;
   const finalStep = steps.additional;
+  const history = useHistory();
 
   useEffect(() => {
-    setInfo(['email', auth.user?.email ?? '']);
-  }, []);
-
-  // useEffect(() => {
-  //   if (registered) {
-  //     alert(`You've been registered!`);
-  //     history.push('/dashborad');
-  //   }
-  // }, [registered]);
+    if (registered) {
+      alert(`You've been registered!`);
+      history.push('/dashborad');
+    }
+  }, [registered]);
 
   const formIsVerified = (): boolean => {
     let complete = true;
@@ -300,24 +253,6 @@ function Registration() {
     });
 
     return complete;
-  };
-
-  const submitForm = async (form: UserForm) => {
-    const formattedForm = filterInto(form);
-
-    const result = await sendApplication(formattedForm, form.resume?.value);
-
-    switch (result) {
-      case 'ok':
-        history.push('/dashboard');
-        break;
-      case 'invalid-form':
-        alert('Please fill out all required fields.');
-        break;
-      case 'error':
-        alert('Something went wrong. Please the organizers knows via Discord.');
-        break;
-    }
   };
 
   const handleFormChange = (e: any) => {
@@ -333,6 +268,11 @@ function Registration() {
   const handleResumeUpload = (file: string) => {
     setInfo(['resume', file]);
   };
+
+  const auth = useAuth();
+  React.useEffect(() => {
+    setInfo(['email', auth.user?.email ?? '']);
+  }, []);
 
   const personalInformation = (
     <FormContainer>
@@ -675,13 +615,11 @@ function Registration() {
   const nextStep = () => {
     if (step === finalStep) {
       if (formIsVerified()) {
-        submitForm(userForm);
-
-        // registerUser(userForm, auth.accessToken?.token ?? '').then((res) => {
-        //   if (res === 'Created') {
-        //     setRegistered(true);
-        //   }
-        // });
+        registerUser(userForm, auth.accessToken?.token ?? '').then((res) => {
+          if (res === 'Created') {
+            setRegistered(true);
+          }
+        });
       } else {
         alert('Please fill out all required fields');
       }
