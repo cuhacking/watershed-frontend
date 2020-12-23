@@ -12,6 +12,7 @@ import 'fontsource-work-sans';
 import 'fontsource-work-sans/600.css';
 import 'fontsource-montserrat-alternates/600.css';
 import {Home, Dashboard} from './pages';
+import {ProvideAuth} from './hooks';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -106,13 +107,15 @@ const GlobalStyle = createGlobalStyle`
 const App = () => (
   <>
     <GlobalStyle />
-    <Router>
-      <Switch>
-        <Route path='/' exact component={Home} />
-        <Route path='/dashboard' component={Dashboard} />
-        <Redirect to='/' />
-      </Switch>
-    </Router>
+    <ProvideAuth>
+      <Router>
+        <Switch>
+          <Route path='/' exact component={Home} />
+          <Route path='/dashboard' component={Dashboard} />
+          <Redirect to='/' />
+        </Switch>
+      </Router>
+    </ProvideAuth>
   </>
 );
 
