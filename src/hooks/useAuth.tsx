@@ -150,7 +150,7 @@ const useProvideAuth = (): AuthObject => {
 
       const _tokens = await tokenResponse.json();
 
-      Cookies.set('refreshToken', _tokens.refreshToken.token);
+      Cookies.set('refreshToken', _tokens.refreshToken.token, {secure: true});
       setToken({
         token: _tokens.accessToken.token,
         expiryDate: new Date(_tokens.accessToken.expiryDate),
@@ -190,7 +190,7 @@ const useProvideAuth = (): AuthObject => {
 
       const _tokens = await tokenResponse.json();
 
-      Cookies.set('refreshToken', _tokens.refreshToken.token);
+      Cookies.set('refreshToken', _tokens.refreshToken.token, {secure: true});
       setToken({
         token: _tokens.accessToken.token,
         expiryDate: new Date(_tokens.accessToken.expiryDate),
