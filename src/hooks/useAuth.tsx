@@ -145,7 +145,7 @@ const useProvideAuth = (): AuthObject => {
         case 401:
           return 'expected-failure';
         default:
-          return 'error';
+          throw tokenResponse;
       }
 
       const _tokens = await tokenResponse.json();
@@ -185,7 +185,7 @@ const useProvideAuth = (): AuthObject => {
         case 400:
           return 'expected-failure';
         default:
-          return 'error';
+          throw tokenResponse;
       }
 
       const _tokens = await tokenResponse.json();
