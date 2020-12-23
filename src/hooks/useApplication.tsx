@@ -48,7 +48,6 @@ const useProvideApplication = (): ApplicationContextObject => {
       switch (response.status) {
         case 200:
           const _application = await response.json();
-          console.log('success!', _application);
           setApplication(_application);
           break;
         case 404:
