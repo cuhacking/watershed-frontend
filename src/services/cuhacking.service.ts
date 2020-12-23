@@ -54,7 +54,7 @@ export const registerUser = async (registrationForm: UserForm) => {
     );
   }
 
-  const accessToken = useAuth();
+  const {accessToken} = useAuth();
 
   return new Promise((resolve) => {
     fetch(`/api/application`, {
