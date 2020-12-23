@@ -22,6 +22,10 @@ type AuthObject = {
   user: UserObject | null;
   signIn: (email: string, password: string) => Promise<AuthResponse>;
   signUp: (email: string, password: string) => Promise<AuthResponse>;
+  request: (
+    input: RequestInfo,
+    init?: RequestInit | undefined
+  ) => Promise<Response>;
   signOut: () => void;
 };
 
@@ -63,7 +67,9 @@ const useProvideAuth = (): AuthObject => {
     setUser(null);
   };
 
-  const getAccessTokenHelper = async (token: string): Promise<boolean> => {
+  const getAccessTokenHelper = async (
+    token: string
+  ): Promise<AccessTokenObject | null> => {
     try {
       const accessTokenResponse = await fetch('/api/auth/refresh', {
         method: 'POST',
@@ -78,43 +84,32 @@ const useProvideAuth = (): AuthObject => {
       if (accessTokenResponse.status !== 200) {
         resetHelper();
         setLoading(false);
-        return false;
+        return null;
       }
 
       const {accessToken: _accessToken} = await accessTokenResponse.json();
-
-      setToken({
+      const newToken = {
         token: _accessToken.token,
         expiryDate: new Date(_accessToken.expiryDate),
-      });
+      };
 
-      const result = await getUserInfoHelper(_accessToken.token);
+      setToken(newToken);
+
+      const result = await getUserInfoHelper(newToken.token);
 
       if (result === 'expected-failure') {
         resetHelper();
         setLoading(false);
-        return false;
+        return null;
       }
       setLoading(false);
-      return true;
+      return newToken;
     } catch (error) {
       resetHelper();
       console.error('Unexpected error retrieving access token: ', error);
       setLoading(false);
-      return false;
+      return null;
     }
-  };
-
-  const verifyNotExpiredHelper = async (): Promise<boolean> => {
-    if (accessToken && new Date() > accessToken?.expiryDate) {
-      const refreshToken = Cookies.get('refreshToken');
-
-      if (!refreshToken) return false;
-
-      return await getAccessTokenHelper(refreshToken);
-    }
-
-    return true;
   };
 
   useEffect(() => {
@@ -150,15 +145,15 @@ const useProvideAuth = (): AuthObject => {
         case 401:
           return 'expected-failure';
         default:
-          return 'error';
+          throw tokenResponse;
       }
 
       const _tokens = await tokenResponse.json();
 
       Cookies.set('refreshToken', _tokens.refreshToken.token);
       setToken({
-        token: _tokens.refreshToken.token,
-        expiryDate: new Date(_tokens.refreshToken.expiryDate),
+        token: _tokens.accessToken.token,
+        expiryDate: new Date(_tokens.accessToken.expiryDate),
       });
 
       return await getUserInfoHelper(_tokens.accessToken.token);
@@ -185,20 +180,20 @@ const useProvideAuth = (): AuthObject => {
       });
 
       switch (tokenResponse.status) {
-        case 200:
+        case 201:
           break;
         case 400:
           return 'expected-failure';
         default:
-          return 'error';
+          throw tokenResponse;
       }
 
       const _tokens = await tokenResponse.json();
 
       Cookies.set('refreshToken', _tokens.refreshToken.token);
       setToken({
-        token: _tokens.refreshToken.token,
-        expiryDate: new Date(_tokens.refreshToken.expiryDate),
+        token: _tokens.accessToken.token,
+        expiryDate: new Date(_tokens.accessToken.expiryDate),
       });
 
       return await getUserInfoHelper(_tokens.accessToken.token);
@@ -208,15 +203,56 @@ const useProvideAuth = (): AuthObject => {
     }
   };
 
-  const signOut = async () => {
-    if (!verifyNotExpiredHelper()) return;
+  const request = async (
+    input: RequestInfo,
+    init?: RequestInit | undefined
+  ): Promise<Response> => {
+    // Returns a valid access token by refreshing the token if it's expired
+    // Throws if the refresh token is invalid somehow
+    const getCorrectToken = async () => {
+      if (accessToken && new Date() > accessToken?.expiryDate) {
+        const refreshToken = Cookies.get('refreshToken');
 
+        if (!refreshToken) {
+          resetHelper();
+          throw new Error('invalid-refresh-token');
+        }
+
+        const newAccessToken = await getAccessTokenHelper(refreshToken);
+        if (newAccessToken === null) {
+          resetHelper();
+          throw new Error('invalid-refresh-token');
+        }
+
+        return newAccessToken;
+      }
+
+      // This should never happen, if you're getting this error
+      // you're trying to make a request without having logged in first.
+      if (accessToken === null) throw new Error('no-access-token');
+
+      return accessToken;
+    };
+
+    const token = await getCorrectToken();
+
+    const options = {
+      ...init,
+      headers: {
+        ...init?.headers,
+        Authorization: `Bearer ${token?.token}`,
+      },
+    };
+
+    return fetch(input, options);
+  };
+
+  const signOut = async () => {
     try {
-      await fetch('/api/auth/logout', {
+      await request('/api/auth/logout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken?.token}`,
         },
         body: JSON.stringify({
           refreshToken: Cookies.get('refreshToken'),
@@ -235,6 +271,7 @@ const useProvideAuth = (): AuthObject => {
     user,
     signIn,
     signUp,
+    request,
     signOut,
   };
 };

@@ -65,10 +65,24 @@ const buttonStyle = css`
   }
 `;
 
+const ContinueButton = styled.button`
+  ${buttonStyle}
+  min-width: unset;
+
+  background-color: var(--snow);
+
+  @media only screen and (min-width: 700px) {
+    &:hover {
+      cursor: pointer;
+      color: var(--snow);
+    }
+  }
+`;
+
 const EmailButton = styled.button`
   ${buttonStyle}
 
-  background-color :var(--snow);
+  background-color: var(--snow);
 
   @media only screen and (min-width: 700px) {
     &:hover {
@@ -193,8 +207,7 @@ const SignInWithEmail = (props: {prevPage: () => void}) => {
     // Create account
     switch (await signUp(email, passwordA)) {
       case 'ok':
-        setLoading(false);
-        return history.replace('/registration');
+        return history.push('/dashboard/registration');
       case 'expected-failure':
         setLoading(false);
         return setError('This email is already taken.');
@@ -242,7 +255,7 @@ const SignInWithEmail = (props: {prevPage: () => void}) => {
         ) : (
           <>
             <ErrorMessage visible={error !== null}>{error ?? '_'}</ErrorMessage>{' '}
-            <EmailButton type='submit'>Continue</EmailButton>
+            <ContinueButton type='submit'>Continue</ContinueButton>
           </>
         )}
       </LoginForm>

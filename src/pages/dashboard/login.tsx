@@ -119,7 +119,6 @@ export default () => {
 
     switch (await signIn(email, password)) {
       case 'ok':
-        setLoading(false);
         return history.replace('/dashboard');
       case 'expected-failure':
         setLoading(false);
