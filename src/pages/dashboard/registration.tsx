@@ -841,7 +841,10 @@ function Registration() {
   };
 
   const previousStep = () => {
-    if (step === steps.personalInformation) return;
+    if (step === steps.personalInformation) {
+      history.push('/');
+      return;
+    };
     setStep(step - 1);
   };
 
