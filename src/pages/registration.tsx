@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from 'react';
+import React, {useEffect, useReducer, useState} from 'react';
 import styled, {css} from 'styled-components';
 import {Desktop, Mobile} from '../shared/util';
 import Input from '../components/Input';
@@ -12,9 +12,10 @@ import Dropzone from '../components/Dropzone';
 import AppButton from '../components/AppButton';
 import schools from '../schools.json';
 import countries from '../countries.json';
-import {Prompt} from 'react-router-dom';
 import {ModalLayout} from '../layouts';
 import {useAuth} from '../hooks';
+import {Prompt, useHistory} from 'react-router-dom';
+import {registerUser} from '../services/cuhacking.service';
 
 const ExperienceLabel = styled.div`
   color: var(${themeElement('--snow', '--spaceGrey')});
@@ -129,13 +130,19 @@ interface FormValue {
   required: boolean;
 }
 
+interface BooleanValue {
+  value: boolean;
+  error: null | 'string';
+  required: boolean;
+}
+
 interface FileValue {
   value: File | null;
   error: null | 'string';
   required: boolean;
 }
 
-interface UserForm {
+export interface UserForm {
   firstName: FormValue;
   lastName: FormValue;
   email: FormValue;
@@ -155,7 +162,7 @@ interface UserForm {
   question1: FormValue;
   question2: FormValue;
   question3: FormValue;
-  feedback: FormValue;
+  feedback: BooleanValue;
 }
 
 const formValue: FormValue = {
@@ -172,6 +179,12 @@ const formValueRequired: FormValue = {
 
 const fileValueRequired: FileValue = {
   value: null,
+  error: null,
+  required: true,
+};
+
+const booleanValueRequired: BooleanValue = {
+  value: false,
   error: null,
   required: true,
 };
@@ -196,7 +209,7 @@ const emptyForm: UserForm = {
   question1: formValueRequired,
   question2: formValueRequired,
   question3: formValueRequired,
-  feedback: formValueRequired,
+  feedback: booleanValueRequired,
 };
 
 enum steps {
@@ -207,7 +220,7 @@ enum steps {
   additional,
 }
 
-const formReducer = (state: UserForm, entry: string[]) => ({
+const formReducer = (state: UserForm, entry: any[]) => ({
   ...state,
   [entry[0]]: {
     ...state[entry[0] as keyof UserForm],
@@ -218,8 +231,17 @@ const formReducer = (state: UserForm, entry: string[]) => ({
 function Registration() {
   const [step, setStep] = useState(0);
   const [userForm, setInfo] = useReducer(formReducer, emptyForm);
+  const [registered, setRegistered] = useState(false);
   const SECTIONS = 5;
   const finalStep = steps.additional;
+  const history = useHistory();
+
+  useEffect(() => {
+    if (registered) {
+      alert(`You've been registered!`);
+      history.push('/dashborad');
+    }
+  }, [registered]);
 
   const handleFormChange = (e: any) => {
     const name = e.target.name;
@@ -285,7 +307,11 @@ function Registration() {
           <Dropdown
             label='Pronouns (Optional*)'
             name='pronouns'
-            options={['He/Him', 'She/Her', 'They/Them']}
+            options={[
+              {value: 'He/Him', label: 'He/Him'},
+              {value: 'She/Her', label: 'She/Her'},
+              {value: 'They/Them', label: 'They/Them'},
+            ]}
             enableOther
             value={userForm.pronouns.value}
             onClick={handleDropdownChange}
@@ -321,12 +347,12 @@ function Registration() {
             label='Current Level of study'
             name='studyLevel'
             options={[
-              'Middle School',
-              'High School',
-              "Bachelor's",
-              "Master's",
-              'PhD',
-              'College',
+              {value: 'Middle School', label: 'Middle School'},
+              {value: 'High School', label: 'High School'},
+              {value: "Bachelor's", label: "Bachelor's"},
+              {value: "Master's", label: "Master's"},
+              {value: 'PhD', label: 'PhD'},
+              {value: 'College', label: 'College'},
             ]}
             enableOther
             value={userForm.studyLevel.value}
@@ -373,7 +399,13 @@ function Registration() {
           <ExperienceLabel>I've been to</ExperienceLabel>
           <Dropdown
             name='hackathonNumber'
-            options={['0', '1 - 5', '6 - 10', '10 - 20', '20+']}
+            options={[
+              {label: '0', value: '0'},
+              {label: '1 - 5', value: '1 - 5'},
+              {label: '6 - 10', value: '6 - 10'},
+              {label: '10 - 20', value: '10 - 20'},
+              {label: '20+', value: '20+'},
+            ]}
             value={userForm.hackathonNumber.value}
             onClick={handleDropdownChange}
             padded
@@ -386,7 +418,13 @@ function Registration() {
           <ExperienceLabel>and in the past year I've been to</ExperienceLabel>
           <Dropdown
             name='eventsNumber'
-            options={['0', '1 - 5', '6 - 10', '10 - 20', '20+']}
+            options={[
+              {label: '0', value: '0'},
+              {label: '1 - 5', value: '1 - 5'},
+              {label: '6 - 10', value: '6 - 10'},
+              {label: '10 - 20', value: '10 - 20'},
+              {label: '20+', value: '20+'},
+            ]}
             value={userForm.eventsNumber.value}
             onClick={handleDropdownChange}
             padded
@@ -478,7 +516,10 @@ function Registration() {
           <Dropdown
             name='feedback'
             label='Select a response'
-            options={['Yes', 'No']}
+            options={[
+              {label: 'Yes', value: true},
+              {label: 'No', value: false},
+            ]}
             required={userForm.feedback.required}
             value={userForm.feedback.value}
             onClick={handleDropdownChange}
@@ -562,7 +603,11 @@ function Registration() {
   const nextStep = () => {
     if (step === finalStep) {
       console.log('verify the form');
-      console.log('send request to API');
+      registerUser(userForm, auth.accessToken?.token ?? '').then((res) => {
+        if (res === 'Created') {
+          setRegistered(true);
+        }
+      });
       return;
     }
     setStep(step + 1);
