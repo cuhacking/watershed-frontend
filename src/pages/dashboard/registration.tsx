@@ -131,7 +131,7 @@ interface FormValue {
 }
 
 interface BooleanValue {
-  value: boolean;
+  value: boolean | null;
   error: null | 'string';
   required: boolean;
 }
@@ -184,7 +184,7 @@ const fileValueRequired: FileValue = {
 };
 
 const booleanValueRequired: BooleanValue = {
-  value: false,
+  value: null,
   error: null,
   required: true,
 };
@@ -243,13 +243,25 @@ function Registration() {
     }
   }, [registered]);
 
+  const formIsVerified = (): boolean => {
+    let complete = true;
+
+    Object.values(userForm).forEach((formValue) => {
+      if (formValue.required && formValue.value === null) {
+        complete = false;
+      }
+    });
+
+    return complete;
+  };
+
   const handleFormChange = (e: any) => {
     const name = e.target.name;
     const value = e.target.value;
     setInfo([name, value]);
   };
 
-  const handleDropdownChange = (name: string, value: string) => {
+  const handleDropdownChange = (name: string, value: string | boolean) => {
     setInfo([name, value]);
   };
 
@@ -602,12 +614,16 @@ function Registration() {
 
   const nextStep = () => {
     if (step === finalStep) {
-      console.log('verify the form');
-      registerUser(userForm, auth.accessToken?.token ?? '').then((res) => {
-        if (res === 'Created') {
-          setRegistered(true);
-        }
-      });
+      if (formIsVerified()) {
+        registerUser(userForm, auth.accessToken?.token ?? '').then((res) => {
+          if (res === 'Created') {
+            setRegistered(true);
+          }
+        });
+      } else {
+        alert('Please fill out all required fields');
+      }
+
       return;
     }
     setStep(step + 1);
@@ -633,6 +649,7 @@ function Registration() {
         ))}
       </MarkersContainer>
       <ForwardButton
+        disabled={step === steps.additional && !formIsVerified()}
         aria-label={step === steps.additional ? 'Submit' : 'Continue'}
         onClick={() => nextStep()}
       >
