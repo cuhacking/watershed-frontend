@@ -8,7 +8,12 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 import styled from 'styled-components';
-import {ProvideAuth, ProvideApplication, useAuth} from '../../hooks';
+import {
+  ProvideAuth,
+  ProvideApplication,
+  useAuth,
+  useApplication,
+} from '../../hooks';
 import {LoadingSymbol} from '../../components';
 import Login from './login';
 import SignUp from './signUp';
@@ -35,9 +40,9 @@ export default () => {
             <PrivateRoute path={`${path}/`} exact>
               <Home />
             </PrivateRoute>
-            <PrivateRoute path={`${path}/registration`} exact>
+            <RegistrationRoute path={`${path}/registration`} exact>
               <Registration />
-            </PrivateRoute>
+            </RegistrationRoute>
             <UnprivateRoute path={`${path}/login`}>
               <Login />
             </UnprivateRoute>
@@ -72,6 +77,50 @@ const PrivateRoute = ({children, ...rest}: RouteProps) => {
             <Redirect
               to={{
                 pathname: '/dashboard/login',
+                state: {from: location},
+              }}
+            />
+          );
+        }
+
+        return children;
+      }}
+    />
+  );
+};
+
+const RegistrationRoute = ({children, ...rest}: RouteProps) => {
+  const {isInitiallyLoading, user} = useAuth();
+  const {isLoading, application} = useApplication();
+
+  if (isInitiallyLoading || isLoading) {
+    return (
+      <LoadingWindow>
+        <LoadingSymbol />
+      </LoadingWindow>
+    );
+  }
+
+  return (
+    <Route
+      {...rest}
+      render={({location}: any) => {
+        if (user === null) {
+          return (
+            <Redirect
+              to={{
+                pathname: '/dashboard/login',
+                state: {from: location},
+              }}
+            />
+          );
+        }
+
+        if (application !== null) {
+          return (
+            <Redirect
+              to={{
+                pathname: '/dashboard',
                 state: {from: location},
               }}
             />

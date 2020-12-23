@@ -174,9 +174,9 @@ const HeroBanner = () => {
         <Date>January 29–31, 2021</Date>
         <Location>Virtual, Worldwide</Location>
         <HeroActions>
-          <RegistrationLink>
-            Registration Opens Dec. 22
-          </RegistrationLink>
+          {/* <Button kind='link' color='var(--ikeaBlue)' link='/dashboard/sign-up'> */}
+          Registration Opens Dec. 22
+          {/* </Button> */}
         </HeroActions>
       </HeroText>
     </HeroLayerWrapper>
@@ -468,7 +468,12 @@ export default () => (
           will be the primary platform for communication and is where we'll be
           hosting many of our workshops.
         </SectionText>
-        <DiscordButton external link='https://discord.gg/TGvYPnD'>
+        <DiscordButton
+          kind='anchor'
+          color='var(--wine)'
+          external
+          link='https://discord.gg/TGvYPnD'
+        >
           Join our Discord Server
         </DiscordButton>
       </SectionHalf>
@@ -550,7 +555,13 @@ export default () => (
           Join us this year digitally to network with innovative students and
           make connections with our amazing tech community!
         </SectionText>
-        <Button external link='mailto:sponsorship@cuhacking.com'>
+
+        <Button
+          kind='anchor'
+          color='var(--wine)'
+          external
+          link='mailto:sponsorship@cuhacking.com'
+        >
           Become a Sponsor
         </Button>
       </SponsorshipContainer>
