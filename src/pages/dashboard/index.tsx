@@ -8,12 +8,7 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 import styled from 'styled-components';
-import {
-  ProvideAuth,
-  ProvideApplication,
-  useAuth,
-  useApplication,
-} from '../../hooks';
+import {ProvideApplication, useAuth, useApplication} from '../../hooks';
 import {LoadingSymbol} from '../../components';
 import Login from './login';
 import SignUp from './signUp';
@@ -34,25 +29,23 @@ export default () => {
   return (
     <>
       <Helmet titleTemplate={`%s — cuHacking 2021 Dashboard`} />
-      <ProvideAuth>
-        <ProvideApplication>
-          <Switch>
-            <PrivateRoute path={`${path}/`} exact>
-              <Home />
-            </PrivateRoute>
-            <RegistrationRoute path={`${path}/registration`} exact>
-              <Registration />
-            </RegistrationRoute>
-            <UnprivateRoute path={`${path}/login`}>
-              <Login />
-            </UnprivateRoute>
-            <UnprivateRoute path={`${path}/sign-up`}>
-              <SignUp />
-            </UnprivateRoute>
-            <Redirect to={`${path}/`} />
-          </Switch>
-        </ProvideApplication>
-      </ProvideAuth>
+      <ProvideApplication>
+        <Switch>
+          <PrivateRoute path={`${path}/`} exact>
+            <Home />
+          </PrivateRoute>
+          <RegistrationRoute path={`${path}/registration`} exact>
+            <Registration />
+          </RegistrationRoute>
+          <UnprivateRoute path={`${path}/login`}>
+            <Login />
+          </UnprivateRoute>
+          <UnprivateRoute path={`${path}/sign-up`}>
+            <SignUp />
+          </UnprivateRoute>
+          <Redirect to={`${path}/`} />
+        </Switch>
+      </ProvideApplication>
     </>
   );
 };

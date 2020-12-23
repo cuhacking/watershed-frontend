@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {Link, useRouteMatch} from 'react-router-dom';
 import {useScrollPosition} from '@n8tb1t/use-scroll-position';
 import {ReactComponent as WordLogo} from 'assets/img/word-logo-white.svg';
+import {useAuth} from '../hooks';
 import MenuButton from './menuButton';
 
 const StyledHeader = styled.header<{
@@ -103,6 +104,7 @@ const NavButton = styled.a`
 `;
 
 const Header = (props: {fixed: boolean; banner?: boolean}) => {
+  const {user} = useAuth();
   const [isOpen, setOpen] = useState(false);
   const [isDark, setDark] = useState(false);
   const isHome = useRouteMatch('/');
@@ -127,7 +129,9 @@ const Header = (props: {fixed: boolean; banner?: boolean}) => {
           <NavButton href='/#schedule'>Schedule</NavButton>
           <NavButton href='/#sponsors'>Sponsors</NavButton>
           <NavButton href='/#FAQ'>FAQ</NavButton>
-          <NavButton href='/dashboard/login'>Login</NavButton>
+          <NavButton href='/dashboard'>
+            {user === null ? 'Login' : 'Dashboard'}
+          </NavButton>
         </ButtonDiv>
       </NavBar>
       <NavMenu>
@@ -135,7 +139,9 @@ const Header = (props: {fixed: boolean; banner?: boolean}) => {
         <NavButton href='/#schedule'>Schedule</NavButton>
         <NavButton href='/#sponsors'>Sponsors</NavButton>
         <NavButton href='/#FAQ'>FAQ</NavButton>
-        <NavButton href='/dashboard/login'>Login</NavButton>
+        <NavButton href='/dashboard'>
+          {user === null ? 'Login' : 'Dashboard'}
+        </NavButton>
       </NavMenu>
     </StyledHeader>
   );

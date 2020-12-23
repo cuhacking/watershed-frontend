@@ -93,6 +93,10 @@ const SocialDiv = styled.div`
   width: 15em;
 
   margin-top: 10px;
+
+  @media only screen and (min-width: 700px) {
+    margin-top: 0;
+  }
 `;
 
 const StyledIcon = styled.a`
@@ -108,6 +112,29 @@ const StyledIcon = styled.a`
   }
 `;
 
+const LeftContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  @media only screen and (min-width: 700px) {
+    flex-direction: row;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
+const CodeOfConductLink = styled.a`
+  margin: 16px 0;
+
+  @media only screen and (min-width: 700px) {
+    margin-left: 16px;
+  }
+`;
+
 const Footer = () => (
   <StyledFooter>
     <Container>
@@ -120,20 +147,29 @@ const Footer = () => (
         <FontAwesomeIcon icon={faArrowUp} size='sm' /> Back to Top
       </BackToTopButton>
       <Content>
-        <a
-          href='https://cuhacking.com'
-          rel='noopener noreferrer external'
-          target='_blank'
-          aria-label="cuHacking Home"
-        >
-          <StyledLogo />
-        </a>
+        <LeftContent>
+          <a
+            href='https://cuhacking.com'
+            rel='noopener noreferrer external'
+            target='_blank'
+            aria-label='cuHacking Home'
+          >
+            <StyledLogo />
+          </a>
+          <CodeOfConductLink
+            href='https://static.mlh.io/docs/mlh-code-of-conduct.pdf'
+            rel='noopener noreferrer external'
+            target='_blank'
+          >
+            MLH Code of Conduct
+          </CodeOfConductLink>
+        </LeftContent>
         <SocialDiv>
           <StyledIcon
             target='_blank'
             rel='noopener noreferrer external'
             href='https://discord.gg/TGvYPnD'
-            aria-label="Discord"
+            aria-label='Discord'
           >
             <FontAwesomeIcon icon={faDiscord} size='1x' />
           </StyledIcon>
@@ -141,7 +177,7 @@ const Footer = () => (
             target='_blank'
             rel='noopener noreferrer external'
             href='https://www.facebook.com/cuhacking/'
-            aria-label="Facebook"
+            aria-label='Facebook'
           >
             <FontAwesomeIcon icon={faFacebookF} size='1x' />
           </StyledIcon>
@@ -149,7 +185,7 @@ const Footer = () => (
             target='_blank'
             rel='noopener noreferrer external'
             href='https://www.linkedin.com/company/cuhacking/'
-            aria-label="Linkedin"
+            aria-label='Linkedin'
           >
             <FontAwesomeIcon icon={faLinkedin} size='1x' />
           </StyledIcon>
@@ -157,7 +193,7 @@ const Footer = () => (
             target='_blank'
             rel='noopener noreferrer external'
             href='https://www.instagram.com/cuHacking/'
-            aria-label="Instagram"
+            aria-label='Instagram'
           >
             <FontAwesomeIcon icon={faInstagram} size='1x' />
           </StyledIcon>
@@ -165,7 +201,7 @@ const Footer = () => (
             target='_blank'
             rel='noopener noreferrer external'
             href='https://twitter.com/cuhacking'
-            aria-label="Twitter"
+            aria-label='Twitter'
           >
             <FontAwesomeIcon icon={faTwitter} size='1x' />
           </StyledIcon>
@@ -173,7 +209,7 @@ const Footer = () => (
             target='_blank'
             rel='noopener noreferrer external'
             href='https://github.com/cuhacking'
-            aria-label="Github"
+            aria-label='Github'
           >
             <FontAwesomeIcon icon={faGithub} size='1x' />
           </StyledIcon>

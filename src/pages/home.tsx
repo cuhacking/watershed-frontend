@@ -20,11 +20,12 @@ import indoorWebP from 'assets/img/indoor/original.webp';
 import macadamian from 'assets/img/sponsors/macadamian.svg';
 import fdmGroup from 'assets/img/sponsors/fdm-group.svg';
 import kinaxis from 'assets/img/sponsors/kinaxis.png';
+import pinnacle from 'assets/img/sponsors/pinnacle.svg';
 
 const faqs: FAQEntry[] = [
   {
     question: 'What is cuHacking 2021: Snowed In?',
-    answer: `cuHacking is Ottawa's largest annual student-run hackathon. Think of it as a marathon of learning and building new things. "Snowed In" is what we're calling the 2021 edition of cuHacking. Over the weekend of January 29–31, students from around the country, and possibly the world, from various backgrounds and skill levels will participate in events, workshops, network with engaging companies, and work on personal projects!`,
+    answer: `Ottawa's largest annual student-run hackathon. Think of it as a marathon of learning and building new things. "Snowed In" is what we're calling the 2021 edition of cuHacking. Over the weekend of January 29–31, students from around the country, and possibly the world, from various backgrounds and skill levels will participate in events, workshops, network with engaging companies, and work on personal projects!`,
   },
   {
     question: 'Is this an online event?',
@@ -32,7 +33,7 @@ const faqs: FAQEntry[] = [
   },
   {
     question: 'How much does it cost to attend?',
-    answer: `cuHacking, along with all other MLH hackathons are completely free to attend for all students. Even though the event has no cost, you still have the chance to win amazing prizes for participating in our event. Follow the registration information found on this page to sign up for this amazing weekend!`,
+    answer: `All MLH hackathons, including cuHacking 2021: Snowed In, are completely free to attend for all students. Even though the event has no cost, you still have the chance to win amazing prizes for participating in our event. Follow the registration information found on this page to sign up for this amazing weekend!`,
   },
   {
     question: `What if I've never participated in a hackathon?`,
@@ -44,7 +45,7 @@ const faqs: FAQEntry[] = [
   },
   {
     question: 'How do I sign up?',
-    answer: `Keep tabs on our social media and join our Discord server to stay in the loop! Once applications are open, you won't be able to miss the big button at the top of this site.`,
+    answer: `Hit the big "Register Now" button at the top of the site!`,
   },
   {
     question: 'Where will cuHacking be hosted?',
@@ -174,9 +175,9 @@ const HeroBanner = () => {
         <Date>January 29–31, 2021</Date>
         <Location>Virtual, Worldwide</Location>
         <HeroActions>
-          {/* <Button kind='link' color='var(--ikeaBlue)' link='/dashboard/sign-up'> */}
-          Registration Opens Dec. 22
-          {/* </Button> */}
+          <Button kind='link' color='var(--ikeaBlue)' link='/dashboard/sign-up'>
+            Register Now
+          </Button>
         </HeroActions>
       </HeroText>
     </HeroLayerWrapper>
@@ -196,10 +197,6 @@ const HeroActions = styled.div`
   margin-top: 16px;
   text-align: center;
   align-content: center;
-`;
-
-const RegistrationLink = styled.div`
-  box-sizing: border-box;
 `;
 
 const HeroText = styled.div`
@@ -276,6 +273,7 @@ const sectionStyles = css`
   display: flex;
   flex-direction: column;
   padding: 0 calc((100% - var(--mobile-width)) / 2);
+
   @media only screen and (min-width: 1200px) {
     padding: 0 calc((100% - var(--max-width)) / 2);
   }
@@ -589,6 +587,17 @@ export default () => (
             name='Kinaxis'
             size={1}
             url='https://kinaxis.com/'
+          />
+        </LogoRow>
+      </SponsorLogos>
+      <SponsorTitle>Partners</SponsorTitle>
+      <SponsorLogos>
+        <LogoRow>
+          <Sponsor
+            logo={pinnacle}
+            name='Pinnacle'
+            size={1}
+            url='https://pinnacle.us.org/'
           />
         </LogoRow>
       </SponsorLogos>
