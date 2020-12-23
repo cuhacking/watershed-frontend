@@ -17,6 +17,7 @@ interface AccessTokenObject {
 type AuthResponse = 'ok' | 'expected-failure' | 'error';
 
 type AuthObject = {
+  accessToken: AccessTokenObject | null;
   isInitiallyLoading: boolean;
   user: UserObject | null;
   signIn: (email: string, password: string) => Promise<AuthResponse>;
@@ -229,6 +230,7 @@ const useProvideAuth = (): AuthObject => {
   };
 
   return {
+    accessToken,
     isInitiallyLoading,
     user,
     signIn,
