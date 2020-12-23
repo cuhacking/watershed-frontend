@@ -199,10 +199,6 @@ const HeroActions = styled.div`
   align-content: center;
 `;
 
-const RegistrationLink = styled.div`
-  box-sizing: border-box;
-`;
-
 const HeroText = styled.div`
   display: flex;
   flex-direction: column;
@@ -277,6 +273,7 @@ const sectionStyles = css`
   display: flex;
   flex-direction: column;
   padding: 0 calc((100% - var(--mobile-width)) / 2);
+
   @media only screen and (min-width: 1200px) {
     padding: 0 calc((100% - var(--max-width)) / 2);
   }
