@@ -21,6 +21,7 @@ import macadamian from 'assets/img/sponsors/macadamian.svg';
 import fdmGroup from 'assets/img/sponsors/fdm-group.svg';
 import kinaxis from 'assets/img/sponsors/kinaxis.png';
 import pinnacle from 'assets/img/sponsors/pinnacle.svg';
+import stickerMule from 'assets/img/sponsors/sticker-mule.svg';
 
 const faqs: FAQEntry[] = [
   {
@@ -598,6 +599,12 @@ export default () => (
             name='Pinnacle'
             size={1}
             url='https://pinnacle.us.org/'
+          />
+          <Sponsor
+            logo={stickerMule}
+            name='stickermule'
+            size={1}
+            url='http://hackp.ac/mlh-stickermule-hackathons'
           />
         </LogoRow>
       </SponsorLogos>
