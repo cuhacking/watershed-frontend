@@ -22,6 +22,9 @@ import fdmGroup from 'assets/img/sponsors/fdm-group.svg';
 import kinaxis from 'assets/img/sponsors/kinaxis.png';
 import pinnacle from 'assets/img/sponsors/pinnacle.svg';
 import stickerMule from 'assets/img/sponsors/sticker-mule.svg';
+import ross from 'assets/img/sponsors/ross.png';
+import ciena from 'assets/img/sponsors/ciena.svg';
+import decode from 'assets/img/sponsors/decode.svg';
 
 const faqs: FAQEntry[] = [
   {
@@ -411,6 +414,7 @@ const LogoRow = styled.div`
   display: flex;
   justify-content: center;
   margin: 16px 0;
+  align-items: center;
 `;
 
 export default () => (
@@ -570,11 +574,20 @@ export default () => (
       <SponsorLogos>
         <LogoRow>
           <Sponsor
+            logo={ross}
+            name='Ross Video'
+            size={4}
+            url='https://www.rossvideo.com/'
+          />
+        </LogoRow>
+        <LogoRow>
+          <Sponsor
             logo={fdmGroup}
             name='FDM Group'
             size={2}
             url='https://apply.fdmgroup.com/?chkCategory=1&chkCategory=3&lstRegion=10'
           />
+          <Sponsor logo={ciena} name='Ciena' size={2} url='www.ciena.com' />
         </LogoRow>
         <LogoRow>
           <Sponsor
@@ -599,6 +612,12 @@ export default () => (
             name='Pinnacle'
             size={1}
             url='https://pinnacle.us.org/'
+          />
+          <Sponsor
+            logo={decode}
+            name='deCODE'
+            size={1}
+            url='www.hackdecode.io'
           />
           <Sponsor
             logo={stickerMule}
