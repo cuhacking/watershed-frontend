@@ -1,23 +1,39 @@
 import Input from '../../components/Input';
 import Button from '../../components/AppButton';
 import React, {useEffect, useReducer, useState} from 'react';
-import {Redirect} from 'react-router-dom';
+import {Redirect, useHistory} from 'react-router-dom';
 import styled from 'styled-components';
+import {themeElement} from '../../shared/theme';
 
 const Container = styled.div`
   display: flex;
-  height: 100%;
+  height: 100vh;
+  background-color: var(--spaceDark);
+  padding: 1rem;
 `;
 
 const ResetPasswordCard = styled.div`
+  min-width: 400px;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  align-items: flex-start;
+  margin: auto;
+  padding: 2rem;
+  background-color: var(--spaceGrey);
+  border-radius: 1rem;
+  box-shadow: var(--hover);
+
+  @media (max-width: 768px) {
+    min-width: 100%;
+  }
 `;
 
 const PasswordForm = styled.form`
   display: flex;
+  width: 100%;
   flex-direction: column;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 `;
 
 interface PasswordForm {
@@ -38,22 +54,21 @@ const formReducer = (state: PasswordForm, entry: any[]) => ({
 export default () => {
   const [resetToken, setResetToken] = useState('');
   const [passwordForm, setPasswordForm] = useReducer(formReducer, emptyForm);
+  const history = useHistory();
 
   const formIsOk = (): boolean =>
     passwordForm.password !== '' &&
     passwordForm.confirmPassword === passwordForm.password;
 
   useEffect(() => {
-    try {
-      const url = window.location.search;
-      const params = new URLSearchParams(url);
-      const token = params.get('token');
+    const url = window.location.search;
+    const params = new URLSearchParams(url);
+    const token = params.get('token');
 
-      if (token) {
-        setResetToken(token);
-      }
-    } catch (err) {
-      // redirect to home
+    if (token) {
+      setResetToken(token);
+    } else {
+      history.push('/');
     }
   }, []);
 
@@ -70,14 +85,14 @@ export default () => {
   return (
     <Container>
       <ResetPasswordCard>
-        <h3>Please enter your new password</h3>
+        <h3>Enter your new password</h3>
         <PasswordForm>
           <Input
             onChange={handleFormChange}
             type='password'
             name='password'
             value={passwordForm.password}
-            placeHolder='Last name'
+            placeHolder='Password'
             displayLabel
             padded
             grow
@@ -88,7 +103,7 @@ export default () => {
             type='password'
             name='confirmPassword'
             value={passwordForm.confirmPassword}
-            placeHolder='Last name'
+            placeHolder='Confirm password'
             displayLabel
             padded
             grow
@@ -99,14 +114,18 @@ export default () => {
                 : `Passwords don't match`
             }
           ></Input>
-          <Button
-            disabled={!formIsOk}
-            onClick={() => submitNewPassword()}
-            value='submit'
-          >
-            Submit
-          </Button>
         </PasswordForm>
+        <Button
+          style={{
+            marginLeft: 'auto',
+            marginRight: 0,
+          }}
+          disabled={!formIsOk()}
+          onClick={() => submitNewPassword()}
+          value='submit'
+        >
+          Submit
+        </Button>
       </ResetPasswordCard>
     </Container>
   );
