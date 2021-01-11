@@ -13,6 +13,7 @@ import 'fontsource-work-sans/600.css';
 import 'fontsource-montserrat-alternates/600.css';
 import {Home, Dashboard} from './pages';
 import {ProvideAuth} from './hooks';
+import ResetPassword from './pages/dashboard/resetPassword';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -112,6 +113,7 @@ const App = () => (
         <Switch>
           <Route path='/' exact component={Home} />
           <Route path='/dashboard' component={Dashboard} />
+          <Route path='/reset' component={ResetPassword} />
           <Redirect to='/' />
         </Switch>
       </Router>
