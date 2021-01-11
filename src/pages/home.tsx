@@ -22,7 +22,7 @@ import fdmGroup from 'assets/img/sponsors/fdm-group.svg';
 import kinaxis from 'assets/img/sponsors/kinaxis.png';
 import pinnacle from 'assets/img/sponsors/pinnacle.svg';
 import stickerMule from 'assets/img/sponsors/sticker-mule.svg';
-import ross from 'assets/img/sponsors/ross.png';
+import ross from 'assets/img/sponsors/rossVideo.svg';
 import ciena from 'assets/img/sponsors/ciena.svg';
 import decode from 'assets/img/sponsors/decode.svg';
 
@@ -415,6 +415,11 @@ const LogoRow = styled.div`
   justify-content: center;
   margin: 16px 0;
   align-items: center;
+  flex-direction: column;
+
+  @media only screen and (min-width: 1200px) {
+    flex-direction: row;
+  }
 `;
 
 export default () => (
@@ -617,7 +622,7 @@ export default () => (
             logo={decode}
             name='deCODE'
             size={1}
-            url='www.hackdecode.io'
+            url='https://www.hackdecode.io'
           />
           <Sponsor
             logo={stickerMule}
