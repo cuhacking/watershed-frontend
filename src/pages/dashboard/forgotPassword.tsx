@@ -38,11 +38,10 @@ const formReducer = (state: PasswordForm, entry: any[]) => ({
 export default () => {
   const [resetToken, setResetToken] = useState('');
   const [passwordForm, setPasswordForm] = useReducer(formReducer, emptyForm);
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
 
   const formIsOk = (): boolean =>
-    password !== '' && confirmPassword === password;
+    passwordForm.password !== '' &&
+    passwordForm.confirmPassword === passwordForm.password;
 
   useEffect(() => {
     try {
@@ -94,7 +93,11 @@ export default () => {
             padded
             grow
             required={true}
-            error={password === confirmPassword ? '' : `Passwords don't match`}
+            error={
+              passwordForm.password === passwordForm.confirmPassword
+                ? ''
+                : `Passwords don't match`
+            }
           ></Input>
           <Button onClick={() => submitNewPassword()} value='submit'>
             Submit
