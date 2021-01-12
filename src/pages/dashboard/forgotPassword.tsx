@@ -11,7 +11,7 @@ const Container = styled.div`
 `;
 
 const ResetPasswordCard = styled.div`
-  min-width: 400px;
+  width: 600px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -22,7 +22,7 @@ const ResetPasswordCard = styled.div`
   box-shadow: var(--hover);
 
   @media (max-width: 768px) {
-    min-width: 100%;
+    width: 100%;
   }
 `;
 
@@ -70,9 +70,9 @@ export default () => {
           ></Input>
         </PasswordForm>
         {emailSent && (
-          <b>
-            If an account is connected to that email and email should arrive
-            soon with instructions to reset your password
+          <b style={{marginBottom: '1rem'}}>
+            An email should arrive soon with instructions to reset your password
+            if the email address is connected to an account
           </b>
         )}
         <Button
