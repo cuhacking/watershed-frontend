@@ -592,7 +592,7 @@ export default () => (
             size={2}
             url='https://apply.fdmgroup.com/?chkCategory=1&chkCategory=3&lstRegion=10'
           />
-          <Sponsor logo={ciena} name='Ciena' size={2} url='www.ciena.com' />
+          <Sponsor logo={ciena} name='Ciena' size={2} url='https://www.ciena.com' />
         </LogoRow>
         <LogoRow>
           <Sponsor
