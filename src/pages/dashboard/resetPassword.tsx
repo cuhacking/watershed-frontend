@@ -1,9 +1,8 @@
 import Input from '../../components/Input';
 import Button from '../../components/AppButton';
 import React, {useEffect, useReducer, useState} from 'react';
-import {Redirect, useHistory} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import styled from 'styled-components';
-import {themeElement} from '../../shared/theme';
 
 const Container = styled.div`
   display: flex;
@@ -79,7 +78,16 @@ export default () => {
   };
 
   const submitNewPassword = () => {
-    console.log('call backend api');
+    const requestBody = {
+      token: resetToken,
+      password: passwordForm.password
+    };
+    fetch('/api/auth/performReset', {
+      method: 'POSt',
+      body: JSON.stringify(requestBody),
+    }).then((res) => {
+      
+    });
   };
 
   return (

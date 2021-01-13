@@ -48,14 +48,21 @@ export default () => {
   };
 
   const submitResetEmail = () => {
-    // call backend
-    setEmailSent(true);
+    const requestBody = {
+      email,
+    };
+    fetch('/api/auth/reset', {
+      method: 'POSt',
+      body: JSON.stringify(requestBody),
+    }).then((res) => {
+      setEmailSent(true);
+    });
   };
 
   return (
     <Container>
       <ResetPasswordCard>
-        <h3>Enter the email connected to your cuHacking account</h3>
+        <h3>Enter the email linked to your cuHacking account</h3>
         <PasswordForm>
           <Input
             onChange={handleFormChange}
@@ -72,7 +79,7 @@ export default () => {
         {emailSent && (
           <b style={{marginBottom: '1rem'}}>
             An email should arrive soon with instructions to reset your password
-            if the email address is connected to an account
+            if the email address is linked to an account
           </b>
         )}
         <Button
