@@ -65,7 +65,7 @@ export default () => {
     const token = params.get('token');
 
     if (token) {
-      setResetToken(token);
+      console.log(token);
     } else {
       history.push('/');
     }
@@ -80,13 +80,18 @@ export default () => {
   const submitNewPassword = () => {
     const requestBody = {
       token: resetToken,
-      password: passwordForm.password
+      password: passwordForm.password,
     };
+    console.log(requestBody);
     fetch('/api/auth/performReset', {
-      method: 'POSt',
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
       body: JSON.stringify(requestBody),
     }).then((res) => {
-      
+      console.log(res);
+      console.log('password reseted');
     });
   };
 

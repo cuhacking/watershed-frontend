@@ -52,7 +52,10 @@ export default () => {
       email,
     };
     fetch('/api/auth/reset', {
-      method: 'POSt',
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
       body: JSON.stringify(requestBody),
     }).then((res) => {
       setEmailSent(true);
