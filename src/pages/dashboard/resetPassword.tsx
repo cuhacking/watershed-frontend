@@ -52,6 +52,7 @@ const formReducer = (state: PasswordForm, entry: any[]) => ({
 
 export default () => {
   const [resetToken, setResetToken] = useState('');
+  const [resetComplete, setResetComplete] = useState(false);
   const [passwordForm, setPasswordForm] = useReducer(formReducer, emptyForm);
   const history = useHistory();
 
@@ -65,7 +66,7 @@ export default () => {
     const token = params.get('token');
 
     if (token) {
-      console.log(token);
+      setResetToken(token);
     } else {
       history.push('/');
     }
@@ -90,8 +91,9 @@ export default () => {
       },
       body: JSON.stringify(requestBody),
     }).then((res) => {
-      console.log(res);
-      console.log('password reseted');
+      if (res.status === 200) {
+        setResetComplete(true);
+      }
     });
   };
 
@@ -128,6 +130,11 @@ export default () => {
             }
           ></Input>
         </PasswordForm>
+        {resetComplete && (
+          <b style={{marginBottom: '1rem'}}>
+            Your password has been reset!
+          </b>
+        )}
         <Button
           style={{
             marginLeft: 'auto',
