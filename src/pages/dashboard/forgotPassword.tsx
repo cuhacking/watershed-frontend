@@ -23,7 +23,8 @@ export default () => {
   };
 
   const emailIsValid = (): boolean => {
-    return email !== '';
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return email !== '' && emailRegex.test(String(email).toLowerCase());
   };
 
   const submitResetEmail = () => {
@@ -64,10 +65,12 @@ export default () => {
           if the email address is linked to an account
         </b>
       )}
-      <div style={{
-        width: '100%',
-        display: 'flex'
-      }}>
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+        }}
+      >
         <Button
           style={{
             marginLeft: 'auto',
