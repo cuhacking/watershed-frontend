@@ -10,7 +10,6 @@ const PasswordForm = styled.form`
   width: 100%;
   flex-direction: column;
   margin-top: 1rem;
-  margin-bottom: 2rem;
 `;
 
 export default () => {
@@ -58,31 +57,34 @@ export default () => {
           grow
           required={true}
         ></Input>
-      </PasswordForm>
-      {emailSent && (
-        <b style={{marginBottom: '1rem'}}>
-          An email should arrive soon with instructions to reset your password
-          if the email address is linked to an account
-        </b>
-      )}
-      <div
-        style={{
-          width: '100%',
-          display: 'flex',
-        }}
-      >
-        <Button
+        {emailSent && (
+          <b style={{marginBottom: '1rem'}}>
+            An email should arrive soon with instructions to reset your password
+            if the email address is linked to an account
+          </b>
+        )}
+        <div
           style={{
-            marginLeft: 'auto',
-            marginRight: 0,
+            width: '100%',
+            display: 'flex',
           }}
-          disabled={!emailIsValid()}
-          onClick={() => submitResetEmail()}
-          value='submit'
         >
-          Submit
-        </Button>
-      </div>
+          <Button
+            style={{
+              marginLeft: 'auto',
+              marginRight: 0,
+            }}
+            disabled={!emailIsValid()}
+            onClick={(e: any) => {
+              e.preventDefault();
+              submitResetEmail();
+            }}
+            value='submit'
+          >
+            Submit
+          </Button>
+        </div>
+      </PasswordForm>
     </ModalLayout>
   );
 };
