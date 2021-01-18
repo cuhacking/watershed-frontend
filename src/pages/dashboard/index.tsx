@@ -14,6 +14,7 @@ import Login from './login';
 import SignUp from './signUp';
 import Home from './home';
 import Registration from './registration';
+import ForgotPassword from './forgotPassword';
 
 const LoadingWindow = styled.div`
   display: flex;
@@ -37,6 +38,9 @@ export default () => {
           <RegistrationRoute path={`${path}/registration`} exact>
             <Registration />
           </RegistrationRoute>
+          <UnprivateRoute path={`${path}/forgot`}>
+            <ForgotPassword />
+          </UnprivateRoute>
           <UnprivateRoute path={`${path}/login`}>
             <Login />
           </UnprivateRoute>

@@ -156,6 +156,7 @@ export default () => {
           padded
           required={true}
         />
+        <Link to='/dashboard/forgot'>reset password</Link>
         {isLoading ? (
           <LoadingSymbol />
         ) : (

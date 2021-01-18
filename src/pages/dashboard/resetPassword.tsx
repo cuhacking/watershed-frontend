@@ -1,6 +1,7 @@
 import Input from '../../components/Input';
 import Button from '../../components/AppButton';
 import React, {useEffect, useReducer, useState} from 'react';
+import {ModalLayout} from '../../layouts';
 import {useHistory} from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -87,7 +88,7 @@ export default () => {
     fetch('/api/auth/performReset', {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
       },
       body: JSON.stringify(requestBody),
     }).then((res) => {
@@ -98,7 +99,7 @@ export default () => {
   };
 
   return (
-    <Container>
+    <ModalLayout>
       <ResetPasswordCard>
         <h3>Enter your new password</h3>
         <PasswordForm>
@@ -131,9 +132,7 @@ export default () => {
           ></Input>
         </PasswordForm>
         {resetComplete && (
-          <b style={{marginBottom: '1rem'}}>
-            Your password has been reset!
-          </b>
+          <b style={{marginBottom: '1rem'}}>Your password has been reset!</b>
         )}
         <Button
           style={{
@@ -147,6 +146,6 @@ export default () => {
           Submit
         </Button>
       </ResetPasswordCard>
-    </Container>
+    </ModalLayout>
   );
 };
