@@ -4,36 +4,13 @@ import React, {useEffect, useReducer, useState} from 'react';
 import {ModalLayout} from '../../layouts';
 import {useHistory} from 'react-router-dom';
 import styled from 'styled-components';
-
-const Container = styled.div`
-  display: flex;
-  height: 100vh;
-  background-color: var(--spaceDark);
-  padding: 1rem;
-`;
-
-const ResetPasswordCard = styled.div`
-  width: 600px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: auto;
-  padding: 2rem;
-  background-color: var(--spaceGrey);
-  border-radius: 1rem;
-  box-shadow: var(--hover);
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`;
+import {Helmet} from 'react-helmet';
 
 const PasswordForm = styled.form`
   display: flex;
   width: 100%;
   flex-direction: column;
   margin-top: 1rem;
-  margin-bottom: 2rem;
 `;
 
 interface PasswordForm {
@@ -55,6 +32,7 @@ export default () => {
   const [resetToken, setResetToken] = useState('');
   const [resetComplete, setResetComplete] = useState(false);
   const [passwordForm, setPasswordForm] = useReducer(formReducer, emptyForm);
+  const [resetError, setResetError] = useState(false);
   const history = useHistory();
 
   const formIsOk = (): boolean =>
@@ -94,58 +72,68 @@ export default () => {
     }).then((res) => {
       if (res.status === 200) {
         setResetComplete(true);
+      } else {
+        setResetError(true);
       }
     });
   };
 
   return (
     <ModalLayout>
-      <ResetPasswordCard>
-        <h3>Enter your new password</h3>
-        <PasswordForm>
-          <Input
-            onChange={handleFormChange}
-            type='password'
-            name='password'
-            value={passwordForm.password}
-            placeHolder='Password'
-            displayLabel
-            padded
-            grow
-            required={true}
-          ></Input>
-          <Input
-            onChange={handleFormChange}
-            type='password'
-            name='confirmPassword'
-            value={passwordForm.confirmPassword}
-            placeHolder='Confirm password'
-            displayLabel
-            padded
-            grow
-            required={true}
-            error={
-              passwordForm.password === passwordForm.confirmPassword
-                ? ''
-                : `Passwords don't match`
-            }
-          ></Input>
-        </PasswordForm>
+      <Helmet>Reset password</Helmet>
+      <h3>Enter your new password</h3>
+      <PasswordForm>
+        <Input
+          onChange={handleFormChange}
+          type='password'
+          name='password'
+          value={passwordForm.password}
+          placeHolder='Password'
+          displayLabel
+          padded
+          grow
+          required={true}
+        ></Input>
+        <Input
+          onChange={handleFormChange}
+          type='password'
+          name='confirmPassword'
+          value={passwordForm.confirmPassword}
+          placeHolder='Confirm password'
+          displayLabel
+          padded
+          grow
+          required={true}
+          error={
+            passwordForm.password === passwordForm.confirmPassword
+              ? ''
+              : `Passwords don't match`
+          }
+        ></Input>
         {resetComplete && (
           <b style={{marginBottom: '1rem'}}>Your password has been reset!</b>
+        )}
+        {resetError && (
+          <b style={{marginBottom: '1rem', color: 'var(--wineDark)'}}>
+            There was an error updating your password, please try again later
+          </b>
         )}
         <Button
           style={{
             marginLeft: 'auto',
             marginRight: 0,
+            marginTop: '1rem',
           }}
           disabled={!formIsOk()}
-          onClick={() => submitNewPassword()}
+          onClick={(e: any) => {
+            e.preventDefault();
+            submitNewPassword();
+          }}
           value='submit'
         >
           Submit
         </Button>
-      </ResetPasswordCard>
+      </PasswordForm>
     </ModalLayout>
   );
 };

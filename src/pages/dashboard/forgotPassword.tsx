@@ -63,27 +63,21 @@ export default () => {
             if the email address is linked to an account
           </b>
         )}
-        <div
+        <Button
           style={{
-            width: '100%',
-            display: 'flex',
+            marginLeft: 'auto',
+            marginRight: 0,
+            marginTop: '1rem',
           }}
+          disabled={!emailIsValid()}
+          onClick={(e: any) => {
+            e.preventDefault();
+            submitResetEmail();
+          }}
+          value='submit'
         >
-          <Button
-            style={{
-              marginLeft: 'auto',
-              marginRight: 0,
-            }}
-            disabled={!emailIsValid()}
-            onClick={(e: any) => {
-              e.preventDefault();
-              submitResetEmail();
-            }}
-            value='submit'
-          >
-            Submit
-          </Button>
-        </div>
+          Submit
+        </Button>
       </PasswordForm>
     </ModalLayout>
   );
