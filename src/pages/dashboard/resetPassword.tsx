@@ -107,7 +107,6 @@ export default () => {
   return (
     <ModalLayout>
       <Container>
-
         <Helmet>Reset password</Helmet>
         <h3>Enter your new password</h3>
         <PasswordForm>
