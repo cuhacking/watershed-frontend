@@ -12,6 +12,14 @@ const PasswordForm = styled.form`
   margin-top: 1rem;
 `;
 
+const Container = styled.div`
+  width: 600px;
+
+  @media (max-width: 769px) {
+    width: 100%;
+  }
+`;
+
 export default () => {
   const [email, setEmail] = useState('');
   const [emailSent, setEmailSent] = useState(false);
@@ -38,47 +46,50 @@ export default () => {
       body: JSON.stringify(requestBody),
     }).then((res) => {
       setEmailSent(true);
+      setEmail('');
     });
   };
 
   return (
     <ModalLayout>
-      <Helmet>Forgot password</Helmet>
-      <h3>Enter the email linked to your cuHacking account</h3>
-      <PasswordForm>
-        <Input
-          onChange={handleFormChange}
-          type='email'
-          name='email'
-          value={email}
-          placeHolder='Email'
-          displayLabel
-          padded
-          grow
-          required={true}
-        ></Input>
-        {emailSent && (
-          <b style={{marginBottom: '1rem'}}>
-            An email should arrive soon with instructions to reset your password
-            if the email address is linked to an account
-          </b>
-        )}
-        <Button
-          style={{
-            marginLeft: 'auto',
-            marginRight: 0,
-            marginTop: '1rem',
-          }}
-          disabled={!emailIsValid()}
-          onClick={(e: any) => {
-            e.preventDefault();
-            submitResetEmail();
-          }}
-          value='submit'
-        >
-          Submit
-        </Button>
-      </PasswordForm>
+      <Container>
+        <Helmet>Forgot password</Helmet>
+        <h3>Enter the email linked to your cuHacking account</h3>
+        <PasswordForm>
+          <Input
+            onChange={handleFormChange}
+            type='email'
+            name='email'
+            value={email}
+            placeHolder='Email'
+            displayLabel
+            padded
+            grow
+            required={true}
+          ></Input>
+          {emailSent && (
+            <b style={{marginBottom: '1rem'}}>
+              An email should arrive soon with instructions to reset your password
+              if the email address is linked to an account
+            </b>
+          )}
+          <Button
+            style={{
+              marginLeft: 'auto',
+              marginRight: 0,
+              marginTop: '1rem',
+            }}
+            disabled={!emailIsValid()}
+            onClick={(e: any) => {
+              e.preventDefault();
+              submitResetEmail();
+            }}
+            value='submit'
+          >
+            Submit
+          </Button>
+        </PasswordForm>
+      </Container>
     </ModalLayout>
   );
 };
