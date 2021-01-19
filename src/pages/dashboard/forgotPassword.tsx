@@ -1,9 +1,11 @@
 import Input from '../../components/Input';
 import Button from '../../components/AppButton';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {ModalLayout} from '../../layouts';
 import {Helmet} from 'react-helmet';
+import { useAuth } from 'hooks';
+import { useHistory } from 'react-router-dom';
 
 const PasswordForm = styled.form`
   display: flex;
@@ -23,6 +25,14 @@ const Container = styled.div`
 export default () => {
   const [email, setEmail] = useState('');
   const [emailSent, setEmailSent] = useState(false);
+  const history = useHistory();
+
+  useEffect(() => {
+    const { user } = useAuth()
+    if (user) {
+      history.push('/');
+    }
+  });
 
   const handleFormChange = (e: any) => {
     const value = e.target.value;

@@ -5,6 +5,7 @@ import {ModalLayout} from '../../layouts';
 import {useHistory} from 'react-router-dom';
 import styled from 'styled-components';
 import {Helmet} from 'react-helmet';
+import { useAuth } from 'hooks';
 
 const PasswordForm = styled.form`
   display: flex;
@@ -48,6 +49,11 @@ export default () => {
     passwordForm.confirmPassword === passwordForm.password;
 
   useEffect(() => {
+    const { user } = useAuth()
+    if (user) {
+      history.push('/');
+    }
+
     const url = window.location.search;
     const params = new URLSearchParams(url);
     const token = params.get('token');
