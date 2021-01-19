@@ -5,7 +5,8 @@ import {ModalLayout} from '../../layouts';
 import {useHistory} from 'react-router-dom';
 import styled from 'styled-components';
 import {Helmet} from 'react-helmet';
-import { useAuth } from 'hooks';
+import { useAuth } from '../../hooks';
+import {LoadingSymbol} from '../../components';
 
 const PasswordForm = styled.form`
   display: flex;
@@ -42,14 +43,15 @@ export default () => {
   const [resetComplete, setResetComplete] = useState(false);
   const [passwordForm, setPasswordForm] = useReducer(formReducer, emptyForm);
   const [resetError, setResetError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
+  const { user } = useAuth()
 
   const formIsOk = (): boolean =>
     passwordForm.password !== '' &&
     passwordForm.confirmPassword === passwordForm.password;
 
   useEffect(() => {
-    const { user } = useAuth()
     if (user) {
       history.push('/');
     }
@@ -71,7 +73,15 @@ export default () => {
     setPasswordForm([name, value]);
   };
 
+  const finishReset = () => {
+    setPasswordForm(['password', '']);
+    setPasswordForm(['confirmPassword', ''])
+    setIsLoading(false);
+  }
+
   const submitNewPassword = () => {
+    setIsLoading(true);
+
     const requestBody = {
       token: resetToken,
       password: passwordForm.password,
@@ -86,12 +96,10 @@ export default () => {
     }).then((res) => {
       if (res.status === 200) {
         setResetComplete(true);
-        setPasswordForm(['password', '']);
-        setPasswordForm(['confirmPassword', ''])
+        finishReset();
       } else {
         setResetError(true);
-        setPasswordForm(['password', '']);
-        setPasswordForm(['confirmPassword', ''])
+        finishReset();
       }
     });
   };
@@ -130,6 +138,15 @@ export default () => {
                 : `Passwords don't match`
             }
           ></Input>
+          {isLoading && (
+            <div style={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center'
+            }}>
+              <LoadingSymbol />
+            </div>
+          )}
           {resetComplete && (
             <b style={{marginBottom: '1rem'}}>Your password has been reset!</b>
           )}

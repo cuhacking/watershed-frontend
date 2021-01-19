@@ -4,8 +4,9 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {ModalLayout} from '../../layouts';
 import {Helmet} from 'react-helmet';
-import { useAuth } from 'hooks';
+import { useAuth } from '../../hooks';
 import { useHistory } from 'react-router-dom';
+import {LoadingSymbol} from '../../components';
 
 const PasswordForm = styled.form`
   display: flex;
@@ -25,10 +26,11 @@ const Container = styled.div`
 export default () => {
   const [email, setEmail] = useState('');
   const [emailSent, setEmailSent] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
+  const { user } = useAuth();
 
   useEffect(() => {
-    const { user } = useAuth()
     if (user) {
       history.push('/');
     }
@@ -45,6 +47,8 @@ export default () => {
   };
 
   const submitResetEmail = () => {
+    setIsLoading(true);
+
     const requestBody = {
       email,
     };
@@ -55,6 +59,7 @@ export default () => {
       },
       body: JSON.stringify(requestBody),
     }).then((res) => {
+      setIsLoading(false);
       setEmailSent(true);
       setEmail('');
     });
@@ -77,6 +82,15 @@ export default () => {
             grow
             required={true}
           ></Input>
+          {isLoading && (
+            <div style={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center'
+            }}>
+              <LoadingSymbol />
+            </div>
+          )}
           {emailSent && (
             <b style={{marginBottom: '1rem'}}>
               An email should arrive soon with instructions to reset your password
