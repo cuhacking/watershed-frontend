@@ -13,6 +13,14 @@ const PasswordForm = styled.form`
   margin-top: 1rem;
 `;
 
+const Container = styled.div`
+  width: 600px;
+
+  @media (max-width: 769px) {
+    width: 100%;
+  }
+`;
+
 interface PasswordForm {
   password: string;
   confirmPassword: string;
@@ -72,68 +80,75 @@ export default () => {
     }).then((res) => {
       if (res.status === 200) {
         setResetComplete(true);
+        setPasswordForm(['password', '']);
+        setPasswordForm(['confirmPassword', ''])
       } else {
         setResetError(true);
+        setPasswordForm(['password', '']);
+        setPasswordForm(['confirmPassword', ''])
       }
     });
   };
 
   return (
     <ModalLayout>
-      <Helmet>Reset password</Helmet>
-      <h3>Enter your new password</h3>
-      <PasswordForm>
-        <Input
-          onChange={handleFormChange}
-          type='password'
-          name='password'
-          value={passwordForm.password}
-          placeHolder='Password'
-          displayLabel
-          padded
-          grow
-          required={true}
-        ></Input>
-        <Input
-          onChange={handleFormChange}
-          type='password'
-          name='confirmPassword'
-          value={passwordForm.confirmPassword}
-          placeHolder='Confirm password'
-          displayLabel
-          padded
-          grow
-          required={true}
-          error={
-            passwordForm.password === passwordForm.confirmPassword
-              ? ''
-              : `Passwords don't match`
-          }
-        ></Input>
-        {resetComplete && (
-          <b style={{marginBottom: '1rem'}}>Your password has been reset!</b>
-        )}
-        {resetError && (
-          <b style={{marginBottom: '1rem', color: 'var(--wineDark)'}}>
-            There was an error updating your password, please try again later
-          </b>
-        )}
-        <Button
-          style={{
-            marginLeft: 'auto',
-            marginRight: 0,
-            marginTop: '1rem',
-          }}
-          disabled={!formIsOk()}
-          onClick={(e: any) => {
-            e.preventDefault();
-            submitNewPassword();
-          }}
-          value='submit'
-        >
-          Submit
-        </Button>
-      </PasswordForm>
+      <Container>
+
+        <Helmet>Reset password</Helmet>
+        <h3>Enter your new password</h3>
+        <PasswordForm>
+          <Input
+            onChange={handleFormChange}
+            type='password'
+            name='password'
+            value={passwordForm.password}
+            placeHolder='Password'
+            displayLabel
+            padded
+            grow
+            required={true}
+          ></Input>
+          <Input
+            onChange={handleFormChange}
+            type='password'
+            name='confirmPassword'
+            value={passwordForm.confirmPassword}
+            placeHolder='Confirm password'
+            displayLabel
+            padded
+            grow
+            required={true}
+            error={
+              passwordForm.password === passwordForm.confirmPassword
+                ? ''
+                : `Passwords don't match`
+            }
+          ></Input>
+          {resetComplete && (
+            <b style={{marginBottom: '1rem'}}>Your password has been reset!</b>
+          )}
+          {resetError && (
+            <b style={{marginBottom: '1rem', color: 'var(--wineDark)'}}>
+              There was an error updating your password, please try again later
+            </b>
+          )}
+          <Button
+            style={{
+              marginLeft: 'auto',
+              marginRight: 0,
+              marginTop: '1rem',
+            }}
+            disabled={!formIsOk()}
+            onClick={(e: any) => {
+              e.preventDefault();
+              submitNewPassword();
+            }}
+            value='submit'
+          >
+            Submit
+          </Button>
+        </PasswordForm>
+      </Container>
     </ModalLayout>
   );
 };
