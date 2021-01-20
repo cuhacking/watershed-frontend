@@ -4,8 +4,8 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {ModalLayout} from '../../layouts';
 import {Helmet} from 'react-helmet';
-import { useAuth } from '../../hooks';
-import { useHistory } from 'react-router-dom';
+import {useAuth} from '../../hooks';
+import {useHistory} from 'react-router-dom';
 import {LoadingSymbol} from '../../components';
 
 const PasswordForm = styled.form`
@@ -27,8 +27,9 @@ export default () => {
   const [email, setEmail] = useState('');
   const [emailSent, setEmailSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [tempEmail, setTempEmail] = useState('');
   const history = useHistory();
-  const { user } = useAuth();
+  const {user} = useAuth();
 
   useEffect(() => {
     if (user) {
@@ -59,6 +60,7 @@ export default () => {
       },
       body: JSON.stringify(requestBody),
     }).then((res) => {
+      setTempEmail(email);
       setIsLoading(false);
       setEmailSent(true);
       setEmail('');
@@ -68,7 +70,9 @@ export default () => {
   return (
     <ModalLayout>
       <Container>
-        <Helmet>Forgot password</Helmet>
+        <Helmet>
+          <title>Forgot password</title>
+        </Helmet>
         <h3>Enter the email linked to your cuHacking account</h3>
         <PasswordForm>
           <Input
@@ -83,35 +87,41 @@ export default () => {
             required={true}
           ></Input>
           {isLoading && (
-            <div style={{
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'center'
-            }}>
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
               <LoadingSymbol />
             </div>
           )}
           {emailSent && (
             <b style={{marginBottom: '1rem'}}>
-              An email should arrive soon with instructions to reset your password
-              if the email address is linked to an account
+              An email will be sent to {tempEmail} with instructions to reset your
+              password if it is linked to an account
             </b>
           )}
-          <Button
+          <div
             style={{
-              marginLeft: 'auto',
-              marginRight: 0,
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'flex-end',
               marginTop: '1rem',
             }}
-            disabled={!emailIsValid()}
-            onClick={(e: any) => {
-              e.preventDefault();
-              submitResetEmail();
-            }}
-            value='submit'
           >
-            Submit
-          </Button>
+            <Button
+              disabled={!emailIsValid()}
+              onClick={(e: any) => {
+                e.preventDefault();
+                submitResetEmail();
+              }}
+              value='submit'
+            >
+              Submit
+            </Button>
+          </div>
         </PasswordForm>
       </Container>
     </ModalLayout>

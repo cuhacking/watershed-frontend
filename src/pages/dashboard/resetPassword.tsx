@@ -5,7 +5,7 @@ import {ModalLayout} from '../../layouts';
 import {useHistory} from 'react-router-dom';
 import styled from 'styled-components';
 import {Helmet} from 'react-helmet';
-import { useAuth } from '../../hooks';
+import {useAuth} from '../../hooks';
 import {LoadingSymbol} from '../../components';
 
 const PasswordForm = styled.form`
@@ -45,7 +45,7 @@ export default () => {
   const [resetError, setResetError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
-  const { user } = useAuth()
+  const {user} = useAuth();
 
   const formIsOk = (): boolean =>
     passwordForm.password !== '' &&
@@ -75,9 +75,9 @@ export default () => {
 
   const finishReset = () => {
     setPasswordForm(['password', '']);
-    setPasswordForm(['confirmPassword', ''])
+    setPasswordForm(['confirmPassword', '']);
     setIsLoading(false);
-  }
+  };
 
   const submitNewPassword = () => {
     setIsLoading(true);
@@ -107,7 +107,9 @@ export default () => {
   return (
     <ModalLayout>
       <Container>
-        <Helmet>Reset password</Helmet>
+        <Helmet>
+          <title>Reset password</title>
+        </Helmet>
         <h3>Enter your new password</h3>
         <PasswordForm>
           <Input
@@ -138,11 +140,13 @@ export default () => {
             }
           ></Input>
           {isLoading && (
-            <div style={{
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'center'
-            }}>
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
               <LoadingSymbol />
             </div>
           )}
