@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import {ModalLayout} from '../../layouts';
 import {Helmet} from 'react-helmet';
 import {useAuth} from '../../hooks';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 import {LoadingSymbol} from '../../components';
 
 const PasswordForm = styled.form`
@@ -98,10 +98,20 @@ export default () => {
             </div>
           )}
           {emailSent && (
-            <b style={{marginBottom: '1rem'}}>
-              An email will be sent to {tempEmail} with instructions to reset your
-              password if it is linked to an account
-            </b>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+            }}>
+              <b style={{marginBottom: '1rem'}}>
+                An email will be sent to {tempEmail} with instructions to reset
+                your password if it is linked to an account
+              </b>
+              <Link style={{color: 'var(--snow)'}} to='/'>
+                <b>
+                  go back to home page
+                </b>
+              </Link>
+            </div>
           )}
           <div
             style={{
