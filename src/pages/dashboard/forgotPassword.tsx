@@ -108,7 +108,7 @@ export default () => {
               </b>
               <Link style={{color: 'var(--snow)'}} to='/'>
                 <b>
-                  go back to home page
+                  Go back to home page
                 </b>
               </Link>
             </div>
