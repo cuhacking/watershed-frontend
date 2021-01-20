@@ -84,6 +84,8 @@ const GitHubButton = styled.a`
 `;
 
 const OptionButtons = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-top: 24px;
 `;
 
@@ -178,7 +180,10 @@ export default () => {
       </OAuthButtons>
       <OptionButtons>
         <OptionButton to='/dashboard/sign-up'>
-          I don't have an account.
+          I don't have an account
+        </OptionButton>
+        <OptionButton style={{marginTop: '1rem'}} to='/dashboard/forgot'>
+          Reset password
         </OptionButton>
         {/* <OptionButton to='/dashboard/forgot-password'>
           I forgot my password.
