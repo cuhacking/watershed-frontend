@@ -25,6 +25,10 @@ import stickerMule from 'assets/img/sponsors/sticker-mule.svg';
 import ross from 'assets/img/sponsors/rossVideo.svg';
 import ciena from 'assets/img/sponsors/ciena.svg';
 import decode from 'assets/img/sponsors/decode.svg';
+import fellow from 'assets/img/sponsors/fellow.svg';
+import glimpse from 'assets/img/sponsors/glimpse.png';
+import codex from 'assets/img/sponsors/the-codex.svg';
+import echoAR from 'assets/img/sponsors/echoAR.png';
 
 const faqs: FAQEntry[] = [
   {
@@ -607,6 +611,20 @@ export default () => (
             size={1}
             url='https://kinaxis.com/'
           />
+          <Sponsor 
+            logo={fellow}
+            name="Fellow"
+            size={1}
+            url='https://fellow.app'
+          />
+        </LogoRow>
+        <LogoRow>
+          <Sponsor 
+            logo={echoAR}
+            name="echoAR"
+            size={1}
+            url='https://echoar.xyz'
+          />
         </LogoRow>
       </SponsorLogos>
       <SponsorTitle>Partners</SponsorTitle>
@@ -629,6 +647,20 @@ export default () => (
             name='stickermule'
             size={1}
             url='http://hackp.ac/mlh-stickermule-hackathons'
+          />
+        </LogoRow>
+        <LogoRow>
+          <Sponsor
+            logo={glimpse}
+            name='Glimpse'
+            size={1}
+            url='https://joinglimpse.com'
+          />
+          <Sponsor
+            logo={codex}
+            name='The Codex'
+            size={1}
+            url='https://thecodex.me/'
           />
         </LogoRow>
       </SponsorLogos>
