@@ -23,7 +23,7 @@ const StyledFooter = styled.footer`
   padding-bottom: 20px;
   width: 100vw;
 
-  color: var(--white);
+  color: var(--coolWhite);
 `;
 
 const Container = styled.div`
@@ -41,7 +41,7 @@ const Container = styled.div`
 const BackToTopButton = styled.button`
   align-self: flex-end;
   padding: 0;
-  color: var(--white);
+  color: var(--coolWhite);
   background: none;
   border: none;
 

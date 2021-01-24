@@ -19,7 +19,7 @@ const CreateAccountPrompt = styled.p`
 `;
 
 const ErrorMessage = styled.p<{visible: boolean}>`
-  color: var(--wineDark);
+  color: var(--wineLight);
   font-size: 0.8em;
   margin-top: 0;
   opacity: ${({visible}) => (visible ? 1 : 0)};
@@ -117,7 +117,7 @@ const BackToOptionsButton = styled.button`
 
   border: none;
   background: none;
-  color: var(--white);
+  color: var(--coolWhite);
 
   font-size: 1em;
   font-family: var(--secondary-font);

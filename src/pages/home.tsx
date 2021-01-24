@@ -198,7 +198,7 @@ const HeroBanner = () => {
 
 const HeroActions = styled.div`
   font-size: 1.2rem;
-  color: var(--white);
+  color: var(--coolWhite);
   display: flex;
   flex-direction: column;
   align-self: center;
@@ -213,7 +213,7 @@ const HeroText = styled.div`
   align-items: center;
   width: var(--mobile-width);
   text-align: right;
-  color: var(--white);
+  color: var(--coolWhite);
   position: absolute;
   justify-content: center;
   height: 100%;
@@ -314,7 +314,7 @@ const StyledSection = styled.section<{
 `;
 
 const SectionHeader = styled.h1`
-  color: var(--white);
+  color: var(--coolWhite);
   font-size: 2.1em;
   font-weight: 600;
   font-family: var(--secondary-font);
@@ -330,7 +330,7 @@ const OutdoorHeader = styled(SectionHeader)`
 `;
 
 const SectionText = styled.p`
-  color: var(--white);
+  color: var(--coolWhite);
   margin: 0 0 0.5em 0;
   font-weight: 400;
   line-height: 1.8em;
@@ -403,7 +403,7 @@ const SponsorshipContainer = styled.div`
 `;
 
 const SponsorshipTitle = styled.h2`
-  color: var(--white);
+  color: var(--coolWhite);
 `;
 
 const SponsorTitle = styled(SectionHeader)`

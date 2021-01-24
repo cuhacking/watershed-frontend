@@ -28,15 +28,15 @@ const buttonStyles = css`
 const PrimaryButton = styled.button<ButtonProps>`
   ${buttonStyles}
   background-color: var(${themeElement('--snow', '--ikeaBlue')});
-  color: var(${themeElement('--spaceGrey', '--white')});
+  color: var(${themeElement('--spaceGrey', '--coolWhite')});
 
   &:hover:not(:disabled) {
-    background-color: var(${themeElement('--spaceDark', '--white')});
+    background-color: var(${themeElement('--spaceDark', '--coolWhite')});
     color: var(${themeElement('--snow', '--spaceGrey')});
   }
 
   &:disabled {
-    color: var(${themeElement('--spaceGrey', '--white')});
+    color: var(${themeElement('--spaceGrey', '--coolWhite')});
     background-color: var(--parksCanada);
   }
 `;
@@ -44,15 +44,15 @@ const PrimaryButton = styled.button<ButtonProps>`
 const SecondaryButton = styled.button<ButtonProps>`
   ${buttonStyles}
   background-color: var(${themeElement('--ikeaBlue', '--spaceGrey')});
-  color: var(--white);
+  color: var(--coolWhite);
 
   &:hover:not(:disabled) {
-    background-color: var(${themeElement('--spaceDark', '--white')});
+    background-color: var(${themeElement('--spaceDark', '--coolWhite')});
     color: var(${themeElement('--snow', '--spaceGrey')});
   }
 
   &:disabled {
-    color: var(--white);
+    color: var(--coolWhite);
     background-color: var(--parksCanada);
   }
 `;

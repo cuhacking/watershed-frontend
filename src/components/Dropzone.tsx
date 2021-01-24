@@ -25,10 +25,10 @@ const dropStyles = css`
 const PrimaryDrop = styled.div`
   ${dropStyles}
   background-color: var(${themeElement('--snow', '--ikeaBlue')});
-  color: var(${themeElement('--spaceGrey', '--white')});
+  color: var(${themeElement('--spaceGrey', '--coolWhite')});
 
   &:hover {
-    background-color: var(${themeElement('--spaceDark', '--white')});
+    background-color: var(${themeElement('--spaceDark', '--coolWhite')});
     color: var(${themeElement('--snow', '--spaceGrey')});
   }
 `;
@@ -36,10 +36,10 @@ const PrimaryDrop = styled.div`
 const SecondaryDrop = styled.div`
   ${dropStyles}
   background-color: var(${themeElement('--ikeaBlue', '--spaceGrey')});
-  color: var(--white);
+  color: var(--coolWhite);
 
   &:hover {
-    background-color: var(${themeElement('--spaceDark', '--white')});
+    background-color: var(${themeElement('--spaceDark', '--coolWhite')});
     color: var(${themeElement('--snow', '--spaceGrey')});
   }
 `;

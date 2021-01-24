@@ -81,7 +81,7 @@ export default () => {
           </StyledButton>
           <StyledButton
             kind='button'
-            color='var(--wineDark)'
+            color='var(--wineLight)'
             action={handleSignOut}
           >
             Sign Out
@@ -115,7 +115,7 @@ export default () => {
         </StyledButton>
         <StyledButton
           kind='button'
-          color='var(--wineDark)'
+          color='var(--wineLight)'
           action={handleSignOut}
         >
           Sign Out
