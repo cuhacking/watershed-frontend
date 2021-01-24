@@ -5,3 +5,4 @@ export * from './faq';
 export * from './sponsors';
 export {default as Input} from './Input';
 export {default as LoadingSymbol} from './loadingSymbol';
+export {default as Sidebar} from './sidebar';
