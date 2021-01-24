@@ -30,7 +30,9 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    --white: #F5F9FF;
+    --white: #FFFFFF;
+    --coolWhite: #F5F9FF;
+    --warmWhite: #FFFCFD;
     --black: #000000;
     --snow: #C1DAFF;
     --ikeaBlue: #315A96;
@@ -39,7 +41,9 @@ const GlobalStyle = createGlobalStyle`
     --wine: #89072E;
     --vanilla: #FECD7D;
     --parksCanada: #3A5154;
-    --wineDark: #CA4353;
+    --wineDark: #57061E;
+    --wineLight: #CA4353;
+    --actionGradient: linear-gradient(135deg, var(--wine) 0%, rgba(176,95,78,1) 100%);
     --outdoor: #030a16;
     --indoor: #130101;
 
@@ -59,7 +63,7 @@ const GlobalStyle = createGlobalStyle`
     
     background-color: var(--indoor);
 
-    color: var(--white);
+    color: var(--coolWhite);
 
     margin: 0;
   }

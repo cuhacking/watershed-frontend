@@ -19,7 +19,7 @@ const StyledHeader = styled.header<{
   left: 0;
   z-index: 1;
   overflow: hidden;
-  color: ${({isDark}) => (isDark ? 'var(--white)' : 'var(--white)')};
+  color: ${({isDark}) => (isDark ? 'var(--coolWhite)' : 'var(--coolWhite)')};
 
   display: flex;
   flex-direction: column;
@@ -81,7 +81,7 @@ const NavMenu = styled.nav`
   width: var(--mobile-width);
   padding-top: 32px;
 
-  color: var(--white);
+  color: var(--coolWhite);
 
   @media only screen and (min-width: 900px) {
     display: none;

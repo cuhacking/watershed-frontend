@@ -18,7 +18,7 @@ const Chevron = styled.div<{down: boolean}>`
     transition: all 0.5s cubic-bezier(0.33, 1, 0.68, 1);
     display: inline-block;
     border-radius: 8px;
-    background: var(--white);
+    background: var(--coolWhite);
     transform: ${(props) =>
       props.down ? 'rotate(-135deg)' : 'rotate(-45deg)'};
     content: '';
@@ -30,7 +30,7 @@ const Chevron = styled.div<{down: boolean}>`
     transition: all 0.5s cubic-bezier(0.33, 1, 0.68, 1);
     display: inline-block;
     border-radius: 8px;
-    background: var(--white);
+    background: var(--coolWhite);
     transform: ${(props) =>
       props.down ? 'rotate(-45deg)' : 'rotate(-135deg)'};
     content: '';

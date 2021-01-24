@@ -13,7 +13,7 @@ const LoginForm = styled.form`
 `;
 
 const ErrorMessage = styled.p<{visible: boolean}>`
-  color: var(--wineDark);
+  color: var(--wineLight);
   font-size: 0.8em;
   margin-top: 0;
   opacity: ${({visible}) => (visible ? 1 : 0)};

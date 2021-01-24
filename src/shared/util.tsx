@@ -33,6 +33,6 @@ export const Required = styled.div`
   right: 0.5rem;
   top: 0.5rem;
   border-radius: 100%;
-  background-color: var(${themeElement('--wineDark', '--wine')});
+  background-color: var(${themeElement('--wineLight', '--wine')});
   transition: opacity 300ms ease;
 `;
