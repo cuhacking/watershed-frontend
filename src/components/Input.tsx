@@ -18,7 +18,7 @@ const InputContainer = styled.div`
   }
 
   & p:last-child {
-    color: var(${themeElement('--wineDark', '--wine')});
+    color: var(${themeElement('--wineLight', '--wine')});
     position: absolute;
     transition: opacity 300ms ease;
     margin: 4px 0 0 0;
@@ -35,7 +35,7 @@ const StyledInput = styled.input`
   width: 100%;
   position: relative;
   background-color: transparent;
-  color: var(${themeElement('--white', '--spaceDark')});
+  color: var(${themeElement('--coolWhite', '--spaceDark')});
   border: none;
   border-bottom: solid 1px var(${themeElement('--ikeaBlue', '--spaceGrey')});
   font-size: 1rem;

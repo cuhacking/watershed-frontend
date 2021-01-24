@@ -179,14 +179,14 @@ const RequiredNotice = styled.p`
   font-size: 0.8em;
 
   span {
-    color: var(--wineDark);
+    color: var(--wineLight);
   }
 `;
 
 const RequiredMessage = styled.p`
   font-weight: bold;
   span {
-    color: var(--wineDark);
+    color: var(--wineLight);
   }
 `;
 

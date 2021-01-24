@@ -154,7 +154,7 @@ export default () => {
             <b style={{marginBottom: '1rem'}}>Your password has been reset!</b>
           )}
           {resetError && (
-            <b style={{marginBottom: '1rem', color: 'var(--wineDark)'}}>
+            <b style={{marginBottom: '1rem', color: 'var(--wineLight)'}}>
               There was an error updating your password, please try again later
             </b>
           )}

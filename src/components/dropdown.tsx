@@ -8,7 +8,7 @@ import Input from './Input';
 
 const itemStyles = css`
   padding: 0.5rem 0;
-  background-color: var(${themeElement('--spaceGrey', '--white')});
+  background-color: var(${themeElement('--spaceGrey', '--coolWhite')});
   width: 100%;
 `;
 
@@ -24,7 +24,7 @@ const DropdownContainer = styled.div`
   position: relative;
   min-width: 200px;
   border: solid 1px var(${themeElement('--ikeaBlue', '--snow')});
-  color: var(${themeElement('--white', '--spaceDark')});
+  color: var(${themeElement('--coolWhite', '--spaceDark')});
   height: min-content;
 
   & p {
