@@ -9,10 +9,7 @@ const StyledCountdown = styled.div`
 
   padding: 16px;
 
-  width: 250px;
-  height: 101px;
-  left: 25px;
-  top: 0px;
+  width: 100%;
 
   background: var(--coolWhite);
 
