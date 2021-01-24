@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import {createGlobalStyle} from 'styled-components';
 import 'fontsource-dm-sans';
+import 'fontsource-dm-sans/700.css';
 import 'fontsource-work-sans';
 import 'fontsource-work-sans/600.css';
 import 'fontsource-montserrat-alternates/600.css';
