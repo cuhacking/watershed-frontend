@@ -16,6 +16,7 @@ import Home from './home';
 import Registration from './registration';
 import ForgotPassword from './forgotPassword';
 import ResetPassword from './resetPassword';
+import CheckIn from './checkin';
 
 const LoadingWindow = styled.div`
   display: flex;
@@ -50,6 +51,9 @@ export default () => {
           </UnprivateRoute>
           <UnprivateRoute path={`${path}/sign-up`}>
             <SignUp />
+          </UnprivateRoute>
+          <UnprivateRoute path={`${path}/checkin`}>
+            <CheckIn />
           </UnprivateRoute>
           <Redirect to={`${path}/`} />
         </Switch>
