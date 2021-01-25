@@ -76,7 +76,6 @@ const DiscordButton = styled.a`
 `;
 
 const CheckIn = () => {
-  const [discordSignedIn, setDiscordSignedIn] = useState(false);
   const [discordServer, setDiscordServer] = useState(false);
 
   return (
@@ -85,11 +84,7 @@ const CheckIn = () => {
         <h1>Check In</h1>
         <h2>Three simple steps to access the hackathon!</h2>
         <StepsContainer>
-          <Step
-            style={{
-              opacity: discordSignedIn ? 1 : 0.5,
-            }}
-          >
+          <Step>
             <StepLabel>
               <Marker>
                 <label>1</label>
@@ -104,6 +99,7 @@ const CheckIn = () => {
           <Step
             style={{
               opacity: discordServer ? 1 : 0.5,
+              pointerEvents: discordServer ? 'all' : 'none',
             }}
           >
             <StepLabel>
@@ -119,7 +115,8 @@ const CheckIn = () => {
           </Step>
           <Step
             style={{
-              opacity: discordSignedIn && discordServer ? 1 : 0.5,
+              opacity: discordServer ? 1 : 0.5,
+              pointerEvents: discordServer ? 'all' : 'none',
             }}
           >
             <StepLabel>
