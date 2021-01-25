@@ -10,6 +10,7 @@ import {createGlobalStyle} from 'styled-components';
 import 'fontsource-dm-sans';
 import 'fontsource-work-sans';
 import 'fontsource-work-sans/600.css';
+import 'fontsource-work-sans/300.css';
 import 'fontsource-montserrat-alternates/600.css';
 import {Home, Dashboard} from './pages';
 import {ProvideAuth} from './hooks';
