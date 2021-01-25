@@ -1,7 +1,9 @@
+import React from 'react';
 import styled from 'styled-components';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {EventType, Event} from '../hooks/useEvents';
-import {format, OptionsWithTZ, utcToZonedTime} from 'date-fns-tz';
+import {EventType} from '../hooks/useEvents';
+import {format, utcToZonedTime} from 'date-fns-tz';
+import {LoadingSymbol} from '../components';
 
 export const eventColor = (type: EventType) => {
   if (type === 'sponsor') {
@@ -65,3 +67,16 @@ export const EventIcon = styled(FontAwesomeIcon)`
   margin-right: 8px;
   width: 16px !important;
 `;
+
+const EventLoadingContainer = styled.div`
+  display: flex;
+  align-self: center;
+  justify-self: center;
+  margin-top: 25vh;
+`;
+
+export const EventLoading = () => {
+  return <EventLoadingContainer>
+    <LoadingSymbol color='var(--wine)' />
+  </EventLoadingContainer>;
+};

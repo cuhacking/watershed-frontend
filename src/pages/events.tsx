@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 import {Link} from 'react-router-dom';
 import {SidebarLayout} from '../layouts';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -8,7 +8,7 @@ import {
   faMapMarkerAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import {faStar as EmptyStar} from '@fortawesome/free-regular-svg-icons';
-import {format, OptionsWithTZ} from 'date-fns-tz';
+import {format} from 'date-fns-tz';
 import {
   eventTimeString,
   eventTypeName,
@@ -16,6 +16,7 @@ import {
   EventDetailRow,
   EventDetailText,
   EventIcon,
+  EventLoading,
 } from '../shared/events';
 import {Event as EventData, useEvents} from '../hooks/useEvents';
 import Switch from 'react-switch';
@@ -25,10 +26,21 @@ const Spacer = styled.div`
   height: 10vh;
 `;
 
+const fade = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
 const EventSection = styled.section`
   position: relative;
-  padding: 0 calc((100% - var(--event-width)) / 2);
-  width: 100%;
+  width: var(--event-width);
+  display: flex;
+  flex-direction: column;
+  animation: ${fade} 0.2s cubic-bezier(0.33, 1, 0.68, 1) 1;
 `;
 
 const DateTitle = styled.h1`
@@ -199,67 +211,75 @@ export default () => {
   }, []);
 
   const {events} = useEvents();
-
-  const sorted = events.sort(
-    (a, b) => a.startTime.getTime() - b.startTime.getTime()
-  );
-  const grouped: {[key: string]: EventData[]} = {};
-  let nowId: number | null = null;
-
-  // Group events by day, and find the place to put the "NOW" indicator
-  sorted.forEach((event) => {
-    if (event.startTime > now && nowId === null) {
-      nowId = event.id;
-    }
-    const key = format(
-      utcToZonedTime(event.startTime, timezone),
-      'EEEE, MMM dd'
+  if (events != null) {
+    const sorted = events!.sort(
+      (a, b) => a.startTime.getTime() - b.startTime.getTime()
     );
-    if (grouped[key]) {
-      grouped[key].push(event);
-    } else {
-      grouped[key] = [event];
+    const grouped: {[key: string]: EventData[]} = {};
+    let nowId: number | null = null;
+
+    // Group events by day, and find the place to put the "NOW" indicator
+    sorted.forEach((event) => {
+      if (event.startTime > now && nowId === null) {
+        nowId = event.id;
+      }
+      const key = format(
+        utcToZonedTime(event.startTime, timezone),
+        'EEEE, MMM dd'
+      );
+      if (grouped[key]) {
+        grouped[key].push(event);
+      } else {
+        grouped[key] = [event];
+      }
+    });
+
+    // Don't show now indicator until 2021-01-29 EST or after 2021-02-01
+    if (
+      new Date() < new Date('2021-01-29T00:00:00.000-05:00') ||
+      new Date() > new Date('2021-02-01T00:00:00.000-05:00')
+    ) {
+      nowId = null;
     }
-  });
 
-  // Don't show now indicator until 2021-01-29 EST or after 2021-02-01
-  if (
-    new Date() < new Date('2021-01-29T00:00:00.000-05:00') ||
-    new Date() > new Date('2021-02-01T00:00:00.000-05:00')
-  ) {
-    nowId = null;
+    return (
+      <SidebarLayout>
+        <Spacer />
+        {localTimezone !== 'America/Toronto' && (
+          <TimeContainer>
+            <TimeText>
+              Show times in{' '}
+              <TimeAbbr title='Eastern Standard Time'>EST</TimeAbbr>
+            </TimeText>
+            <TimeSwitch
+              checkedIcon={false}
+              uncheckedIcon={false}
+              onChange={setEasternTime}
+              checked={easternTime}
+              onColor='#89072E'
+              height={24}
+              activeBoxShadow='0 0 2px 2px #89072E'
+            />
+          </TimeContainer>
+        )}
+        {Object.keys(grouped).map((key) => (
+          <EventSection key={key}>
+            <DateTitle>{key}</DateTitle>
+            {grouped[key].map((event) => (
+              <React.Fragment key={event.id}>
+                {event.id === nowId && <Now tz={timezone} ref={nowRef} />}
+                <Event event={event} tz={timezone} />
+              </React.Fragment>
+            ))}
+          </EventSection>
+        ))}
+      </SidebarLayout>
+    );
+  } else {
+    return (
+      <SidebarLayout>
+        <EventLoading />
+      </SidebarLayout>
+    );
   }
-
-  return (
-    <SidebarLayout>
-      <Spacer />
-      {localTimezone !== 'America/Toronto' && (
-        <TimeContainer>
-          <TimeText>
-            Show times in <TimeAbbr title='Eastern Standard Time'>EST</TimeAbbr>
-          </TimeText>
-          <TimeSwitch
-            checkedIcon={false}
-            uncheckedIcon={false}
-            onChange={setEasternTime}
-            checked={easternTime}
-            onColor='#89072E'
-            height={24}
-            activeBoxShadow='0 0 2px 2px #89072E'
-          />
-        </TimeContainer>
-      )}
-      {Object.keys(grouped).map((key) => (
-        <EventSection key={key}>
-          <DateTitle>{key}</DateTitle>
-          {grouped[key].map((event) => (
-            <React.Fragment key={event.id}>
-              {event.id === nowId && <Now tz={timezone} ref={nowRef} />}
-              <Event event={event} tz={timezone} />
-            </React.Fragment>
-          ))}
-        </EventSection>
-      ))}
-    </SidebarLayout>
-  );
 };

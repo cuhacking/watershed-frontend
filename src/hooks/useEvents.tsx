@@ -27,11 +27,11 @@ export interface Resource {
 }
 
 interface EventsObject {
-  events: Event[];
+  events?: Event[];
 }
 
 const useProvideEvents = (): EventsObject => {
-  const [events, setEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<Event[] | undefined>();
 
   useEffect(() => {
     fetch('/api/event')
@@ -50,7 +50,7 @@ const useProvideEvents = (): EventsObject => {
   return {events};
 };
 
-const EventsContext = createContext<EventsObject>({events: []});
+const EventsContext = createContext<EventsObject>({});
 
 export const ProvideEvents = (props: {children: React.ReactNode}) => {
   const events = useProvideEvents();

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import {useParams, Redirect} from 'react-router-dom';
 import {SidebarLayout} from '../layouts';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -12,6 +12,7 @@ import {
   EventTypeMarker,
   EventIcon,
   eventTypeName,
+  EventLoading,
 } from '../shared/events';
 import {Resource as ResourceData, useEvents} from '../hooks/useEvents';
 
@@ -19,13 +20,24 @@ const Spacer = styled.div`
   height: 10vh;
 `;
 
+const fade = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
+
 const EventSection = styled.section`
   position: relative;
-  width: 100%;
-  padding: 0 calc((100% - var(--event-width)) / 2);
+  width: var(--event-width);
   color: var(--black);
   display: flex;
   flex-direction: column;
+  padding: 16px;
+  animation: ${fade} 0.2s cubic-bezier(0.33, 1, 0.68, 1) 1;
 `;
 
 const EventTitle = styled.h1`
@@ -119,7 +131,7 @@ export default () => {
   const {id} = useParams<{id: string}>();
   const {events} = useEvents();
 
-  const event = events.find((event) => event.id.toString() === id);
+  const event = events?.find((event) => event.id.toString() === id);
 
   if (event != null) {
     const isStream =
@@ -175,7 +187,14 @@ export default () => {
         <Spacer />
       </SidebarLayout>
     );
-  } else {
+  } else if (events != null) {
+    console.log(events);
     return <Redirect to='/schedule' />;
+  } else {
+    return (
+      <SidebarLayout>
+        <EventLoading />
+      </SidebarLayout>
+    );
   }
 };
