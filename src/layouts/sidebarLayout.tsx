@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {Sidebar} from '../components';
 
 const Container = styled.div`
+  position: relative;
   display: flex;
 
   min-width: 100%;
@@ -19,6 +20,7 @@ const Main = styled.main`
   align-items: center;
   justify-content: flex-start;
   padding: 0 20px;
+  padding-left: calc(var(--sidebar-width) + 20px);
 `;
 
 interface LayoutProps {

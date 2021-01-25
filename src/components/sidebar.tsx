@@ -19,8 +19,9 @@ import {
 
 const Container = styled.div`
   flex-shrink: 0;
-  width: 350px;
+  width: var(--sidebar-width);
   min-height: 100vh;
+  position: fixed;
 
   background-color: var(--wineDark);
   color: var(--white);
@@ -112,7 +113,7 @@ const Sidebar = () => {
       </Section>
       <Section>
         <SectionHeader>STUFF</SectionHeader>
-        <Button icon={CalendarIcon} link={appendBase('/schedule')}>
+        <Button icon={CalendarIcon} link='/schedule'>
           Schedule
         </Button>
         <Button icon={SuitcaseIcon} link={appendBase('/stage')}>
