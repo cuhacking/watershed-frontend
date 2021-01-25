@@ -16,6 +16,7 @@ const Container = styled.div`
 const CheckInContainer = styled.div`
   margin: auto;
   max-width: 1440px;
+  min-width: 600px;
 
   & h1 {
     font-family: var(--primary-font);
@@ -55,17 +56,17 @@ const StepLabel = styled.div`
 `;
 
 const Marker = styled.div`
-  height: 2.5rem;
-  width: 2.5rem;
+  height: 2rem;
+  width: 2rem;
   display: flex;
-  padding: 0.25rem;
+  padding: 4px;
   background-color: var(--white);
   color: var(--wineDark);
   border-radius: 100%;
 
   & label {
     font-family: var(--primary-font);
-    font-size: 1.5rem;
+    font-size: 1rem;
     margin: auto;
   }
 `;
@@ -73,6 +74,7 @@ const Marker = styled.div`
 const DiscordButton = styled.a`
   ${buttonStyle}
   background-color: #738adb;
+  cursor: pointer;
 `;
 
 const CheckIn = () => {
@@ -82,7 +84,7 @@ const CheckIn = () => {
     <Container>
       <CheckInContainer>
         <h1>Check In</h1>
-        <h2>Three simple steps to access the hackathon!</h2>
+        <h2>Complete the steps below to get started!</h2>
         <StepsContainer>
           <Step>
             <StepLabel>
