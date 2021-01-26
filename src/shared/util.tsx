@@ -1,5 +1,5 @@
-import styled, { css } from "styled-components";
-import { themeElement } from "./theme";
+import styled, {css} from 'styled-components';
+import {themeElement} from './theme';
 
 const alignStyles = css`
   display: flex;
@@ -36,3 +36,15 @@ export const Required = styled.div`
   background-color: var(${themeElement('--wineLight', '--wine')});
   transition: opacity 300ms ease;
 `;
+
+export const parseDuration = (millis: number) => {
+  const hours = Math.floor(millis / 60 / 60 / 1000);
+  const minutes = Math.floor((millis - hours * 60 * 60 * 1000) / 60 / 1000);
+  const seconds = Math.floor(millis / 1000) % 60;
+
+  const hourString = `${hours}`.padStart(2, '0');
+  const minuteString = `${minutes}`.padStart(2, '0');
+  const secondsString = `${seconds}`.padStart(2, '0');
+
+  return `${hourString}:${minuteString}:${secondsString}`;
+};

@@ -1556,6 +1556,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource/dm-mono@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "@fontsource/dm-mono@npm:4.1.1"
+  checksum: 40766767f6a9c0e66c19521538e1e69b3da6827fb7ae8bdef2e7f6de467a4d17e9d2cd8636d764fd4c30f87213335842fba12555bb3751215c64870af6b2f5fd
+  languageName: node
+  linkType: hard
+
 "@fortawesome/fontawesome-common-types@npm:^0.2.32":
   version: 0.2.32
   resolution: "@fortawesome/fontawesome-common-types@npm:0.2.32"
@@ -15379,6 +15386,7 @@ typescript@^4.1.3:
   version: 0.0.0-use.local
   resolution: "watershed-frontend@workspace:."
   dependencies:
+    "@fontsource/dm-mono": ^4.1.1
     "@fortawesome/fontawesome-svg-core": ^1.2.32
     "@fortawesome/free-brands-svg-icons": ^5.15.1
     "@fortawesome/free-regular-svg-icons": ^5.15.2

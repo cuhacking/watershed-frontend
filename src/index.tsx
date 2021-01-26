@@ -9,11 +9,12 @@ import {
 import {createGlobalStyle} from 'styled-components';
 import 'fontsource-dm-sans';
 import 'fontsource-dm-sans/700.css';
+import '@fontsource/dm-mono';
 import 'fontsource-work-sans';
 import 'fontsource-work-sans/600.css';
 import 'fontsource-montserrat-alternates/600.css';
 import {Home, Dashboard, Events, Event} from './pages';
-import {ProvideAuth, ProvideEvents} from './hooks';
+import {ProvideAuth, ProvideEvents, ProvideDashboardInfo} from './hooks';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -55,6 +56,7 @@ const GlobalStyle = createGlobalStyle`
     --sidebar-width: 350px;
 
     --primary-font: 'DM Sans', sans-serif;
+    --primary-font-mono: 'DM Mono', monospace;
     --secondary-font: 'Work Sans', sans-serif;
 
     --shadow: 0px 0px 12px rgba(0, 0, 0, 0.25);
@@ -132,15 +134,17 @@ const App = () => (
     <GlobalStyle />
     <ProvideAuth>
       <ProvideEvents>
-        <Router>
-          <Switch>
-            <Route path='/' exact component={Home} />
-            <Route path='/dashboard' component={Dashboard} />
-            <Route path='/schedule/:id' component={Event} />
-            <Route path='/schedule' component={Events} />
-            <Redirect to='/' />
-          </Switch>
-        </Router>
+        <ProvideDashboardInfo>
+          <Router>
+            <Switch>
+              <Route path='/' exact component={Home} />
+              <Route path='/dashboard' component={Dashboard} />
+              <Route path='/schedule/:id' component={Event} />
+              <Route path='/schedule' component={Events} />
+              <Redirect to='/' />
+            </Switch>
+          </Router>
+        </ProvideDashboardInfo>
       </ProvideEvents>
     </ProvideAuth>
   </>
