@@ -1563,6 +1563,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fortawesome/fontawesome-common-types@npm:^0.2.34":
+  version: 0.2.34
+  resolution: "@fortawesome/fontawesome-common-types@npm:0.2.34"
+  checksum: cbfa1ad00fc80bc162a74c793bd96773001908c94316f0ac817b43e819334e42b21d35db47f78ff542f5e4397d394d7f68c0cbf7a7bf0719b0554cc6dea11cd8
+  languageName: node
+  linkType: hard
+
 "@fortawesome/fontawesome-svg-core@npm:^1.2.32":
   version: 1.2.32
   resolution: "@fortawesome/fontawesome-svg-core@npm:1.2.32"
@@ -1578,6 +1585,15 @@ __metadata:
   dependencies:
     "@fortawesome/fontawesome-common-types": ^0.2.32
   checksum: d6d0544d2428a2cdca8308a4a0d4c8f7eb10b3b9f1aa04c26e58f310d909201e316253d6bdb8d31cca21e8633060f5b342fc68a7e8d11cf6d6289e23cc0a94d2
+  languageName: node
+  linkType: hard
+
+"@fortawesome/free-regular-svg-icons@npm:^5.15.2":
+  version: 5.15.2
+  resolution: "@fortawesome/free-regular-svg-icons@npm:5.15.2"
+  dependencies:
+    "@fortawesome/fontawesome-common-types": ^0.2.34
+  checksum: a24ae419a3406cfa71787bb677b44a687fe6a32f753e066fd451a56814cd05647a025d8d86130490675ab0ff4538c470a6f6d3b2b73a7b50c658120fc82a4525
   languageName: node
   linkType: hard
 
@@ -5335,7 +5351,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:2.6.9, debug@npm:^2.2.0, debug@npm:^2.3.3, debug@npm:^2.6.0, debug@npm:^2.6.9":
+"date-fns-tz@npm:^1.0.12":
+  version: 1.0.12
+  resolution: "date-fns-tz@npm:1.0.12"
+  peerDependencies:
+    date-fns: ">=2.0.0-alpha.13"
+  checksum: 32b80d1fcda104c139100ccac9462019fa2032683882c3492a04d4284d199e1a9f430750bb4b811f9dc4384cdb383e8a1e1beda8d6a8186c001b41c1d9b8b181
+  languageName: node
+  linkType: hard
+
+"date-fns@npm:^2.16.1":
+  version: 2.16.1
+  resolution: "date-fns@npm:2.16.1"
+  checksum: fbe5d9aa1dc4c92c7cf9c0b31e58f532ac9fe059f85fc622641b1ac9c673150329620ea6bf941a8ba10e8e677aa0b6ccdc04ce001f81e70fd49acd1760edcba0
+  languageName: node
+  linkType: hard
+
+"debug@npm:2.6.9, debug@npm:^2.2.0, debug@npm:^2.3.3, debug@npm:^2.6.0, debug@npm:^2.6.6, debug@npm:^2.6.9":
   version: 2.6.9
   resolution: "debug@npm:2.6.9"
   dependencies:
@@ -6535,6 +6567,13 @@ __metadata:
   version: 1.4.0
   resolution: "extsprintf@npm:1.4.0"
   checksum: 092e011574324c5cddd78b5a27f869c2703613c1140eb7763aef8f5b0e33769a9b4c7dbcc50acd39b6afebe79bf66adcec73bf3c84e095c5bcfb42306d128ad0
+  languageName: node
+  linkType: hard
+
+"fast-deep-equal@npm:3.1.3":
+  version: 3.1.3
+  resolution: "fast-deep-equal@npm:3.1.3"
+  checksum: 451526766b219503131d11e823eaadd1533080b0be4860e316670b039dcaf31cd1007c2fe036a9b922abba7c040dfad5e942ed79d21f2ff849e50049f36e0fb7
   languageName: node
   linkType: hard
 
@@ -9438,6 +9477,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"load-script@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "load-script@npm:1.0.0"
+  checksum: 9f907ee20dfe8068af210be73a072dd61a287566a23b5666b9c6b9957e66eb33cc7c6a790308cf307c373d7ff75265ab1dde779c3fff90d65535fb3a1c0a167a
+  languageName: node
+  linkType: hard
+
 "loader-fs-cache@npm:^1.0.2":
   version: 1.0.2
   resolution: "loader-fs-cache@npm:1.0.2"
@@ -12279,7 +12325,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
+"prop-types@npm:15.7.2, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
   version: 15.7.2
   resolution: "prop-types@npm:15.7.2"
   dependencies:
@@ -12750,6 +12796,31 @@ fsevents@^1.2.7:
   peerDependencies:
     react: ^16.3.0 || ^17.0.0
   checksum: 5896f7c126b9e7147e3ea6cc967dab8e3a2f6c395bd5327d16483adb91177866eec47770500a92fece866ea551f395484f6e6e078796002293bc1b53b7e65b26
+  languageName: node
+  linkType: hard
+
+"react-switch@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "react-switch@npm:6.0.0"
+  dependencies:
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: ^15.3.0 || ^16.0.0 || ^17.0.0
+    react-dom: ^15.3.0 || ^16.0.0 || ^17.0.0
+  checksum: 1dcc5edc636ce7b3e3d2c138d438aff504c62a524f6ad782eb50e1e3d19c1a2ee143c5b196fb74b1e2e9e62aae9854171e396d95686aa85ca564b9392a566d52
+  languageName: node
+  linkType: hard
+
+"react-youtube@npm:^7.13.1":
+  version: 7.13.1
+  resolution: "react-youtube@npm:7.13.1"
+  dependencies:
+    fast-deep-equal: 3.1.3
+    prop-types: 15.7.2
+    youtube-player: 5.5.2
+  peerDependencies:
+    react: ">=0.14.1"
+  checksum: 125eff75aa241c31cbb66dd587bffccd2aa6c702bbb919391d62468a1ff2bdeba9126edd3b7388e82eeeb423b0d3958e061db168b721726a3dbfabc2f2d24eb4
   languageName: node
   linkType: hard
 
@@ -13785,6 +13856,13 @@ resolve@1.15.0:
   dependencies:
     is-arrayish: ^0.3.1
   checksum: a5a2c1c86cea94f42ab843508e7c68b5bbfd15acb08056d600ac2e9c7f7c41bc417e71160ea3034a5411d3cce186c801f7a56badfb3a854906ce163120318875
+  languageName: node
+  linkType: hard
+
+"sister@npm:^3.0.0":
+  version: 3.0.2
+  resolution: "sister@npm:3.0.2"
+  checksum: 32bfe26361014a3a0e41140cb2bf2f2beb172c4e9fc1919f06d46cc8a3399a563012cecfc128b7833f160d9570285878de162f056d84673443ac05d078cc7f9f
   languageName: node
   linkType: hard
 
@@ -15303,6 +15381,7 @@ typescript@^4.1.3:
   dependencies:
     "@fortawesome/fontawesome-svg-core": ^1.2.32
     "@fortawesome/free-brands-svg-icons": ^5.15.1
+    "@fortawesome/free-regular-svg-icons": ^5.15.2
     "@fortawesome/free-solid-svg-icons": ^5.15.1
     "@fortawesome/react-fontawesome": ^0.1.13
     "@n8tb1t/use-scroll-position": ^2.0.3
@@ -15319,6 +15398,8 @@ typescript@^4.1.3:
     "@types/react-router-dom": ^5.1.6
     "@types/styled-components": ^5.1.4
     "@yarnpkg/pnpify": ^2.3.3
+    date-fns: ^2.16.1
+    date-fns-tz: ^1.0.12
     fontsource-dm-sans: ^3.1.5
     fontsource-montserrat-alternates: ^3.1.5
     fontsource-work-sans: ^3.1.6
@@ -15332,6 +15413,8 @@ typescript@^4.1.3:
     react-rellax-wrapper: ^1.0.6
     react-router-dom: ^5.2.0
     react-scripts: 3.4.3
+    react-switch: ^6.0.0
+    react-youtube: ^7.13.1
     styled-components: ^5.2.0
     typescript: ^4.1.3
   languageName: unknown
@@ -15928,5 +16011,16 @@ typescript@^4.1.3:
     y18n: ^4.0.0
     yargs-parser: ^13.1.2
   checksum: 92c612cd14a9217d7421ae4f42bc7c460472633bfc2e45f7f86cd614a61a845670d3bac7c2228c39df7fcecce0b8c12b2af65c785b1f757de974dcf84b5074f9
+  languageName: node
+  linkType: hard
+
+"youtube-player@npm:5.5.2":
+  version: 5.5.2
+  resolution: "youtube-player@npm:5.5.2"
+  dependencies:
+    debug: ^2.6.6
+    load-script: ^1.0.0
+    sister: ^3.0.0
+  checksum: 2d62315551137a9cdf963e42d7d3d3b589da4811569762441946eb37716cf5c8d364e72d5639c61beeddf6ec82063154aa485bc401edc086232bcbcb32f657c3
   languageName: node
   linkType: hard

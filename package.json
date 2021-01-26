@@ -5,9 +5,12 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-brands-svg-icons": "^5.15.1",
+    "@fortawesome/free-regular-svg-icons": "^5.15.2",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.13",
     "@n8tb1t/use-scroll-position": "^2.0.3",
+    "date-fns": "^2.16.1",
+    "date-fns-tz": "^1.0.12",
     "fontsource-dm-sans": "^3.1.5",
     "fontsource-montserrat-alternates": "^3.1.5",
     "fontsource-work-sans": "^3.1.6",
@@ -21,6 +24,8 @@
     "react-rellax-wrapper": "^1.0.6",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "react-switch": "^6.0.0",
+    "react-youtube": "^7.13.1",
     "styled-components": "^5.2.0"
   },
   "scripts": {

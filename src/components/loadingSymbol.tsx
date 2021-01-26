@@ -18,7 +18,7 @@ const ripple = keyframes`
   }
 `;
 
-const Symbol = styled.div`
+const Symbol = styled.div<{color: string}>`
   display: inline-block;
   position: relative;
   width: 72px;
@@ -26,7 +26,7 @@ const Symbol = styled.div`
 
   & div {
     position: absolute;
-    border: 4px solid #fff;
+    border: 4px solid ${({color}) => color};
     opacity: 1;
     border-radius: 50%;
     animation: ${ripple} 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
@@ -37,8 +37,8 @@ const Symbol = styled.div`
   }
 `;
 
-export default () => (
-  <Symbol>
+export default (props: {color?: string}) => (
+  <Symbol color={props.color ?? "#FFFFFF"}>
     <div />
     <div />
   </Symbol>

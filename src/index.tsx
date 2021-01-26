@@ -12,8 +12,8 @@ import 'fontsource-dm-sans/700.css';
 import 'fontsource-work-sans';
 import 'fontsource-work-sans/600.css';
 import 'fontsource-montserrat-alternates/600.css';
-import {Home, Dashboard} from './pages';
-import {ProvideAuth} from './hooks';
+import {Home, Dashboard, Events, Event} from './pages';
+import {ProvideAuth, ProvideEvents} from './hooks';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -49,8 +49,10 @@ const GlobalStyle = createGlobalStyle`
     --indoor: #130101;
 
     --max-width: 1200px;
+    --event-width: 800px;
     --reading-width: 65ch;
     --mobile-width: 90vw;
+    --sidebar-width: 350px;
 
     --primary-font: 'DM Sans', sans-serif;
     --secondary-font: 'Work Sans', sans-serif;
@@ -107,19 +109,39 @@ const GlobalStyle = createGlobalStyle`
   .ReactCollapse--collapse {
     transition: height 500ms cubic-bezier(0.33, 1, 0.68, 1);
   }
+
+  .youtubeContainer {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+    overflow: hidden;
+  }
+
+  .youtubeContainer iframe {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 `;
 
 const App = () => (
   <>
     <GlobalStyle />
     <ProvideAuth>
-      <Router>
-        <Switch>
-          <Route path='/' exact component={Home} />
-          <Route path='/dashboard' component={Dashboard} />
-          <Redirect to='/' />
-        </Switch>
-      </Router>
+      <ProvideEvents>
+        <Router>
+          <Switch>
+            <Route path='/' exact component={Home} />
+            <Route path='/dashboard' component={Dashboard} />
+            <Route path='/schedule/:id' component={Event} />
+            <Route path='/schedule' component={Events} />
+            <Redirect to='/' />
+          </Switch>
+        </Router>
+      </ProvideEvents>
     </ProvideAuth>
   </>
 );
