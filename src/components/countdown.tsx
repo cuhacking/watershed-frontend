@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
+import {useDashboardInfo} from '../hooks';
+import {parseDuration} from '../shared/util';
 
 const StyledCountdown = styled.div`
   display: flex;
@@ -26,35 +28,75 @@ const Timer = styled.span`
   font-family: var(--primary-font-mono);
 `;
 
-const formattedDate = (currentDate: string) => {
-  if (!currentDate) return '';
+enum Status {
+  NotYetStarted,
+  Started,
+  Ended,
+}
+
+const calcTimeRemaining = (times: {
+  start: string;
+  end: string;
+}): {time: string; status: Status} => {
+  if (!times.start || !times.end)
+    return {time: '99:99:99', status: Status.NotYetStarted};
+
   const now = new Date().toISOString();
-  const r = new Date(Math.max(Date.parse(currentDate) - Date.parse(now), 0))
-    .toISOString()
-    .match(/\d\d:\d\d:\d\d/)
-    ?.toString();
-  return r?.length === 1 ? r : '00:00:00';
+
+  const startDiff = Math.max(Date.parse(times.start) - Date.parse(now), 0);
+  if (startDiff > 0) {
+    return {
+      status: Status.NotYetStarted,
+      time: parseDuration(startDiff),
+    };
+  }
+
+  const endDiff = Math.max(Date.parse(times.end) - Date.parse(now), 0);
+  if (endDiff > 0) {
+    return {
+      status: Status.Started,
+      time: parseDuration(endDiff),
+    };
+  }
+  return {
+    status: Status.Ended,
+    time: '00:00:00',
+  };
 };
 
 const Countdown = () => {
-  const [startDate, setStartDate] = useState('');
-  const [dateString, setDateString] = useState('');
-
-  // need to fetch date from server, plan to replace this default value with it
-  useEffect(() => {
-    setStartDate(new Date(Date.now() + 10000).toISOString());
-    setDateString(formattedDate(new Date(Date.now() + 10000).toISOString()));
-  }, []);
+  const dashboardInfo = useDashboardInfo();
+  const [dateString, setDateString] = useState(String.fromCodePoint(160));
+  const [status, setStatus] = useState(Status.NotYetStarted);
 
   useEffect(() => {
     setTimeout(() => {
-      const s = formattedDate(startDate);
-      setDateString(s);
+      const timeData = calcTimeRemaining({
+        start: dashboardInfo.startTime,
+        end: dashboardInfo.endTime,
+      });
+      setDateString(timeData.time);
+      setStatus(timeData.status);
     }, 1000);
-  }, [dateString]);
+  }, [dateString, dashboardInfo.startTime, dashboardInfo.endTime]);
+
+  if (status !== Status.Ended) {
+    return (
+      <StyledCountdown>
+        <span>
+          {status === Status.NotYetStarted
+            ? 'Hackathon starts '
+            : 'Hacking ends '}
+          in
+        </span>
+        <Timer>{dateString}</Timer>
+      </StyledCountdown>
+    );
+  }
+
   return (
     <StyledCountdown>
-      <span>Hackathon starts in</span>
+      <span>Hackathon ended</span>
       <Timer>{dateString}</Timer>
     </StyledCountdown>
   );

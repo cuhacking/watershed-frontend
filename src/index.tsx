@@ -14,7 +14,7 @@ import 'fontsource-work-sans';
 import 'fontsource-work-sans/600.css';
 import 'fontsource-montserrat-alternates/600.css';
 import {Home, Dashboard, Events, Event} from './pages';
-import {ProvideAuth, ProvideEvents} from './hooks';
+import {ProvideAuth, ProvideEvents, ProvideDashboardInfo} from './hooks';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -134,15 +134,17 @@ const App = () => (
     <GlobalStyle />
     <ProvideAuth>
       <ProvideEvents>
-        <Router>
-          <Switch>
-            <Route path='/' exact component={Home} />
-            <Route path='/dashboard' component={Dashboard} />
-            <Route path='/schedule/:id' component={Event} />
-            <Route path='/schedule' component={Events} />
-            <Redirect to='/' />
-          </Switch>
-        </Router>
+        <ProvideDashboardInfo>
+          <Router>
+            <Switch>
+              <Route path='/' exact component={Home} />
+              <Route path='/dashboard' component={Dashboard} />
+              <Route path='/schedule/:id' component={Event} />
+              <Route path='/schedule' component={Events} />
+              <Redirect to='/' />
+            </Switch>
+          </Router>
+        </ProvideDashboardInfo>
       </ProvideEvents>
     </ProvideAuth>
   </>
