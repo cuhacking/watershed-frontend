@@ -124,37 +124,4 @@ export default () => {
       </Content>
     </SidebarLayout>
   );
-
-  return (
-    <Container>
-      <Content>
-        <LogoLink to='/'>
-          <StyledLogo />
-        </LogoLink>
-        <h1>All set!</h1>
-        <p>
-          The hackathon will take place on our Discord along with this website.
-          We'll be sending frequent updates leading up to the event there.
-          <br />
-          <br />
-          Join now so you don't miss out!
-        </p>
-        <StyledButton
-          kind='anchor'
-          color='var(--wine)'
-          external
-          link='https://discord.gg/TGvYPnD'
-        >
-          Join our Discord Server
-        </StyledButton>
-        <StyledButton
-          kind='button'
-          color='var(--wineLight)'
-          action={handleSignOut}
-        >
-          Sign Out
-        </StyledButton>
-      </Content>
-    </Container>
-  );
 };
