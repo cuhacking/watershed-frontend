@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import {useHistory} from 'react-router-dom';
-import {useAuth} from '../hooks';
-import {Button, Sidebar} from '../components';
+import {useHistory, Link} from 'react-router-dom';
+import {useApplication, useAuth} from '../hooks';
+import {Button, LoadingSymbol, Sidebar} from '../components';
+import {ReactComponent as Logo} from 'assets/img/word-and-year-logo-white.svg';
 
 const Container = styled.div`
   position: relative;
@@ -23,7 +24,7 @@ const DesktopSidebar = styled(Sidebar)`
   }
 `;
 
-const Main = styled.main`
+const DesktopView = styled.main`
   display: none;
 
   @media only screen and (min-width: 700px) {
@@ -45,7 +46,6 @@ const MobileView = styled.main`
   justify-content: center;
 
   padding: 0 5vw;
-
   background-color: var(--wineDark);
   color: var(--white);
 
@@ -76,7 +76,7 @@ export default ({children}: LayoutProps) => {
   return (
     <Container>
       <DesktopSidebar />
-      <Main>{children}</Main>
+      <DesktopView>{children}</DesktopView>
       <MobileView>
         <h1>Screen Too Narrow</h1>
         <p>

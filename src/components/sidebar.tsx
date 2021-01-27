@@ -115,8 +115,6 @@ const SignOutButton = styled.button`
   }
 `;
 
-const appendBase = (path: string) => `/dashboard${path}`;
-
 interface ButtonProps {
   icon: React.FC;
   children: React.ReactNode;
@@ -124,7 +122,10 @@ interface ButtonProps {
 }
 
 const Button = ({icon: Icon, children, link}: ButtonProps) => (
-  <StyledLink to={link} selected={useRouteMatch(link) !== null}>
+  <StyledLink
+    to={link}
+    selected={useRouteMatch({path: link, exact: true}) !== null}
+  >
     <Icon />
     {children}
   </StyledLink>
@@ -139,6 +140,8 @@ const Sidebar = (props: any) => {
     history.push('/');
   };
 
+  const appendBase = (path: string) => `/dashboard${path}`;
+
   return (
     <Container {...props}>
       <StyledLogo />
@@ -149,10 +152,10 @@ const Sidebar = (props: any) => {
       </Section>
       <Section>
         <SectionHeader>EVENT</SectionHeader>
-        <Button icon={CalendarIcon} link='/schedule'>
+        <Button icon={CalendarIcon} link={appendBase('/schedule')}>
           Schedule
         </Button>
-        <Button icon={SuitcaseIcon} link={appendBase('/stage')}>
+        <Button icon={SuitcaseIcon} link={appendBase('/sponsors')}>
           Sponsors
         </Button>
         <Button icon={TrophyIcon} link={appendBase('/challenges')}>

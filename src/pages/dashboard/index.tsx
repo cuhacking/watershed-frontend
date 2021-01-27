@@ -16,6 +16,8 @@ import Home from './home';
 import Registration from './registration';
 import ForgotPassword from './forgotPassword';
 import ResetPassword from './resetPassword';
+import Schedule from './schedule';
+import Event from './event';
 
 const LoadingWindow = styled.div`
   display: flex;
@@ -35,6 +37,12 @@ export default () => {
         <Switch>
           <PrivateRoute path={`${path}/`} exact>
             <Home />
+          </PrivateRoute>
+          <PrivateRoute path={`${path}/schedule`} exact>
+            <Schedule />
+          </PrivateRoute>
+          <PrivateRoute path={`${path}/schedule/:id`} exact>
+            <Event />
           </PrivateRoute>
           <RegistrationRoute path={`${path}/registration`} exact>
             <Registration />
