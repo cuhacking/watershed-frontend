@@ -130,7 +130,7 @@ const Button = ({icon: Icon, children, link}: ButtonProps) => (
   </StyledLink>
 );
 
-const Sidebar = () => {
+const Sidebar = (props: any) => {
   const history = useHistory();
   const {signOut, user} = useAuth();
 
@@ -140,7 +140,7 @@ const Sidebar = () => {
   };
 
   return (
-    <Container>
+    <Container {...props}>
       <StyledLogo />
       <Section>
         <Button icon={TilesIcon} link={appendBase('/')}>
