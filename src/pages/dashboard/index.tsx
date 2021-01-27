@@ -8,7 +8,7 @@ import {
   useHistory,
   useRouteMatch,
 } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, {createGlobalStyle} from 'styled-components';
 import {ProvideApplication, useAuth, useApplication} from '../../hooks';
 import {Button, LoadingSymbol} from '../../components';
 import Login from './login';
@@ -20,6 +20,29 @@ import ResetPassword from './resetPassword';
 import Schedule from './schedule';
 import Event from './event';
 import {ReactComponent as Logo} from 'assets/img/word-and-year-logo-white.svg';
+
+const DashboardStyle = createGlobalStyle`
+  body {
+    --card-shadow: 0px 0px 4px #13010140;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--primary-font);
+    font-weight: 400
+  }
+
+  h1 {
+    font-size: 2.25rem;
+  }
+
+  h2 {
+    font-size: 1.625rem;
+  }
+
+  h4 {
+    font-size: 1.125rem;
+  }
+`;
 
 const LoadingWindow = styled.div`
   display: flex;
@@ -71,6 +94,7 @@ export default () => {
 
   return (
     <>
+      <DashboardStyle />
       <ProvideApplication>
         <Switch>
           <PrivateRoute path={`${path}/`} exact>
