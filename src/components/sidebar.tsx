@@ -146,9 +146,6 @@ const Sidebar = () => {
         <Button icon={TilesIcon} link={appendBase('/')}>
           Dashboard
         </Button>
-        <Button icon={CameraIcon} link={appendBase('/stage')}>
-          Main Stage
-        </Button>
       </Section>
       <Section>
         <SectionHeader>EVENT</SectionHeader>
