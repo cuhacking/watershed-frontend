@@ -44,8 +44,12 @@ const MobileView = styled.main`
   align-items: center;
   justify-content: center;
 
+  padding: 0 5vw;
+
   background-color: var(--wineDark);
   color: var(--white);
+
+  text-align: center;
 
   @media only screen and (min-width: 700px) {
     display: none;
@@ -74,8 +78,11 @@ export default ({children}: LayoutProps) => {
       <DesktopSidebar />
       <Main>{children}</Main>
       <MobileView>
-        <h1>Screen Too Small</h1>
-        <p>Please sign in on a device with a larger screen.</p>
+        <h1>Screen Too Narrow</h1>
+        <p>
+          Our dashboard doesn't support mobile devices. Please sign in on a
+          device with a wider screen, such as a laptop or desktop.
+        </p>
         <StyledButton
           kind='button'
           color='var(--wineLight)'
