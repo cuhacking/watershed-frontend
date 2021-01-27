@@ -187,8 +187,7 @@ export default () => {
       </SidebarLayout>
     );
   } else if (events != null) {
-    console.log(events);
-    return <Redirect to='/schedule' />;
+    return <Redirect to='/dashboard/schedule' />;
   } else {
     return (
       <SidebarLayout>

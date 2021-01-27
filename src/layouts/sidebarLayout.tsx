@@ -23,7 +23,7 @@ const DesktopSidebar = styled(Sidebar)`
   }
 `;
 
-const Main = styled.main`
+const DesktopView = styled.main`
   display: none;
 
   @media only screen and (min-width: 700px) {
@@ -76,7 +76,7 @@ export default ({children}: LayoutProps) => {
   return (
     <Container>
       <DesktopSidebar />
-      <Main>{children}</Main>
+      <DesktopView>{children}</DesktopView>
       <MobileView>
         <h1>Screen Too Narrow</h1>
         <p>

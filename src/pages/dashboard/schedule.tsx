@@ -21,6 +21,7 @@ import {
 import {Event as EventData, useEvents} from '../../hooks/useEvents';
 import Switch from 'react-switch';
 import {utcToZonedTime} from 'date-fns-tz/esm';
+import {Helmet} from 'react-helmet';
 
 const Spacer = styled.div`
   height: 10vh;
@@ -37,7 +38,8 @@ const fade = keyframes`
 
 const EventSection = styled.section`
   position: relative;
-  width: var(--event-width);
+  width: 100%;
+  max-width: var(--event-width);
   display: flex;
   flex-direction: column;
   animation: ${fade} 0.2s cubic-bezier(0.33, 1, 0.68, 1) 1;
@@ -157,7 +159,7 @@ const TimeAbbr = styled.abbr`
 
 const Event = ({event, tz}: {event: EventData; tz: string}) => {
   return (
-    <Link to={`/schedule/${event.id}`}>
+    <Link to={`/dashboard/schedule/${event.id}`}>
       <EventContainer>
         <EventTime>
           {eventTimeString(tz, event.startTime, event.endTime)}
@@ -244,6 +246,10 @@ export default () => {
 
     return (
       <SidebarLayout>
+        <Helmet
+          titleTemplate={`%s — cuHacking 2021 Dashboard`}
+          title='Schedule'
+        />
         <Spacer />
         {localTimezone !== 'America/Toronto' && (
           <TimeContainer>
@@ -278,6 +284,10 @@ export default () => {
   } else {
     return (
       <SidebarLayout>
+        <Helmet
+          titleTemplate={`%s — cuHacking 2021 Dashboard`}
+          title='Schedule'
+        />
         <EventLoading />
       </SidebarLayout>
     );

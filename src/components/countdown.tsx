@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import {useDashboardInfo} from '../hooks';
+import {useDashboardInfo, useInterval} from '../hooks';
 import {parseDuration} from '../shared/util';
 
 const StyledCountdown = styled.div`
@@ -13,7 +13,7 @@ const StyledCountdown = styled.div`
 
   width: 100%;
 
-  background: var(--coolWhite);
+  background: var(--white);
 
   border: 1px solid var(--wine);
   box-sizing: border-box;
@@ -65,20 +65,29 @@ const calcTimeRemaining = (times: {
 };
 
 const Countdown = () => {
-  const dashboardInfo = useDashboardInfo();
+  const {dashboard} = useDashboardInfo();
   const [dateString, setDateString] = useState(String.fromCodePoint(160));
   const [status, setStatus] = useState(Status.NotYetStarted);
 
   useEffect(() => {
-    setTimeout(() => {
-      const timeData = calcTimeRemaining({
-        start: dashboardInfo.startTime,
-        end: dashboardInfo.endTime,
-      });
-      setDateString(timeData.time);
-      setStatus(timeData.status);
-    }, 1000);
-  }, [dateString, dashboardInfo.startTime, dashboardInfo.endTime]);
+    const timeData = calcTimeRemaining({
+      start: dashboard!.startTime,
+      end: dashboard!.endTime,
+    });
+
+    setDateString(timeData.time);
+    setStatus(timeData.status);
+  }, []);
+
+  useInterval(() => {
+    const timeData = calcTimeRemaining({
+      start: dashboard!.startTime,
+      end: dashboard!.endTime,
+    });
+
+    setDateString(timeData.time);
+    setStatus(timeData.status);
+  }, 1000);
 
   if (status !== Status.Ended) {
     return (

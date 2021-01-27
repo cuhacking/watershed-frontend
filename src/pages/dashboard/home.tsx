@@ -1,126 +1,227 @@
 import React from 'react';
 import styled from 'styled-components';
-import {useHistory} from 'react-router-dom';
-import {useAuth, useApplication} from '../../hooks';
-import {Button, LoadingSymbol, Sidebar} from '../../components';
 import {Link} from 'react-router-dom';
-import {ReactComponent as Logo} from 'assets/img/word-and-year-logo-white.svg';
-
-const StyledLogo = styled(Logo)`
-  width: 300px;
-  height: 50px;
-`;
-
-const LogoLink = styled(Link)`
-  margin-bottom: 50px;
-`;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  min-width: 100vw;
-  min-height: 100vh;
-`;
+import {Button, Countdown, LoadingSymbol} from '../../components';
+import {SidebarLayout} from '../../layouts';
+import {useApplication, useAuth, useDashboardInfo} from '../../hooks';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faArrowRight} from '@fortawesome/free-solid-svg-icons';
+import {Helmet} from 'react-helmet';
+import {UpcomingEvent} from '../../hooks/useDashboardInfo';
+import {
+  eventTimeString,
+  eventTypeName,
+  EventTypeMarker,
+  EventDetailRow,
+  EventDetailText,
+  EventIcon,
+  EventLoading,
+} from '../../shared/events';
 
 const Content = styled.div`
+  flex: 1;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
-  align-items: center;
 
-  width: var(--mobile-width);
-
+  margin-top: 100px;
   text-align: center;
 
   @media only screen and (min-width: 700px) {
-    max-width: var(--reading-width);
+    max-width: var(--max-width);
   }
 `;
 
-const StyledButton = styled(Button)`
-  margin-top: 16px;
+const MainSection = styled.div`
+  flex: 800;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 `;
 
-export default () => {
-  const history = useHistory();
-  const {signOut} = useAuth();
-  const {isLoading, application} = useApplication();
+const Greeting = styled.h1`
+  font-size: 4rem;
+`;
 
-  const handleSignOut = async () => {
-    await signOut();
-    history.push('/');
-  };
+const Subtitle = styled.p`
+  font-family: var(--secondary-font);
+  font-size: 1.75rem;
+
+  margin: 0;
+
+  span {
+    color: var(--wineLight);
+  }
+`;
+
+const Subsection = styled.div`
+  margin-top: 50px;
+  width: 100%;
+  text-align: left;
+`;
+
+const SubsectionHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  h2 {
+    margin: 0;
+  }
+`;
+
+const HeaderLink = styled(Link)`
+  color: var(--wineLight) !important;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const CardSection = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+
+  & > p {
+    text-align: center;
+  }
+
+  @media only screen and (min-width: 1000px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media only screen and (min-width: 1250px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+`;
+
+const SideSection = styled.div`
+  flex: 275;
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  padding-left: 20px;
+
+  & > * {
+    margin-bottom: 20px;
+  }
+`;
+
+const EventCardContainer = styled.div`
+  padding: 20px;
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+
+  transition: 100ms ease-out;
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: var(--shadow);
+  }
+`;
+
+const EventCardHeader = styled.div`
+  display: flex;
+  align-items: center;
+
+  & > div {
+    flex-shrink: 0;
+    margin-right: 10px;
+  }
+
+  h4 {
+    margin: 0;
+  }
+`;
+
+const EventCardTime = styled.p`
+  font-weight: 600;
+`;
+
+const EventCardDescription = styled.p`
+  margin-bottom: 0;
+`;
+
+interface UpcomingEventProps {
+  event: UpcomingEvent;
+}
+
+const EventCard = ({event}: UpcomingEventProps) => {
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  const truncate = (str: string) =>
+    str.length > 200 ? `${str.slice(0, 197)}...` : str;
+
+  return (
+    <EventCardContainer>
+      <EventCardHeader>
+        <EventTypeMarker type={event.type} />
+        <h4>{event.title}</h4>
+      </EventCardHeader>
+      <EventCardTime>
+        {eventTimeString(timezone, event.startTime, event.endTime)}
+      </EventCardTime>
+      <EventCardDescription>{truncate(event.description)}</EventCardDescription>
+    </EventCardContainer>
+  );
+};
+
+export default () => {
+  const {application} = useApplication();
+  const {isLoading, dashboard} = useDashboardInfo();
 
   if (isLoading) {
     return (
-      <Container>
-        <p>Let's see here...</p>
-        <LoadingSymbol />
-      </Container>
+      <SidebarLayout>
+        <Content>
+          <LoadingSymbol color='var(--wineLight)' />
+        </Content>
+      </SidebarLayout>
     );
   }
 
-  if (application === null) {
-    return (
-      <Container>
-        <Content>
-          <LogoLink to='/'>
-            <StyledLogo />
-          </LogoLink>
-          <h1>Register now!</h1>
-          <p>Don't wait! Start registration by pressing the button below.</p>
-          <StyledButton
-            kind='link'
-            color='var(--wine)'
-            link='/dashboard/registration'
-          >
-            Start Registration
-          </StyledButton>
-          <StyledButton
-            kind='button'
-            color='var(--wineLight)'
-            action={handleSignOut}
-          >
-            Sign Out
-          </StyledButton>
-        </Content>
-      </Container>
-    );
-  }
+  const user = dashboard!.user;
+  const events = dashboard!.upcomingEvents;
 
   return (
-    <Container>
+    <SidebarLayout>
+      <Helmet title='cuHacking 2021: Snowed In' />
       <Content>
-        <LogoLink to='/'>
-          <StyledLogo />
-        </LogoLink>
-        <h1>All set!</h1>
-        <p>
-          The hackathon will take place on our Discord along with this website.
-          We'll be sending frequent updates leading up to the event there.
-          <br />
-          <br />
-          Join now so you don't miss out!
-        </p>
-        <StyledButton
-          kind='anchor'
-          color='var(--wine)'
-          external
-          link='https://discord.gg/TGvYPnD'
-        >
-          Join our Discord Server
-        </StyledButton>
-        <StyledButton
-          kind='button'
-          color='var(--wineLight)'
-          action={handleSignOut}
-        >
-          Sign Out
-        </StyledButton>
+        <MainSection>
+          <Greeting>Hey, {application!.firstName}!</Greeting>
+          <Subtitle>
+            You currently have <span>{user.points}</span>{' '}
+            {user.points === 1 ? 'point' : 'points'}.
+          </Subtitle>
+          <Subsection>
+            <h2>Recent Announcements</h2>
+            <CardSection>
+              <p>(No announcements)</p>
+            </CardSection>
+          </Subsection>
+          <Subsection>
+            <SubsectionHeader>
+              <h2>Up Next</h2>
+              <HeaderLink to='/dashboard/schedule'>
+                Go to schedule <FontAwesomeIcon icon={faArrowRight} size='1x' />
+              </HeaderLink>
+            </SubsectionHeader>
+            <CardSection>
+              {events.map((event) => (
+                <EventCard key={event.id} event={event} />
+              ))}
+            </CardSection>
+          </Subsection>
+        </MainSection>
+        <SideSection>
+          <Countdown />
+        </SideSection>
       </Content>
-    </Container>
+    </SidebarLayout>
   );
 };
