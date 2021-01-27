@@ -7,7 +7,6 @@ import {useApplication, useAuth, useDashboardInfo} from '../../hooks';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons';
 import {Helmet} from 'react-helmet';
-
 import {UpcomingEvent} from '../../hooks/useDashboardInfo';
 import {
   eventTimeString,

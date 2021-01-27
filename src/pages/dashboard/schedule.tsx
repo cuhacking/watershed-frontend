@@ -38,6 +38,7 @@ const fade = keyframes`
 
 const EventSection = styled.section`
   position: relative;
+  width: 100%;
   max-width: var(--event-width);
   display: flex;
   flex-direction: column;
