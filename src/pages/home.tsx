@@ -558,6 +558,9 @@ export default () => (
         aria-label='January 29: Network and Socialize. January 30: Hack and Learn. January 31: Demo and Flex.'
         src={schedule}
       />
+      <Button kind='link' color='var(--wine)' link='/schedule'>
+        See Full Schedule
+      </Button>
     </StyledSection>
     <StyledSection id='sponsors' center>
       <SponsorshipContainer>
@@ -596,7 +599,12 @@ export default () => (
             size={2}
             url='https://apply.fdmgroup.com/?chkCategory=1&chkCategory=3&lstRegion=10'
           />
-          <Sponsor logo={ciena} name='Ciena' size={2} url='https://www.ciena.com' />
+          <Sponsor
+            logo={ciena}
+            name='Ciena'
+            size={2}
+            url='https://www.ciena.com'
+          />
         </LogoRow>
         <LogoRow>
           <Sponsor
@@ -611,17 +619,17 @@ export default () => (
             size={1}
             url='https://kinaxis.com/'
           />
-          <Sponsor 
+          <Sponsor
             logo={fellow}
-            name="Fellow"
+            name='Fellow'
             size={1}
             url='https://fellow.app'
           />
         </LogoRow>
         <LogoRow>
-          <Sponsor 
+          <Sponsor
             logo={echoAR}
-            name="echoAR"
+            name='echoAR'
             size={1}
             url='https://echoar.xyz'
           />
