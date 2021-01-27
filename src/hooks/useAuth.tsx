@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 interface UserObject {
   uuid: string;
   email: string;
-  role: number;
+  role: 0 | 1 | 2;
   githubId: string | null;
   discordId: string | null;
 }
