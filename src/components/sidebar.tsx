@@ -168,31 +168,37 @@ const Sidebar = () => {
           Leaderboard
         </Button>
       </Section>
-      {user && user?.role> 0 && 
-      (<Section>
-        <SectionHeader>SPONSOR PAGES</SectionHeader>
-        <Button icon={GavelIcon} link={appendBase('/sponsors/judging')}>
-          Judging
-        </Button>
-      </Section>)
-      }
-      {user && user?.role> 1 && 
-      (<Section>
-        <SectionHeader>ORGANIZER PAGES</SectionHeader>
-        <Button icon={BellIcon} link={appendBase('/admin/send-notifications')}>
-          Send Notifications
-        </Button>
-        <Button icon={PencilIcon} link={appendBase('/admin/edit-schedule')}>
-          Edit Schedule
-        </Button>
-        <Button icon={GraphIcon} link={appendBase('/admin/stats')}>
-          Statistics
-        </Button>
-        <Button icon={HundredIcon} link={appendBase('/admin/generate-points')}>
-          Generate Points
-        </Button>
-      </Section>)
-      }
+      {user && user.role > 0 && (
+        <Section>
+          <SectionHeader>SPONSOR PAGES</SectionHeader>
+          <Button icon={GavelIcon} link={appendBase('/sponsors/judging')}>
+            Judging
+          </Button>
+        </Section>
+      )}
+      {user && user.role > 1 && (
+        <Section>
+          <SectionHeader>ORGANIZER PAGES</SectionHeader>
+          <Button
+            icon={BellIcon}
+            link={appendBase('/admin/send-notifications')}
+          >
+            Send Notifications
+          </Button>
+          <Button icon={PencilIcon} link={appendBase('/admin/edit-schedule')}>
+            Edit Schedule
+          </Button>
+          <Button icon={GraphIcon} link={appendBase('/admin/stats')}>
+            Statistics
+          </Button>
+          <Button
+            icon={HundredIcon}
+            link={appendBase('/admin/generate-points')}
+          >
+            Generate Points
+          </Button>
+        </Section>
+      )}
       <SignOutButton onClick={handleSignOut}>
         <ExitIcon />
         Sign Out
