@@ -99,9 +99,9 @@ const Button = ({icon: Icon, children, link}: ButtonProps) => (
   </StyledLink>
 );
 
-const Sidebar = () => {
+const Sidebar = (props: any) => {
   return (
-    <Container>
+    <Container {...props}>
       <StyledLogo />
       <Section>
         <Button icon={TilesIcon} link={appendBase('/')}>
