@@ -103,6 +103,21 @@ const NavButton = styled.a`
   }
 `;
 
+const NavLinkButton = styled(Link)`
+  text-align: right;
+  font-size: 2rem;
+  margin: 0.5rem 0;
+
+  @media only screen and (min-width: 900px) {
+    font-size: 1.125rem;
+    margin: 0 0 0 40px;
+
+    &:hover {
+      color: var(--vanilla) !important;
+    }
+  }
+`;
+
 const Header = (props: {fixed: boolean; banner?: boolean}) => {
   const {user} = useAuth();
   const [isOpen, setOpen] = useState(false);
@@ -126,7 +141,7 @@ const Header = (props: {fixed: boolean; banner?: boolean}) => {
         <MenuButton isOpen={isOpen} onClick={() => setOpen(!isOpen)} />
         <ButtonDiv>
           <NavButton href='/#about'>About</NavButton>
-          <NavButton href='/#schedule'>Schedule</NavButton>
+          <NavLinkButton to='/schedule'>Schedule</NavLinkButton>
           <NavButton href='/#sponsors'>Sponsors</NavButton>
           <NavButton href='/#FAQ'>FAQ</NavButton>
           <NavButton href='/dashboard'>
@@ -136,7 +151,7 @@ const Header = (props: {fixed: boolean; banner?: boolean}) => {
       </NavBar>
       <NavMenu>
         <NavButton href='/#about'>About</NavButton>
-        <NavButton href='/#schedule'>Schedule</NavButton>
+        <NavLinkButton to='/schedule'>Schedule</NavLinkButton>
         <NavButton href='/#sponsors'>Sponsors</NavButton>
         <NavButton href='/#FAQ'>FAQ</NavButton>
         <NavButton href='/dashboard'>

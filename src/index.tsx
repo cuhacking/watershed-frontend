@@ -13,7 +13,7 @@ import '@fontsource/dm-mono';
 import 'fontsource-work-sans';
 import 'fontsource-work-sans/600.css';
 import 'fontsource-montserrat-alternates/600.css';
-import {Home, Dashboard, Events, Event} from './pages';
+import {Home, Dashboard, Events} from './pages';
 import {ProvideAuth, ProvideEvents, ProvideDashboardInfo} from './hooks';
 
 const GlobalStyle = createGlobalStyle`
@@ -139,7 +139,6 @@ const App = () => (
             <Switch>
               <Route path='/' exact component={Home} />
               <Route path='/dashboard' component={Dashboard} />
-              <Route path='/schedule/:id' component={Event} />
               <Route path='/schedule' component={Events} />
               <Redirect to='/' />
             </Switch>

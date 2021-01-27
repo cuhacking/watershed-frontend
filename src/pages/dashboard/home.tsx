@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import {useHistory} from 'react-router-dom';
 import {useAuth, useApplication} from '../../hooks';
 import {Button, LoadingSymbol, Sidebar} from '../../components';
 import {Link} from 'react-router-dom';
 import {ReactComponent as Logo} from 'assets/img/word-and-year-logo-white.svg';
-import {SidebarLayout} from '../../layouts';
 
 const StyledLogo = styled(Logo)`
   width: 300px;
@@ -93,7 +92,7 @@ export default () => {
   }
 
   return (
-    <SidebarLayout>
+    <Container>
       <Content>
         <LogoLink to='/'>
           <StyledLogo />
@@ -122,6 +121,6 @@ export default () => {
           Sign Out
         </StyledButton>
       </Content>
-    </SidebarLayout>
+    </Container>
   );
 };

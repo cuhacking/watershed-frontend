@@ -43,6 +43,7 @@ const MobileView = styled.main`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   padding: 0 5vw;
 
   background-color: var(--wineDark);

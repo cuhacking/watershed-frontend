@@ -1,13 +1,7 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styled, {keyframes} from 'styled-components';
-import {Link} from 'react-router-dom';
-import {SidebarLayout} from '../layouts';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {
-  faStar as SolidStar,
-  faMapMarkerAlt,
-} from '@fortawesome/free-solid-svg-icons';
-import {faStar as EmptyStar} from '@fortawesome/free-regular-svg-icons';
+import {MainLayout} from '../layouts';
+import {faMapMarkerAlt} from '@fortawesome/free-solid-svg-icons';
 import {format} from 'date-fns-tz';
 import {
   eventTimeString,
@@ -22,8 +16,26 @@ import {Event as EventData, useEvents} from '../hooks/useEvents';
 import Switch from 'react-switch';
 import {utcToZonedTime} from 'date-fns-tz/esm';
 
-const Spacer = styled.div`
-  height: 10vh;
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 150px;
+`;
+
+const Card = styled.div`
+  background-color: var(--warmWhite);
+
+  margin: 50px 0;
+  padding: 25px 10px;
+
+  border-radius: 8px;
+
+  width: var(--mobile-width);
+
+  @media only screen and (min-width: 700px) {
+    max-width: var(--event-width);
+  }
 `;
 
 const fade = keyframes`
@@ -37,40 +49,29 @@ const fade = keyframes`
 
 const EventSection = styled.section`
   position: relative;
-  width: var(--event-width);
   display: flex;
   flex-direction: column;
   animation: ${fade} 0.2s cubic-bezier(0.33, 1, 0.68, 1) 1;
 `;
 
 const DateTitle = styled.h1`
-  position: sticky;
-  top: 0;
   color: var(--indoor);
   padding: 16px;
   margin-bottom: 16px;
-  width: 100%;
-  background: var(--warmWhite);
   font-weight: normal;
   font-size: 2em;
-  z-index: 2;
 `;
 
 const EventContainer = styled.div`
   box-sizing: border-box;
   padding: 16px;
-  color: var(--black);
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  cursor: pointer;
-  transition: background 0.1s;
+  color: var(--black);
 
-  &:hover {
-    background: rgba(0, 0, 0, 0.1);
-  }
-
-  &:active {
-    background: rgba(0, 0, 0, 0.2);
+  @media only screen and (min-width: 700px) {
+    flex-direction: row;
   }
 `;
 
@@ -94,56 +95,12 @@ const EventTime = styled.div`
   margin-right: 16px;
 `;
 
-const NowTime = styled.div`
-  color: var(--wine);
-  width: 120px;
-  font-size: 1.05em;
-  flex-shrink: 0;
-  font-weight: bold;
-`;
-
-const NowLine = styled.div`
-  height: 1px;
-  background: var(--wine);
-  flex-grow: 1;
-  z-index: 1;
-
-  &:before {
-    display: block;
-    position: relative;
-    top: -3px;
-    width: 6px;
-    height: 6px;
-    border-radius: 100%;
-    content: '';
-    background: var(--wine);
-  }
-`;
-
-const NowConatiner = styled.div`
-  box-sizing: border-box;
-  padding: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const EventFavouriteButton = styled(FontAwesomeIcon)`
-  margin: 0 32px;
-`;
-
 const TimeSwitch = styled(Switch)``;
 
 const TimeContainer = styled.label`
   display: flex;
   flex-direction: row;
-  position: sticky;
   cursor: pointer;
-  top: 24px;
-  z-index: 3;
-  margin-bottom: -48px;
-  right: calc(50% - 560px);
-  align-self: flex-end;
 `;
 
 const TimeText = styled.div`
@@ -157,94 +114,65 @@ const TimeAbbr = styled.abbr`
 
 const Event = ({event, tz}: {event: EventData; tz: string}) => {
   return (
-    <Link to={`/schedule/${event.id}`}>
-      <EventContainer>
-        <EventTime>
-          {eventTimeString(tz, event.startTime, event.endTime)}
-        </EventTime>
-        {/* <EventFavouriteButton icon={EmptyStar} /> */}
-        <EventDetails>
-          <EventTitle>{event.title}</EventTitle>
+    <EventContainer>
+      <EventTime>
+        {eventTimeString(tz, event.startTime, event.endTime)}
+      </EventTime>
+      <EventDetails>
+        <EventTitle>{event.title}</EventTitle>
+        <EventDetailRow>
+          <EventTypeMarker type={event.type} />
+          <EventDetailText>{eventTypeName(event.type)}</EventDetailText>
+        </EventDetailRow>
+        {event.location && (
           <EventDetailRow>
-            <EventTypeMarker type={event.type} />
-            <EventDetailText>{eventTypeName(event.type)}</EventDetailText>
+            <EventIcon icon={faMapMarkerAlt} />
+            <EventDetailText>{event.locationName}</EventDetailText>
           </EventDetailRow>
-          {event.location && (
-            <EventDetailRow>
-              <EventIcon icon={faMapMarkerAlt} />
-              <EventDetailText>{event.locationName}</EventDetailText>
-            </EventDetailRow>
-          )}
-        </EventDetails>
-      </EventContainer>
-    </Link>
+        )}
+      </EventDetails>
+    </EventContainer>
   );
 };
 
-const Now = React.forwardRef<HTMLDivElement, {tz: string}>((props, ref) => {
-  return (
-    <NowConatiner ref={ref}>
-      <NowTime>
-        NOW ({format(utcToZonedTime(new Date(), props.tz), 'HH:mm')})
-      </NowTime>
-      <NowLine />
-    </NowConatiner>
-  );
-});
-
 export default () => {
   const [easternTime, setEasternTime] = useState<boolean>(false);
-  const [now, setNow] = useState<Date>(new Date());
-  const nowRef = useCallback((element: HTMLDivElement | null) => {
-    element?.scrollIntoView();
-  }, []);
+  const {events} = useEvents();
+
+  if (events == null) {
+    return (
+      <MainLayout>
+        <EventLoading />
+      </MainLayout>
+    );
+  }
 
   const localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   let timezone = easternTime ? 'America/Toronto' : localTimezone;
 
-  // Re-render once per minute
-  useEffect(() => {
-    const interval = setInterval(() => setNow(new Date()), 60 * 1000);
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+  const sorted = events!.sort(
+    (a, b) => a.startTime.getTime() - b.startTime.getTime()
+  );
 
-  const {events} = useEvents();
-  if (events != null) {
-    const sorted = events!.sort(
-      (a, b) => a.startTime.getTime() - b.startTime.getTime()
+  const grouped: {[key: string]: EventData[]} = {};
+
+  // Group events by day
+  sorted.forEach((event) => {
+    const key = format(
+      utcToZonedTime(event.startTime, timezone),
+      'EEEE, MMM dd'
     );
-    const grouped: {[key: string]: EventData[]} = {};
-    let nowId: number | null = null;
-
-    // Group events by day, and find the place to put the "NOW" indicator
-    sorted.forEach((event) => {
-      if (event.startTime > now && nowId === null) {
-        nowId = event.id;
-      }
-      const key = format(
-        utcToZonedTime(event.startTime, timezone),
-        'EEEE, MMM dd'
-      );
-      if (grouped[key]) {
-        grouped[key].push(event);
-      } else {
-        grouped[key] = [event];
-      }
-    });
-
-    // Don't show now indicator until 2021-01-29 EST or after 2021-02-01
-    if (
-      new Date() < new Date('2021-01-29T00:00:00.000-05:00') ||
-      new Date() > new Date('2021-02-01T00:00:00.000-05:00')
-    ) {
-      nowId = null;
+    if (grouped[key]) {
+      grouped[key].push(event);
+    } else {
+      grouped[key] = [event];
     }
+  });
 
-    return (
-      <SidebarLayout>
-        <Spacer />
+  return (
+    <MainLayout>
+      <Content>
+        <h1>Our schedule</h1>
         {localTimezone !== 'America/Toronto' && (
           <TimeContainer>
             <TimeText>
@@ -262,24 +190,17 @@ export default () => {
             />
           </TimeContainer>
         )}
-        {Object.keys(grouped).map((key) => (
-          <EventSection key={key}>
-            <DateTitle>{key}</DateTitle>
-            {grouped[key].map((event) => (
-              <React.Fragment key={event.id}>
-                {event.id === nowId && <Now tz={timezone} ref={nowRef} />}
-                <Event event={event} tz={timezone} />
-              </React.Fragment>
-            ))}
-          </EventSection>
-        ))}
-      </SidebarLayout>
-    );
-  } else {
-    return (
-      <SidebarLayout>
-        <EventLoading />
-      </SidebarLayout>
-    );
-  }
+        <Card>
+          {Object.keys(grouped).map((key) => (
+            <EventSection key={key}>
+              <DateTitle>{key}</DateTitle>
+              {grouped[key].map((event) => (
+                <Event key={event.id} event={event} tz={timezone} />
+              ))}
+            </EventSection>
+          ))}
+        </Card>
+      </Content>
+    </MainLayout>
+  );
 };
