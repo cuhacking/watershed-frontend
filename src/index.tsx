@@ -8,12 +8,14 @@ import {
 } from 'react-router-dom';
 import {createGlobalStyle} from 'styled-components';
 import 'fontsource-dm-sans';
+import 'fontsource-dm-sans/700.css';
+import '@fontsource/dm-mono';
 import 'fontsource-work-sans';
 import 'fontsource-work-sans/600.css';
 import 'fontsource-work-sans/300.css';
 import 'fontsource-montserrat-alternates/600.css';
-import {Home, Dashboard} from './pages';
-import {ProvideAuth} from './hooks';
+import {Home, Dashboard, Events} from './pages';
+import {ProvideAuth, ProvideEvents, ProvideDashboardInfo} from './hooks';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -49,10 +51,13 @@ const GlobalStyle = createGlobalStyle`
     --indoor: #130101;
 
     --max-width: 1200px;
+    --event-width: 800px;
     --reading-width: 65ch;
     --mobile-width: 90vw;
+    --sidebar-width: 350px;
 
     --primary-font: 'DM Sans', sans-serif;
+    --primary-font-mono: 'DM Mono', monospace;
     --secondary-font: 'Work Sans', sans-serif;
 
     --shadow: 0px 0px 12px rgba(0, 0, 0, 0.25);
@@ -107,19 +112,40 @@ const GlobalStyle = createGlobalStyle`
   .ReactCollapse--collapse {
     transition: height 500ms cubic-bezier(0.33, 1, 0.68, 1);
   }
+
+  .youtubeContainer {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+    overflow: hidden;
+  }
+
+  .youtubeContainer iframe {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 `;
 
 const App = () => (
   <>
     <GlobalStyle />
     <ProvideAuth>
-      <Router>
-        <Switch>
-          <Route path='/' exact component={Home} />
-          <Route path='/dashboard' component={Dashboard} />
-          <Redirect to='/' />
-        </Switch>
-      </Router>
+      <ProvideEvents>
+        <ProvideDashboardInfo>
+          <Router>
+            <Switch>
+              <Route path='/' exact component={Home} />
+              <Route path='/dashboard' component={Dashboard} />
+              <Route path='/schedule' component={Events} />
+              <Redirect to='/' />
+            </Switch>
+          </Router>
+        </ProvideDashboardInfo>
+      </ProvideEvents>
     </ProvideAuth>
   </>
 );

@@ -7,7 +7,7 @@ import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons';
 const genericButton = css<{color: string}>`
   background: ${({color}) => color};
   border: 0px;
-  color: var(--coolWhite);
+  color: var(--white);
   font-size: 1rem;
   user-select: none;
   border-radius: 24px;
@@ -21,7 +21,7 @@ const genericButton = css<{color: string}>`
 
   @media only screen and (min-width: 700px) {
     &:hover {
-      background-color: var(--coolWhite);
+      background-color: var(--white);
       color: ${({color}) => color} !important;
       cursor: pointer;
     }
