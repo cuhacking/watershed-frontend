@@ -138,6 +138,7 @@ const App = () => (
             <Route path='/dashboard' component={Dashboard} />
             <Route path='/schedule/:id' component={Event} />
             <Route path='/schedule' component={Events} />
+            {/* <Route path='/submissions' component={Submissions} /> */}
             <Redirect to='/' />
           </Switch>
         </Router>

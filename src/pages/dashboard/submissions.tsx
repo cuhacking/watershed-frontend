@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const sampleProjects: ProjectPreview[] = [
@@ -102,7 +102,8 @@ const Submissions = () => {
   const PAGE_OFFSET = 6;
 
   const currentProjects = () => {
-
+    const start = page * PAGE_OFFSET;
+    return projects.slice()
   };
 
   return (
