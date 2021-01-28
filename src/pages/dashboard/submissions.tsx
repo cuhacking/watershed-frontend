@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {SidebarLayout} from '../../layouts';
 import {Helmet} from 'react-helmet';
+import { Link } from 'react-router-dom';
 
 const sampleProjects: ProjectPreview[] = [
   {
@@ -112,9 +113,24 @@ const ProjectCard = styled.div`
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
   }
 
-  & h3, p {
+  & h3,
+  p {
     margin: 0;
   }
+`;
+
+const SubmitButton = styled.button`
+  width: 100%;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: none;
+  background: var(--wine)
+    linear-gradient(to right, rgba(255, 255, 255, 0), rgba(254, 205, 125, 0.75));
+  margin-top: 2rem;
+  color: var(--white);
+  font-size: 1.5rem;
+  font-family: var(--primary-font);
 `;
 
 interface ProjectPreview {
@@ -153,11 +169,17 @@ const Submissions = () => {
           <h2>Submissions</h2>
           <label>Check out what other hackers have built</label>
         </Header>
+        <SubmitButton>
+          <Link to="/dashboard/submit">Submit your hack</Link>
+        </SubmitButton>
         <ProjectsDisplay>
           {currentProjects.map((project, index) => (
-            <ProjectCard style={{
-              background: `url(${project.backgroundURL})`
-            }} key={index}>
+            <ProjectCard
+              style={{
+                background: `url(${project.backgroundURL})`,
+              }}
+              key={index}
+            >
               <h3>{project.name}</h3>
               <p>{project.team}</p>
             </ProjectCard>
