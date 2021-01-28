@@ -86,7 +86,7 @@ export default () => {
       token: resetToken,
       password: passwordForm.password,
     };
-    console.log(requestBody);
+
     fetch('/api/auth/performReset', {
       method: 'POST',
       headers: {

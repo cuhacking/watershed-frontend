@@ -33,7 +33,7 @@ type ApplicationContextObject = {
 };
 
 const useProvideApplication = (): ApplicationContextObject => {
-  const {request, user} = useAuth();
+  const {request, user, isInitiallyLoading: isAuthLoading} = useAuth();
   const [isLoading, setLoading] = useState(true);
   const [application, setApplication] = useState<ApplicationObject | null>(
     null
@@ -67,7 +67,10 @@ const useProvideApplication = (): ApplicationContextObject => {
     if (user !== null) {
       getApplication();
     }
-    setLoading(false);
+
+    if (!isAuthLoading) {
+      setLoading(false);
+    }
   }, [user]);
 
   const sendApplication = async (

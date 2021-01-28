@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 interface UserObject {
   uuid: string;
   email: string;
-  role: number;
+  role: 0 | 1 | 2;
   githubId: string | null;
   discordId: string | null;
 }
@@ -156,7 +156,11 @@ const useProvideAuth = (): AuthObject => {
         expiryDate: new Date(_tokens.accessToken.expiryDate),
       });
 
-      return await getUserInfoHelper(_tokens.accessToken.token);
+      setLoading(true);
+      const userInfo = await getUserInfoHelper(_tokens.accessToken.token);
+      setLoading(false);
+
+      return userInfo;
     } catch (error) {
       console.error('Unexpected error on sign in: ', error);
       return 'error';

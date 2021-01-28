@@ -1,7 +1,7 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 import {useParams, Redirect} from 'react-router-dom';
-import {SidebarLayout} from '../layouts';
+import {SidebarLayout} from '../../layouts';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faMapMarkerAlt, faLink} from '@fortawesome/free-solid-svg-icons';
 import YouTube from 'react-youtube';
@@ -13,8 +13,8 @@ import {
   EventIcon,
   eventTypeName,
   EventLoading,
-} from '../shared/events';
-import {Resource as ResourceData, useEvents} from '../hooks/useEvents';
+} from '../../shared/events';
+import {Resource as ResourceData, useEvents} from '../../hooks/useEvents';
 
 const Spacer = styled.div`
   height: 10vh;
@@ -28,7 +28,6 @@ const fade = keyframes`
     opacity: 1;
   }
 `;
-
 
 const EventSection = styled.section`
   position: relative;
@@ -188,8 +187,7 @@ export default () => {
       </SidebarLayout>
     );
   } else if (events != null) {
-    console.log(events);
-    return <Redirect to='/schedule' />;
+    return <Redirect to='/dashboard/schedule' />;
   } else {
     return (
       <SidebarLayout>
