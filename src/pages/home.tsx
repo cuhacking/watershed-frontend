@@ -29,6 +29,7 @@ import fellow from 'assets/img/sponsors/fellow.svg';
 import glimpse from 'assets/img/sponsors/glimpse.png';
 import codex from 'assets/img/sponsors/the-codex.svg';
 import echoAR from 'assets/img/sponsors/echoAR.png';
+import nokia from 'assets/img/sponsors/nokia.png';
 
 const faqs: FAQEntry[] = [
   {
@@ -632,6 +633,12 @@ export default () => (
             name='echoAR'
             size={1}
             url='https://echoar.xyz'
+          />
+          <Sponsor
+            logo={nokia}
+            name='Nokia'
+            size={1}
+            url='https://www.nokia.com/'
           />
         </LogoRow>
       </SponsorLogos>
