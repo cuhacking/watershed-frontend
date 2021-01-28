@@ -2,9 +2,39 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {SidebarLayout} from '../../layouts';
 import {Helmet} from 'react-helmet';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const sampleProjects: ProjectPreview[] = [
+  {
+    name: 'Project Atlas',
+    team: 'cuHacking dev-team',
+    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
+  },
+  {
+    name: 'Project Atlas',
+    team: 'cuHacking dev-team',
+    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
+  },
+  {
+    name: 'Project Atlas',
+    team: 'cuHacking dev-team',
+    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
+  },
+  {
+    name: 'Project Atlas',
+    team: 'cuHacking dev-team',
+    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
+  },
+  {
+    name: 'Project Atlas',
+    team: 'cuHacking dev-team',
+    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
+  },
+  {
+    name: 'Project Atlas',
+    team: 'cuHacking dev-team',
+    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
+  },
   {
     name: 'Project Atlas',
     team: 'cuHacking dev-team',
@@ -100,9 +130,9 @@ const ProjectCard = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  width: 264px;
+  width: calc(25% - 1rem);
   height: 148px;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   background-color: lightblue;
   color: var(--white);
   margin: 0.5rem;
@@ -119,18 +149,22 @@ const ProjectCard = styled.div`
   }
 `;
 
-const SubmitButton = styled.button`
+const SubmitButton = styled(Link)`
   width: 100%;
   text-align: center;
   padding: 1rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   border: none;
-  background: var(--wine)
-    linear-gradient(to right, rgba(255, 255, 255, 0), rgba(254, 205, 125, 0.75));
+  background: var(--actionGradient);
   margin-top: 2rem;
   color: var(--white);
   font-size: 1.5rem;
   font-family: var(--primary-font);
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: var(--card-shadow-hover);
+  }
 `;
 
 interface ProjectPreview {
@@ -140,22 +174,11 @@ interface ProjectPreview {
 }
 
 const Submissions = () => {
-  const [page, setPage] = useState(0);
-  const [projects, setProjects] = useState<ProjectPreview[]>(sampleProjects);
-  const [currentProjects, setCurrentProjects] = useState<ProjectPreview[]>([]);
-  const PAGE_OFFSET = 12;
+  const [projects, setProjects] = useState<ProjectPreview[]>([]);
 
   useEffect(() => {
-    const start = page * PAGE_OFFSET;
-    const previews: ProjectPreview[] = [];
-    for (let i = start; i < start + PAGE_OFFSET; i++) {
-      console.log(projects[i]);
-      if (projects[i] !== null) {
-        previews.push(projects[i]);
-      }
-    }
-    setCurrentProjects(previews);
-  }, [page]);
+    setProjects(sampleProjects);
+  }, []);
 
   return (
     <SidebarLayout>
@@ -169,11 +192,16 @@ const Submissions = () => {
           <h2>Submissions</h2>
           <label>Check out what other hackers have built</label>
         </Header>
-        <SubmitButton>
-          <Link to="/dashboard/submit">Submit your hack</Link>
+        <SubmitButton
+          style={{
+            color: 'var(--white)',
+          }}
+          to='/dashboard/submit'
+        >
+          Submit your hack
         </SubmitButton>
         <ProjectsDisplay>
-          {currentProjects.map((project, index) => (
+          {projects.map((project, index) => (
             <ProjectCard
               style={{
                 background: `url(${project.backgroundURL})`,
