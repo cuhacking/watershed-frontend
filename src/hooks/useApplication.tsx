@@ -67,10 +67,6 @@ const useProvideApplication = (): ApplicationContextObject => {
     if (user !== null) {
       getApplication();
     }
-
-    if (!isAuthLoading) {
-      setLoading(false);
-    }
   }, [user]);
 
   const sendApplication = async (

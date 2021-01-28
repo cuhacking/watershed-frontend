@@ -70,15 +70,13 @@ export default () => {
           <LogoLink to='/'>
             <StyledLogo />
           </LogoLink>
-          <h1>Register now!</h1>
-          <p>Don't wait! Start registration by pressing the button below.</p>
-          <StyledButton
-            kind='link'
-            color='var(--wine)'
-            link='/dashboard/registration'
-          >
-            Start Registration
-          </StyledButton>
+          <h1>Registrations closed.</h1>
+          <p>
+            Sorry, registrations closed on January 27, 23:59 EST.
+            <br />
+            <br />
+            Follow us on our socials so you don't miss out on our future events!
+          </p>
           <StyledButton
             kind='button'
             color='var(--wineLight)'
@@ -97,10 +95,19 @@ export default () => {
         <LogoLink to='/'>
           <StyledLogo />
         </LogoLink>
-        <h1>All set!</h1>
+        <h1>Get Ready!</h1>
+        <p>
+          The event schedule is{' '}
+          <Link style={{textDecoration: 'underline'}} to='/schedule'>
+            now available
+          </Link>
+          . Check out the activities and workshops that will be taking place
+          during the event!
+        </p>
         <p>
           The hackathon will take place on our Discord along with this website.
-          We'll be sending frequent updates leading up to the event there.
+          You will need to be a member of the Discord server in order to
+          participate.
           <br />
           <br />
           Join now so you don't miss out!
@@ -113,6 +120,7 @@ export default () => {
         >
           Join our Discord Server
         </StyledButton>
+
         <StyledButton
           kind='button'
           color='var(--wineLight)'

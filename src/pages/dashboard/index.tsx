@@ -36,9 +36,9 @@ export default () => {
           <PrivateRoute path={`${path}/`} exact>
             <Home />
           </PrivateRoute>
-          <RegistrationRoute path={`${path}/registration`} exact>
+          {/* <RegistrationRoute path={`${path}/registration`} exact>
             <Registration />
-          </RegistrationRoute>
+          </RegistrationRoute> */}
           <UnprivateRoute path={`${path}/forgot`}>
             <ForgotPassword />
           </UnprivateRoute>
@@ -48,9 +48,9 @@ export default () => {
           <UnprivateRoute path={`${path}/login`}>
             <Login />
           </UnprivateRoute>
-          <UnprivateRoute path={`${path}/sign-up`}>
+          {/* <UnprivateRoute path={`${path}/sign-up`}>
             <SignUp />
-          </UnprivateRoute>
+          </UnprivateRoute> */}
           <Redirect to={`${path}/`} />
         </Switch>
       </ProvideApplication>
