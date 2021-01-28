@@ -126,29 +126,6 @@ const ProjectsDisplay = styled.div`
   margin-top: 2rem;
 `;
 
-const ProjectCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-  width: calc(25% - 1rem);
-  height: 148px;
-  border-radius: 0.5rem;
-  background-color: lightblue;
-  color: var(--white);
-  margin: 0.5rem;
-  justify-content: flex-end;
-  transition: box-shadow 200ms;
-
-  &:hover {
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
-  }
-
-  & h3,
-  p {
-    margin: 0;
-  }
-`;
-
 const SubmitButton = styled(Link)`
   width: 100%;
   text-align: center;
@@ -165,6 +142,42 @@ const SubmitButton = styled(Link)`
     cursor: pointer;
     box-shadow: var(--card-shadow-hover);
   }
+`;
+
+const ProjectCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  width: calc(25% - 1rem);
+  height: 148px;
+  border-radius: 0.5rem;
+  background-color: lightblue;
+  color: var(--white);
+  margin: 0.5rem;
+  justify-content: flex-end;
+  transition: box-shadow 200ms;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+  }
+
+  & h3,
+  p {
+    margin: 0;
+    z-index: 2;
+  }
+`;
+
+const ProjectOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75));
 `;
 
 interface ProjectPreview {
@@ -208,6 +221,7 @@ const Submissions = () => {
               }}
               key={index}
             >
+              <ProjectOverlay />
               <h3>{project.name}</h3>
               <p>{project.team}</p>
             </ProjectCard>
