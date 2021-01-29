@@ -89,12 +89,32 @@ const useProvideDashboardInfo = (): DashboardInfo => {
 
       console.log(dashboardResult);
 
+      let teamInvites: Array<TeamInvite> = [];
+
+      // if (dashboardResult.user.team != null) {
+      //   const response = await request(
+      //     `/api/team/invites/${dashboardResult.user.team.uuid}`
+      //   );
+
+      //   if (response.status == 200) {
+      //     const invites = await response.json();
+      //     teamInvites = invites.map(
+      //       (invite: any) =>
+      //         ({
+      //           uuid: invite.uuid,
+      //           teamId: invite.team.uuid,
+      //           userId: invite.user.uuid,
+      //         } as TeamInvite)
+      //     );
+      //   }
+      // }
+
       setDashboard({
         user: {
           uuid: dashboardResult.user.uuid,
           email: dashboardResult.user.email,
-          firstName: dashboardResult.user.firstName || '<noFirstName>',
-          lastName: dashboardResult.user.lastName || '<noFirstName>',
+          firstName: dashboardResult.firstName || '<noFirstName>',
+          lastName: dashboardResult.lastName || '<noFirstName>',
           role: dashboardResult.user.role,
           discordId: dashboardResult.user.discordId,
           githubId: dashboardResult.user.githubId,
@@ -117,7 +137,7 @@ const useProvideDashboardInfo = (): DashboardInfo => {
                       } as User)
                   ),
                   submission: Boolean(dashboardResult.user.team.submission),
-                  invites: dashboardResult.user.team.invites ?? [],
+                  invites: teamInvites,
                 }
               : null,
         },

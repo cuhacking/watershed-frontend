@@ -167,7 +167,6 @@ const EventCard = ({event}: UpcomingEventProps) => {
 };
 
 export default () => {
-  const {application} = useApplication();
   const {isLoading, dashboard} = useDashboardInfo();
 
   if (isLoading) {
@@ -198,7 +197,7 @@ export default () => {
       <Helmet title='cuHacking 2021: Snowed In' />
       <Content>
         <MainSection>
-          <Greeting>Hey, {application!.firstName}!</Greeting>
+          <Greeting>Hey, {user.firstName}!</Greeting>
           <Subtitle>
             You currently have <span>{user.points}</span>{' '}
             {user.points === 1 ? 'point' : 'points'}.

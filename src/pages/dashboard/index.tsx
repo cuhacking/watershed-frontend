@@ -192,7 +192,7 @@ const PrivateRoute = ({children, ...rest}: RouteProps) => {
           );
         }
 
-        if (application === null) {
+        if (application === null && user.role < 1) {
           return (
             <CustomLayout>
               <CustomLayoutContent>
