@@ -53,10 +53,6 @@ const faqs: FAQEntry[] = [
     answer: `If you're a student, you can attend! When we say students, we mean *any student.* Middle schoolers, high schoolers, university students, and college students of all skill levels are welcome at our event. You don't need to be in any specific program or focus to attend either. If you're interested in tech, this event is for you!`,
   },
   {
-    question: 'How do I sign up?',
-    answer: `Hit the big "Register Now" button at the top of the site!`,
-  },
-  {
     question: 'Where will cuHacking be hosted?',
     answer: `The event will be run through our website and our Discord server. Once you've registered here and joined the Discord server, you're all set!`,
   },
@@ -183,11 +179,6 @@ const HeroBanner = () => {
         <Title>Snowed In</Title>
         <Date>January 29–31, 2021</Date>
         <Location>Virtual, Worldwide</Location>
-        <HeroActions>
-          <Button kind='link' color='var(--ikeaBlue)' link='/dashboard/sign-up'>
-            Register Now
-          </Button>
-        </HeroActions>
       </HeroText>
     </HeroLayerWrapper>
   );
