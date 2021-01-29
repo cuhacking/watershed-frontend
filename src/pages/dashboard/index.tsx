@@ -124,9 +124,9 @@ export default () => {
           <PrivateRoute path={`${path}/checkin`}>
             <CheckIn />
           </PrivateRoute>
-          <PrivateRoute path={`${path}/submissions`} exact>
+          {/* <PrivateRoute path={`${path}/submissions`} exact>
             <Submissions />
-          </PrivateRoute>
+          </PrivateRoute> */}
           <PrivateRoute path={`${path}/schedule/:id`} exact>
             <Event />
           </PrivateRoute>

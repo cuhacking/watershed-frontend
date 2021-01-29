@@ -311,7 +311,7 @@ const TeamManager = () => {
 
       return (
         <Container>
-          <Link to='/dashboard/submit'>
+          {/* <Link to='/dashboard/submit'>
             <ActionBox>
               All done with hacking?
               <LargeActionText>
@@ -322,7 +322,7 @@ const TeamManager = () => {
                 hack!
               </LargeActionText>
             </ActionBox>
-          </Link>
+          </Link> */}
           <Card>
             <EyebrowText>Team</EyebrowText>
             <Subtitle>{dashboard!.user.team.name}</Subtitle>
