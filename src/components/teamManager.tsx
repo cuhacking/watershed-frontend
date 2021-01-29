@@ -11,6 +11,10 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
+
+  & > * {
+    width: 100%;
+  }
 `;
 
 const Card = styled.div`
@@ -86,9 +90,18 @@ const Subtitle = styled.h4`
 
 const TeamList = styled.div`
   margin: 20px;
+  width: 100%;
 `;
 
 const TeamMember = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  text-align: left;
+  width: 100%;
+
   span {
     color: var(--wine);
   }
@@ -304,9 +317,10 @@ const TeamManager = () => {
             <Subtitle>{dashboard!.user.team.name}</Subtitle>
             <TeamList>
               <TeamMember>
-                {/* TODO: once user returns firstname and last name */}
-                Wal
-                <span>@Walsker</span>
+                <div>
+                  {dashboard!.user.firstName}
+                  <span>@{dashboard!.user.discordUsername?.split('#')[0]}</span>
+                </div>
                 <LeaveButton
                   onClick={async () => {
                     setLoading(true);

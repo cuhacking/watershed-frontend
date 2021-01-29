@@ -37,8 +37,8 @@ export interface DashboardObject {
   endTime: string;
   user: {
     uuid: string;
-    // firstName: string;
-    // lastName: string; TODO: RYAN!!!
+    firstName: string;
+    lastName: string;
     email: string;
     role: Role;
     discordId: string | null;
@@ -77,8 +77,7 @@ const useProvideDashboardInfo = (): DashboardInfo => {
   const [isLoading, setLoading] = useState(true);
   const [dashboard, setDashboard] = useState<DashboardObject | null>(null);
 
-  const fetchData = async () => {
-    setLoading(true);
+  const fetchDataNoLoad = async () => {
     try {
       const [dashboardResponse, eventsResponse] = await Promise.all([
         request('/api/dashboard'),
@@ -94,6 +93,8 @@ const useProvideDashboardInfo = (): DashboardInfo => {
         user: {
           uuid: dashboardResult.user.uuid,
           email: dashboardResult.user.email,
+          firstName: dashboardResult.user.firstName || '<noFirstName>',
+          lastName: dashboardResult.user.lastName || '<noFirstName>',
           role: dashboardResult.user.role,
           discordId: dashboardResult.user.discordId,
           githubId: dashboardResult.user.githubId,
@@ -112,7 +113,7 @@ const useProvideDashboardInfo = (): DashboardInfo => {
                         uuid: member.uuid,
                         name: '<noName>',
                         discordUsername:
-                          member.discordUsername ?? '<noDiscord>',
+                          member.discordUsername ?? '<noDiscord>#1234',
                       } as User)
                   ),
                   submission: Boolean(dashboardResult.user.team.submission),
@@ -141,12 +142,18 @@ const useProvideDashboardInfo = (): DashboardInfo => {
     try {
       // TODO: get invites and load into team
     } catch (e) {}
+  };
+
+  const fetchData = async () => {
+    setLoading(true);
+
+    await fetchDataNoLoad();
 
     setLoading(false);
   };
 
   const refresh = () => {
-    fetchData();
+    fetchDataNoLoad();
   };
 
   const createTeam: CreateTeamFunction = async (teamName) => {
@@ -162,6 +169,7 @@ const useProvideDashboardInfo = (): DashboardInfo => {
       });
 
       if (response.status === 201) {
+        await fetchDataNoLoad();
         return true;
       }
 
@@ -178,7 +186,12 @@ const useProvideDashboardInfo = (): DashboardInfo => {
       const response = await request('/api/team/leave');
       console.log('after');
 
-      return response.status === 200;
+      if (response.status === 200) {
+        await fetchDataNoLoad();
+        return true;
+      }
+
+      throw new Error(`Could not leave team. Response: ${response.status}`);
     } catch (error) {
       console.log(error);
       return false;
@@ -197,7 +210,11 @@ const useProvideDashboardInfo = (): DashboardInfo => {
         }),
       });
 
-      return response.status === 200;
+      if (response.status === 200) {
+        await fetchDataNoLoad();
+        return true;
+      }
+      throw new Error(`Could not send invite. Response: ${response.status}`);
     } catch (error) {
       console.log(error);
       return false;
@@ -216,11 +233,11 @@ const useProvideDashboardInfo = (): DashboardInfo => {
         }),
       });
 
-      const responseBody = await response.json();
-
       switch (response.status) {
         case 200:
-          return {status: 'success', value: responseBody.value};
+          const {value} = await response.json();
+          await fetchDataNoLoad();
+          return {status: 'success', value};
         case 404:
           return {status: 'invalid'};
         case 400:
