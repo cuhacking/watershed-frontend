@@ -140,7 +140,6 @@ export default () => {
   const {leaderboard} = useLeaderboard();
 
   if (leaderboard != null) {
-    console.log(leaderboard);
     return (
       <SidebarLayout>
         <Helmet
@@ -151,7 +150,6 @@ export default () => {
         <Title>Leaderboard</Title>
         <Subtitle>See how you stack against the competition</Subtitle>
         <LeaderboardContainer>
-          {console.log(user?.uuid)}
           {leaderboard.map((place) => (
             <LeaderboardRow
               isUser={user?.uuid === place.uuid}
