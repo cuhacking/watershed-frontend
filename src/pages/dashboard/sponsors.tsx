@@ -8,7 +8,7 @@ import fdm from 'assets/img/sponsors/fdm-full.svg';
 import fellow from 'assets/img/sponsors/fellow-full.svg';
 
 const Spacer = styled.div`
-  height: 10vh;
+  height: 5vh;
 `;
 
 const Container = styled.div`
@@ -22,12 +22,12 @@ const Container = styled.div`
 const Header = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 const SponsorsHeader = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 2rem;
   text-align: center;
 
   & h2 {
@@ -74,20 +74,19 @@ const Sponsors = () => (
         <label>Chat with our amazing sponsors</label>
       </Header>
       <SponsorsHeader>
-        <h2>Meeting Rooms</h2>
-        <p>click on a logo to join</p>
+        <p>Click on a logo to join</p>
       </SponsorsHeader>
       <SponsorsContainer>
-        <SponsorCard href='https://cuhacking.com' target='_blank'>
+        <SponsorCard href='https://meet.google.com/hdm-uene-saz' target='_blank'>
           <SponsorLogo src={ciena} />
         </SponsorCard>
-        <SponsorCard href='https://cuhacking.com' target='_blank'>
+        <SponsorCard href='https://meet.google.com/wvf-dyiv-jye' target='_blank'>
           <SponsorLogo src={ross} />
         </SponsorCard>
-        <SponsorCard href='https://cuhacking.com' target='_blank'>
+        <SponsorCard href='https://meet.google.com/dac-owtz-eqx' target='_blank'>
           <SponsorLogo src={fellow} />
         </SponsorCard>
-        <SponsorCard href='https://cuhacking.com' target='_blank'>
+        <SponsorCard href='https://meet.google.com/zba-ygev-jah' target='_blank'>
           <SponsorLogo src={fdm} />
         </SponsorCard>
       </SponsorsContainer>
