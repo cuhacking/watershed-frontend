@@ -179,9 +179,9 @@ export default () => {
         </GitHubButton>
       </OAuthButtons>
       <OptionButtons>
-        <OptionButton to='/dashboard/sign-up'>
+        {/* <OptionButton to='/dashboard/sign-up'>
           I don't have an account
-        </OptionButton>
+        </OptionButton> */}
         <OptionButton style={{marginTop: '1rem'}} to='/dashboard/forgot'>
           Reset password
         </OptionButton>
