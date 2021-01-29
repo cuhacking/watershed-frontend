@@ -91,7 +91,7 @@ const CheckIn = () => {
   const checkDiscordServerStatus = () => {
     setInterval((timer) => {
       request('/api/user/checkUserDiscord').then((res) => {
-        if (res) {
+        if (res.ok) {
           setDiscordServer(true);
           clearInterval(timer);
         }
@@ -117,15 +117,14 @@ const CheckIn = () => {
   };
 
   useEffect(() => {
-    const connected = dashboard?.user.checkedIn;
-    if (!connected) {
-      checkDiscordConnectionStatus();
-    }
-
     setDiscordConnected(dashboard?.user.discordId != null);
   }, [dashboard]);
 
   useEffect(() => {
+    const connected = dashboard?.user.checkedIn;
+    if (!connected) {
+      checkDiscordConnectionStatus();
+    }
     checkDiscordServerStatus();
   }, []);
 
