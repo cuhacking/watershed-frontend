@@ -8,6 +8,7 @@ import {useHistory} from 'react-router-dom';
 import {useDashboardInfo} from '../../hooks/useDashboardInfo';
 import {useAuth} from '../../hooks';
 import {clearInterval} from 'timers';
+import {ExitIcon} from '../../assets/img/icons';
 
 const Container = styled.div`
   height: 100vh;
@@ -39,6 +40,7 @@ const StepsContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 2rem;
+  margin-bottom: 25px;
 `;
 
 const Step = styled.div`
@@ -81,12 +83,34 @@ const DiscordButton = styled.a`
   cursor: pointer;
 `;
 
+const SignOutButton = styled.a`
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: var(--secondary-font);
+  font-size: 1rem;
+
+  display: flex;
+  align-items: center;
+
+  color: var(--white);
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  svg {
+    margin-right: 0.25rem;
+  }
+`;
+
 const CheckIn = () => {
   const [discordConnected, setDiscordConnected] = useState(false);
   const [discordServer, setDiscordServer] = useState(false);
   const {dashboard, refresh} = useDashboardInfo();
   const history = useHistory();
-  const {request} = useAuth();
+  const {request, signOut} = useAuth();
 
   const checkDiscordServerStatus = () => {
     // Initial check
@@ -200,6 +224,9 @@ const CheckIn = () => {
             </Button>
           </Step>
         </StepsContainer>
+        <SignOutButton onClick={signOut}>
+          <ExitIcon /> Sign Out
+        </SignOutButton>
       </CheckInContainer>
     </Container>
   );
