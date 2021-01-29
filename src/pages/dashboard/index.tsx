@@ -24,6 +24,7 @@ import CheckIn from './checkin';
 import Submissions from './submissions';
 import Leaderboard from './leaderboard';
 import Challenges from './challenges';
+import Sponsors from './sponsors';
 
 const DashboardStyle = createGlobalStyle`
   body {
@@ -121,6 +122,9 @@ export default () => {
           </PrivateRoute>
           <PrivateRoute path={`${path}/challenges`} exact>
             <Challenges />
+          </PrivateRoute>
+          <PrivateRoute path={`${path}/sponsors`}>
+            <Sponsors />
           </PrivateRoute>
           <RegistrationRoute path={`${path}/registration`} exact>
             <Registration />
