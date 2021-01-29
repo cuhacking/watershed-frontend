@@ -53,11 +53,16 @@ export interface DashboardObject {
 }
 
 type CreateTeamFunction = (teamName: string) => Promise<boolean>;
+type LeaveTeamFunction = () => Promise<boolean>;
+type SendInviteFunction = (username: string) => Promise<boolean>;
+
 export interface DashboardInfo {
   isLoading: boolean;
   dashboard: DashboardObject | null;
   refresh: Function;
   createTeam: CreateTeamFunction;
+  leaveTeam: LeaveTeamFunction;
+  sendInvite: SendInviteFunction;
 }
 
 const useProvideDashboardInfo = (): DashboardInfo => {
@@ -99,7 +104,8 @@ const useProvideDashboardInfo = (): DashboardInfo => {
                       ({
                         uuid: member.uuid,
                         name: '<noName>',
-                        discordUsername: member.discordId ?? '<noDiscord>',
+                        discordUsername:
+                          member.discordUsername ?? '<noDiscord>',
                       } as User)
                   ),
                   submission: Boolean(dashboardResult.user.team.submission),
@@ -124,6 +130,11 @@ const useProvideDashboardInfo = (): DashboardInfo => {
     } catch (e) {
       console.error(e);
     }
+
+    try {
+      // TODO: get invites and load into team
+    } catch (e) {}
+
     setLoading(false);
   };
 
@@ -154,6 +165,38 @@ const useProvideDashboardInfo = (): DashboardInfo => {
     }
   };
 
+  const leaveTeam: LeaveTeamFunction = async () => {
+    try {
+      console.log('before');
+      const response = await request('/api/team/leave');
+      console.log('after');
+
+      return response.status === 200;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
+  const sendInvite: SendInviteFunction = async (username: string) => {
+    try {
+      const response = await request('/api/team/createInvite', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+        }),
+      });
+
+      return response.status === 200;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
   useEffect(() => {
     if (user !== null) {
       fetchData();
@@ -165,6 +208,8 @@ const useProvideDashboardInfo = (): DashboardInfo => {
     dashboard,
     refresh,
     createTeam,
+    leaveTeam,
+    sendInvite,
   };
 };
 
@@ -173,6 +218,8 @@ const DashboardInfoContext = createContext<DashboardInfo>({
   dashboard: null,
   refresh: () => {},
   createTeam: async () => false,
+  leaveTeam: async () => false,
+  sendInvite: async () => false,
 });
 
 export const ProvideDashboardInfo = (props: {children: React.ReactNode}) => {

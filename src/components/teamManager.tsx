@@ -9,6 +9,7 @@ import {useDashboardInfo} from '../hooks';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   & > * {
     margin-bottom: 20px;
@@ -32,6 +33,10 @@ const normalizeButton = css`
   padding: 0;
   font-family: var(--secondary-font);
   font-size: 1rem;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const glowingButton = css`
@@ -47,7 +52,6 @@ const glowingButton = css`
   box-shadow: var(--card-shadow);
 
   &:hover {
-    cursor: pointer;
     box-shadow: var(--card-shadow-hover);
   }
 
@@ -81,12 +85,18 @@ const Subtitle = styled.h4`
   font-size: 1.4rem;
 `;
 
-const TeamList = styled.div``;
+const TeamList = styled.div`
+  margin: 20px;
+`;
 
 const TeamMember = styled.div`
   span {
     color: var(--wine);
   }
+`;
+
+const InvitedMember = styled(TeamMember)`
+  opacity: 0.5;
 `;
 
 const miniText = css`
@@ -98,6 +108,10 @@ const LeaveButton = styled.button`
   ${normalizeButton}
   ${miniText}
   color: var(--wineLight);
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const InvitedText = styled.div`
@@ -133,40 +147,66 @@ const TextButton = styled.button`
   }
 `;
 
+const Tooltip = styled.p`
+  font-size: 0.75rem;
+  text-align: left;
+  margin: -5px 0 20px;
+`;
+
 const TeamManager = () => {
-  const {createTeam, dashboard} = useDashboardInfo();
+  const {createTeam, leaveTeam, sendInvite, dashboard} = useDashboardInfo();
   const [isLoading, setLoading] = useState(false);
   const [view, setView] = useState<'default' | 'createTeam' | 'invite'>(
     'default'
   );
   const [teamName, setTeamName] = useState('');
-  const [teamNameError, setTeamNameError] = useState<string>();
+  const [inputError, setInputError] = useState<string>();
   const [username, setUsername] = useState('');
+
+  const handleCreateTeam = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
+    setInputError(undefined);
+
+    if (teamName == '') {
+      setLoading(false);
+      return setInputError('Please enter a team name.');
+    }
+
+    if (teamName.length < 5) {
+      setLoading(false);
+      return setInputError('Minimum 5 characters.');
+    }
+
+    const success = await createTeam(teamName);
+
+    if (success) {
+      setView('default');
+    }
+
+    setLoading(false);
+  };
 
   const handleSubmitInvite = async (
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
     setLoading(true);
+    setInputError(undefined);
 
-    if (teamName == '') {
+    if (username == '') {
       setLoading(false);
-      return setTeamNameError('Please enter a team name.');
+      return setInputError('No username provided.');
     }
 
-    if (teamName.length < 5) {
+    const success = await sendInvite(username);
+
+    if (!success) {
       setLoading(false);
-      return setTeamNameError('Minimum 5 characters.');
+      return setInputError('Invalid username.');
     }
 
-    const success = await createTeam(teamName);
-
-    console.log(success);
-
-    if (success) {
-      setView('default');
-    }
-
+    setView('default');
     setLoading(false);
   };
 
@@ -183,13 +223,13 @@ const TeamManager = () => {
       return (
         <Container>
           <Card>
-            <form onSubmit={handleSubmitInvite}>
+            <form onSubmit={handleCreateTeam}>
               <StyledInput
                 onChange={(event: any) => setTeamName(event.target.value)}
                 value={teamName}
                 label='Team Name'
                 name='teamName'
-                error={teamNameError}
+                error={inputError}
                 displayLabel
                 forceLabel
                 required
@@ -209,18 +249,23 @@ const TeamManager = () => {
           <Card>
             <form onSubmit={handleSubmitInvite}>
               <StyledInput
-                onChange={(event: any) => setTeamName(event.target.value)}
-                value={teamName}
+                onChange={(event: any) => setUsername(event.target.value)}
+                value={username}
                 label='Email or Discord Username'
                 name='username'
-                error={'asd'}
+                error={inputError}
                 displayLabel
                 forceLabel
                 required
               />
-
+              <Tooltip>
+                Email or Discord username of the user you would like to invite.
+                <br />
+                <br />
+                Discord username must include four-digit tag. i.e. User#1234{' '}
+              </Tooltip>
               <Button kind='button' color='var(--wineLight)'>
-                Create Team
+                Send Invite
               </Button>
             </form>
             <TextButton>Cancel</TextButton>
@@ -259,21 +304,35 @@ const TeamManager = () => {
             <EyebrowText>Team</EyebrowText>
             <Subtitle>{dashboard!.user.team.name}</Subtitle>
             <TeamList>
-              {/* <TeamMember >
-                  {dashboard!.user.firstName}
-                  <span>@{member.discordUsername}</span>
-                  <LeaveButton onClick={() => {}}>Leave</LeaveButton>
-                </TeamMember> */}
-              {dashboard!.user.team.members.map((member) => (
-                <TeamMember key={member.uuid}>
-                  {member.name}
-                  <span>@{member.discordUsername}</span>
-                  <LeaveButton onClick={() => {}}>Leave</LeaveButton>
-                </TeamMember>
-              ))}
+              <TeamMember>
+                {/* TODO: once user returns firstname and last name */}
+                Wal
+                <span>@Walsker</span>
+                <LeaveButton
+                  onClick={async () => {
+                    setLoading(true);
+                    await leaveTeam();
+                    setLoading(false);
+                  }}
+                >
+                  Leave
+                </LeaveButton>
+              </TeamMember>
+              {dashboard!.user.team.members
+                .filter((member) => member.uuid !== dashboard!.user.uuid)
+                .map((member) => (
+                  <TeamMember key={member.uuid}>
+                    {member.name}
+                    <span>@{member.discordUsername}</span>
+                  </TeamMember>
+                ))}
             </TeamList>
             {dashboard!.user.team.members.length < 4 && (
-              <Button kind='button' color='var(--wineLight)'>
+              <Button
+                kind='button'
+                color='var(--wineLight)'
+                action={() => setView('invite')}
+              >
                 Invite
               </Button>
             )}
