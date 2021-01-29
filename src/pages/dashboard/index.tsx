@@ -224,9 +224,15 @@ const PrivateRoute = ({children, ...rest}: RouteProps) => {
                   kind='link'
                   color='var(--wineLight)'
                   link='/dashboard/registration'
-                  action={handleSignOut}
                 >
                   Registration
+                </StyledButton>
+                <StyledButton
+                  kind='button'
+                  color='var(--wine)'
+                  action={handleSignOut}
+                >
+                  Sign Out
                 </StyledButton>
               </CustomLayoutContent>
             </CustomLayout>
