@@ -197,14 +197,17 @@ const useProvideDashboardInfo = (): DashboardInfo => {
               description: rawEvent.description,
             } as UpcomingEvent)
         ),
-        announcements: announcementsResult.slice(0, 3).map(
-          (announcement: any) =>
-            ({
-              title: announcement.title,
-              description: announcement.description,
-              url: announcement.url || undefined,
-            } as Announcement)
-        ),
+        announcements: announcementsResult
+          .reverse()
+          .slice(0, 3)
+          .map(
+            (announcement: any) =>
+              ({
+                title: announcement.title,
+                description: announcement.description,
+                url: announcement.url || undefined,
+              } as Announcement)
+          ),
       });
     } catch (e) {
       console.error(e);
