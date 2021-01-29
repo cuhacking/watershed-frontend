@@ -163,9 +163,9 @@ const Sidebar = (props: any) => {
         <Button icon={TrophyIcon} link={appendBase('/challenges')}>
           Challenges
         </Button>
-        <Button icon={GalleryIcon} link={appendBase('/submissions')}>
+        {/* <Button icon={GalleryIcon} link={appendBase('/submissions')}>
           Submissions
-        </Button>
+        </Button> */}
         <Button icon={RanksIcon} link={appendBase('/leaderboard')}>
           Leaderboard
         </Button>

@@ -3,7 +3,7 @@ import styled, {keyframes} from 'styled-components';
 import {useParams, Redirect} from 'react-router-dom';
 import {SidebarLayout} from '../../layouts';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faMapMarkerAlt, faLink} from '@fortawesome/free-solid-svg-icons';
+import {faMapMarkerAlt, faLink, faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons';
 import YouTube from 'react-youtube';
 import {
   EventDetailRow,
@@ -95,6 +95,20 @@ const ResourceDetails = styled.div`
   justify-content: center;
 `;
 
+const StyledIcon = styled(FontAwesomeIcon)`
+  margin-left: 10px;
+  margin-top: -1px;
+`;
+
+const EventLink = styled.a`
+  display: flex;
+  flex-direction: row;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 const ResourceContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -169,7 +183,18 @@ export default () => {
           {event.location && (
             <EventDetailRow>
               <EventIcon icon={faMapMarkerAlt} />
-              <EventDetailText>{event.locationName}</EventDetailText>
+              {event.location !== 'value' ? (
+                <EventLink
+                  href={event.location}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  <EventDetailText>{event.locationName}</EventDetailText>
+                  <StyledIcon icon={faExternalLinkAlt} size='1x' />
+                </EventLink>
+              ) : (
+                <EventDetailText>{event.locationName}</EventDetailText>
+              )}
             </EventDetailRow>
           )}
           <EventDescription>{event.description}</EventDescription>

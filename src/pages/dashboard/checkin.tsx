@@ -89,6 +89,14 @@ const CheckIn = () => {
   const {request} = useAuth();
 
   const checkDiscordServerStatus = () => {
+    // Initial check
+    request('/api/user/checkUserDiscord').then((res) => {
+      if (res.ok) {
+        setDiscordServer(true);
+      }
+    });
+
+    // Interval check
     setInterval((timer) => {
       request('/api/user/checkUserDiscord').then((res) => {
         if (res.ok) {
