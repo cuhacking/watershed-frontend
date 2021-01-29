@@ -21,6 +21,7 @@ import Schedule from './schedule';
 import Event from './event';
 import {ReactComponent as Logo} from 'assets/img/word-and-year-logo-white.svg';
 import Submissions from './submissions';
+import Leaderboard from './leaderboard';
 
 const DashboardStyle = createGlobalStyle`
   body {
@@ -109,6 +110,9 @@ export default () => {
           </PrivateRoute>
           <PrivateRoute path={`${path}/schedule/:id`} exact>
             <Event />
+          </PrivateRoute>
+          <PrivateRoute path={`${path}/leaderboard`} exact>
+            <Leaderboard />
           </PrivateRoute>
           <RegistrationRoute path={`${path}/registration`} exact>
             <Registration />

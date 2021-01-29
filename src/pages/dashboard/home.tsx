@@ -116,6 +116,7 @@ const EventCardContainer = styled.div`
   background-color: var(--white);
   border-radius: 8px;
   box-shadow: var(--card-shadow);
+  height: 100%;
 
   transition: 100ms ease-out;
 
@@ -158,16 +159,20 @@ const EventCard = ({event}: UpcomingEventProps) => {
     str.length > 200 ? `${str.slice(0, 197)}...` : str;
 
   return (
-    <EventCardContainer>
-      <EventCardHeader>
-        <EventTypeMarker type={event.type} />
-        <h4>{event.title}</h4>
-      </EventCardHeader>
-      <EventCardTime>
-        {eventTimeString(timezone, event.startTime, event.endTime)}
-      </EventCardTime>
-      <EventCardDescription>{truncate(event.description)}</EventCardDescription>
-    </EventCardContainer>
+    <Link to={`/dashboard/schedule/${event.id}`}>
+      <EventCardContainer>
+        <EventCardHeader>
+          <EventTypeMarker type={event.type} />
+          <h4>{event.title}</h4>
+        </EventCardHeader>
+        <EventCardTime>
+          {eventTimeString(timezone, event.startTime, event.endTime)}
+        </EventCardTime>
+        <EventCardDescription>
+          {truncate(event.description)}
+        </EventCardDescription>
+      </EventCardContainer>
+    </Link>
   );
 };
 
