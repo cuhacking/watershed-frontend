@@ -218,9 +218,9 @@ export default () => {
   const events = dashboard.upcomingEvents;
   const announcements = dashboard.announcements;
 
-  if (!user.checkedIn) {
-    return <Redirect to='/dashboard/checkin' />;
-  }
+  // if (!user.checkedIn) {
+  //   return <Redirect to='/dashboard/checkin' />;
+  // }
 
   return (
     <SidebarLayout>

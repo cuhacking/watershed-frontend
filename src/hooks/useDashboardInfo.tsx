@@ -25,6 +25,12 @@ export interface User {
   discordUsername: string;
 }
 
+export interface MyInvite {
+  uuid: string;
+  teamId: string;
+  teamName: string;
+}
+
 export interface Invite {
   uuid: string;
   firstName: string;
@@ -55,6 +61,7 @@ export interface DashboardObject {
     checkedIn: boolean;
     points: number;
     team: Team | null;
+    invites: Array<MyInvite>;
   };
   upcomingEvents: Array<UpcomingEvent>;
   announcements: Array<Announcement>;
@@ -107,7 +114,7 @@ const useProvideDashboardInfo = (): DashboardInfo => {
       console.log(announcementsResult);
 
       let memberInvites: Array<Invite> = [];
-      let myInvites: Array<Invite> = [];
+      let myInvites: Array<MyInvite> = [];
 
       if (dashboardResult.user.team != null) {
         const response = await request(
@@ -126,19 +133,20 @@ const useProvideDashboardInfo = (): DashboardInfo => {
           );
         }
       } else {
-        // const response = await request(`/api/team/invites`);
-        // if (response.status == 200) {
-        //   const invites = await response.json();
-        //   console.log(invites);
-        //   myInvites = invites.map(
-        //     (invite: any) =>
-        //       ({
-        //         uuid: invite.uuid,
-        //         firstName: invite.firstName,
-        //         discordUsername: invite.discordUsername,
-        //       } as Invite)
-        //   );
-        // }
+        const response = await request(`/api/team/invites`);
+
+        if (response.status == 200) {
+          const invites = await response.json();
+          console.log(invites);
+          myInvites = invites.map(
+            (invite: any) =>
+              ({
+                uuid: invite.uuid,
+                teamId: invite.teamId,
+                teamName: invite.teamName,
+              } as MyInvite)
+          );
+        }
       }
 
       setDashboard({
@@ -153,6 +161,7 @@ const useProvideDashboardInfo = (): DashboardInfo => {
           discordUsername: dashboardResult.user.discordUsername,
           confirmed: dashboardResult.user.confirmed,
           checkedIn: dashboardResult.user.checkedIn ?? false,
+          invites: myInvites,
           points: dashboardResult.user.points,
           team:
             dashboardResult.user.team != null

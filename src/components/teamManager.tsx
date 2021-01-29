@@ -51,7 +51,6 @@ const normalizeButton = css`
 const glowingButton = css`
   border-radius: 8px;
   padding: 20px;
-  margin-bottom: 20px;
   width: 100%;
 
   background: var(--action-gradient);
@@ -77,6 +76,7 @@ const ActionButton = styled.button`
 
 const ActionBox = styled.div`
   ${glowingButton}
+  margin-bottom: 20px;
 `;
 
 const LargeActionText = styled.div`
@@ -303,6 +303,27 @@ const TeamManager = () => {
               <FontAwesomeIcon icon={faPlus} size='1x' />
               Create Team
             </ActionButton>
+            {dashboard!.user.invites.length > 0 && (
+              <Card style={{marginTop: 20}}>
+                <Subtitle>Invites</Subtitle>
+                <TeamList>
+                  {dashboard!.user.invites.map((invite) => (
+                    <TeamMember key={invite.uuid}>
+                      {invite.teamName}asd
+                      <MiniButton
+                        onClick={async () => {
+                          setLoading(true);
+                          // await leaveTeam(); TODO: join team
+                          setLoading(false);
+                        }}
+                      >
+                        Join
+                      </MiniButton>
+                    </TeamMember>
+                  ))}
+                </TeamList>
+              </Card>
+            )}
           </Container>
         );
       }
