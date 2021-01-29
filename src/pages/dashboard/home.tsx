@@ -148,6 +148,15 @@ const EventCardTime = styled.p`
 
 const EventCardDescription = styled.p`
   margin-bottom: 0;
+
+  a {
+    color: var(--wineLight);
+  }
+
+  a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 `;
 
 interface AnnouncementCardProps {
@@ -163,6 +172,13 @@ const AnnouncementCard = ({title, description, url}: AnnouncementCardProps) => {
         <h4>{title}</h4>
       </EventCardHeader>
       <EventCardDescription>{description}</EventCardDescription>
+      {url && (
+        <EventCardDescription>
+          <a href={url} target='_blank' rel='noopener noreferrer'>
+            {url}
+          </a>
+        </EventCardDescription>
+      )}
     </AnnouncementCardContainer>
   );
 };

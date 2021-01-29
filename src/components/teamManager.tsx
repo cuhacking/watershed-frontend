@@ -171,6 +171,7 @@ const Tooltip = styled.p`
 const TeamManager = () => {
   const {
     createTeam,
+    joinTeam,
     leaveTeam,
     sendInvite,
     revokeInvite,
@@ -309,11 +310,11 @@ const TeamManager = () => {
                 <TeamList>
                   {dashboard!.user.invites.map((invite) => (
                     <TeamMember key={invite.uuid}>
-                      {invite.teamName}asd
+                      {invite.teamName}
                       <MiniButton
                         onClick={async () => {
                           setLoading(true);
-                          // await leaveTeam(); TODO: join team
+                          await joinTeam(invite.uuid);
                           setLoading(false);
                         }}
                       >
@@ -351,7 +352,11 @@ const TeamManager = () => {
               <TeamMember>
                 <div>
                   {dashboard!.user.firstName}
-                  <span>@{dashboard!.user.discordUsername?.split('#')[0]}</span>
+                  {dashboard!.user.discordUsername && (
+                    <span>
+                      @{dashboard!.user.discordUsername?.split('#')[0]}
+                    </span>
+                  )}
                 </div>
                 <MiniButton
                   onClick={async () => {
@@ -367,8 +372,11 @@ const TeamManager = () => {
                 .filter((member) => member.uuid !== dashboard!.user.uuid)
                 .map((member) => (
                   <TeamMember key={member.uuid}>
-                    {member.name}
-                    <span>@{member.discordUsername}</span>
+                    <div>
+                      {member.name}
+                      {/* <span>@{member.discordUsername}</span> */}
+                      {member.discordUsername}
+                    </div>
                   </TeamMember>
                 ))}
               {dashboard!.user.team.invites.map((invite) => (

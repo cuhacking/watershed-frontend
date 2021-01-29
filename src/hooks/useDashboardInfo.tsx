@@ -68,6 +68,7 @@ export interface DashboardObject {
 }
 
 type CreateTeamFunction = (teamName: string) => Promise<boolean>;
+type JoinTeamFunction = (inviteId: string) => Promise<boolean>;
 type LeaveTeamFunction = () => Promise<boolean>;
 type SendInviteFunction = (username: string) => Promise<boolean>;
 type RevokeInviteFunction = (uuid: string) => Promise<boolean>;
@@ -83,6 +84,7 @@ export interface DashboardInfo {
   dashboard: DashboardObject | null;
   refresh: Function;
   createTeam: CreateTeamFunction;
+  joinTeam: JoinTeamFunction;
   leaveTeam: LeaveTeamFunction;
   sendInvite: SendInviteFunction;
   revokeInvite: RevokeInviteFunction;
@@ -172,7 +174,7 @@ const useProvideDashboardInfo = (): DashboardInfo => {
                     (member: any) =>
                       ({
                         uuid: member.uuid,
-                        name: '<noName>',
+                        name: '',
                         discordUsername:
                           member.discordUsername ?? '<noDiscord>#1234',
                       } as User)
@@ -239,6 +241,30 @@ const useProvideDashboardInfo = (): DashboardInfo => {
       }
 
       throw new Error(`Could not create team. Response: ${response.status}`);
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+
+  const joinTeam: JoinTeamFunction = async (inviteId) => {
+    try {
+      const response = await request('/api/team/join', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          inviteId,
+        }),
+      });
+
+      if (response.status === 200) {
+        await fetchDataNoLoad();
+        return true;
+      }
+
+      throw new Error(`Could not join team. Response: ${response.status}`);
     } catch (error) {
       console.error(error);
       return false;
@@ -346,6 +372,7 @@ const useProvideDashboardInfo = (): DashboardInfo => {
     dashboard,
     refresh,
     createTeam,
+    joinTeam,
     leaveTeam,
     sendInvite,
     revokeInvite,
@@ -358,6 +385,7 @@ const DashboardInfoContext = createContext<DashboardInfo>({
   dashboard: null,
   refresh: () => {},
   createTeam: async () => false,
+  joinTeam: async () => false,
   leaveTeam: async () => false,
   sendInvite: async () => false,
   revokeInvite: async () => false,
