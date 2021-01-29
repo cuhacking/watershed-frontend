@@ -47,7 +47,7 @@ const SponsorCard = styled.a`
   display: flex;
   border-radius: 0.8rem;
   transition: box-shadow 300ms;
-  padding: 4rem 6rem;
+  padding: 2rem 3rem;
   margin: 1.5rem;
   width: 40%;
 
