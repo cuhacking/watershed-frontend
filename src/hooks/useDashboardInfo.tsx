@@ -33,6 +33,7 @@ export interface DashboardObject {
 export interface DashboardInfo {
   isLoading: boolean;
   dashboard: DashboardObject | null;
+  refresh: Function
 }
 
 const useProvideDashboardInfo = (): DashboardInfo => {
@@ -40,52 +41,54 @@ const useProvideDashboardInfo = (): DashboardInfo => {
   const [isLoading, setLoading] = useState(true);
   const [dashboard, setDashboard] = useState<DashboardObject | null>(null);
 
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const [dashboardResponse, eventsResponse] = await Promise.all([
+        request('/api/dashboard'),
+        request('/api/event/upcoming?num=3'),
+      ]);
+
+      const dashboardResult = await dashboardResponse.json();
+      const eventsResult = await eventsResponse.json();
+
+      setDashboard({
+        user: {
+          uuid: dashboardResult.user.uuid,
+          email: dashboardResult.user.email,
+          role: dashboardResult.user.role,
+          discordId: dashboardResult.user.discordId,
+          githubId: dashboardResult.user.githubId,
+          discordUsername: dashboardResult.user.discordUsername,
+          confirmed: dashboardResult.user.confirmed,
+          checkedIn: dashboardResult.user.checkedIn ?? false,
+          points: dashboardResult.user.points,
+        },
+        startTime: dashboardResult.startTime,
+        endTime: dashboardResult.endTime,
+        upcomingEvents: eventsResult.map(
+          (rawEvent: any) =>
+            ({
+              id: rawEvent.id,
+              title: rawEvent.title,
+              type: rawEvent.type,
+              startTime: rawEvent.startTime,
+              endTime: rawEvent.endTime,
+              description: rawEvent.description,
+            } as UpcomingEvent)
+        ),
+      });
+    } catch (e) {
+      console.error(e);
+    }
+    setLoading(false);
+  };
+
+  const refresh = () => {
+    fetchData();
+  }
+
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const [dashboardResponse, eventsResponse] = await Promise.all([
-          request('/api/dashboard'),
-          request('/api/event/upcoming?num=3'),
-        ]);
-
-        const dashboardResult = await dashboardResponse.json();
-        const eventsResult = await eventsResponse.json();
-
-        console.log(dashboardResult, eventsResult);
-
-        setDashboard({
-          user: {
-            uuid: dashboardResult.user.uuid,
-            email: dashboardResult.user.email,
-            role: dashboardResult.user.role,
-            discordId: dashboardResult.user.discordId,
-            githubId: dashboardResult.user.githubId,
-            discordUsername: dashboardResult.user.discordUsername,
-            confirmed: dashboardResult.user.confirmed,
-            checkedIn: dashboardResult.user.checkedIn ?? false,
-            points: dashboardResult.user.points,
-          },
-          startTime: dashboardResult.startTime,
-          endTime: dashboardResult.endTime,
-          upcomingEvents: eventsResult.map(
-            (rawEvent: any) =>
-              ({
-                id: rawEvent.id,
-                title: rawEvent.title,
-                type: rawEvent.type,
-                startTime: rawEvent.startTime,
-                endTime: rawEvent.endTime,
-                description: rawEvent.description,
-              } as UpcomingEvent)
-          ),
-        });
-      } catch (e) {
-        console.error(e);
-      }
-      setLoading(false);
-    };
-
     if (user !== null) {
       fetchData();
     }
@@ -94,12 +97,14 @@ const useProvideDashboardInfo = (): DashboardInfo => {
   return {
     isLoading,
     dashboard,
+    refresh
   };
 };
 
 const DashboardInfoContext = createContext<DashboardInfo>({
   isLoading: true,
   dashboard: null,
+  refresh: () => {}
 });
 
 export const ProvideDashboardInfo = (props: {children: React.ReactNode}) => {

@@ -30,7 +30,7 @@ const OAuthButtons = styled.div`
   }
 `;
 
-const buttonStyle = css`
+export const buttonStyle = css`
   display: inline-flex;
   justify-content: flex-start;
   align-items: center;

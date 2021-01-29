@@ -20,6 +20,7 @@ import ResetPassword from './resetPassword';
 import Schedule from './schedule';
 import Event from './event';
 import {ReactComponent as Logo} from 'assets/img/word-and-year-logo-white.svg';
+import CheckIn from './checkin';
 import Submissions from './submissions';
 
 const DashboardStyle = createGlobalStyle`
@@ -103,6 +104,9 @@ export default () => {
           </PrivateRoute>
           <PrivateRoute path={`${path}/schedule`} exact>
             <Schedule />
+          </PrivateRoute>
+          <PrivateRoute path={`${path}/checkin`}>
+            <CheckIn />
           </PrivateRoute>
           <PrivateRoute path={`${path}/submissions`} exact>
             <Submissions />
