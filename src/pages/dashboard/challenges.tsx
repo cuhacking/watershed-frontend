@@ -11,6 +11,11 @@ import health from 'assets/img/sponsors/health-hack.svg';
 import education from 'assets/img/sponsors/education-hack.svg';
 import ravens from 'assets/img/sponsors/ravens-hack.svg';
 import game from 'assets/img/sponsors/health-hack.svg';
+import social from 'assets/img/social.svg';
+import discord from 'assets/img/discord.svg';
+import meme from 'assets/img/meme.svg';
+import css from 'assets/img/css.svg';
+import startup from 'assets/img/startup.svg';
 
 const Spacer = styled.div`
   height: 10vh;
@@ -105,7 +110,8 @@ const IndividualHeader = styled.div`
 const IndividualChallenge = styled.div`
   display: flex;
   flex-direction: row;
-  width: calc(30%);
+  align-items: center;
+  width: calc(50%);
   margin: 2rem 0;
 
   & h3 {
@@ -121,6 +127,29 @@ const IndividualChallenge = styled.div`
     color: var(--wine) !important;
   }
 `;
+
+const IndividualChallenges = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 2rem;
+`;
+
+const SmallLogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 84px;
+  min-width: 84px;
+  margin-right: 2rem;
+`;
+
+const SmallLogo = styled.img`
+  width: 100%;
+`;
+
 
 const Challenges = () => {
   return (
@@ -268,15 +297,6 @@ const Challenges = () => {
               </label>
             </SponsoredChallenge>
           </SponsoredChallenges>
-          <label
-            style={{
-              fontSize: '8px',
-            }}
-          >
-            Illustrations sourced from the Noun Project. Credits to (in reading
-            order) ProSymbols, Flatart, Nhor, Eucalyp, Komkrit Noenpoempisut,
-            ArmOkay, and Eucalyp.
-          </label>
         </ChallengeSection>
         <IndividualSection>
           <IndividualHeader>
@@ -285,24 +305,91 @@ const Challenges = () => {
               Smaller prizes to be won based on attributes of participation.
             </label>
           </IndividualHeader>
-          <SponsoredChallenges>
+          <IndividualChallenges>
             <IndividualChallenge>
-              <LargeLogoContainer>
-                <LargeLogo src={ross} />
-              </LargeLogoContainer>
+              <SmallLogoContainer>
+                <SmallLogo src={social} />
+              </SmallLogoContainer>
               <div>
-                <h3>Fan Engage-o-meter</h3>
-                <p>Nintendo Switch Lite</p>
+                <h3>Social Media Raffle</h3>
+                <p>3 winners</p>
+                <p>$15 Gift Card, TBD upon winning.</p>
                 <label>
-                  Build a fan engagement app that large-scale events would use to
-                  increase the engagement of the viewership by creating trivia
-                  games to use throughout their events. See more details{' '}
-                  <a href='#'>here</a>!
+                  Automatically entered by making a post on Instagram, Twitter,
+                  or Facebook using the hashtag #cuHacking2021.
                 </label>
               </div>
             </IndividualChallenge>
-          </SponsoredChallenges>
+            <IndividualChallenge>
+              <SmallLogoContainer>
+                <SmallLogo src={meme} />
+              </SmallLogoContainer>
+              <div>
+                <h3>Spiciest Original™ Meme</h3>
+                <p>3 winners</p>
+                <p>One month of Discord Nitro.</p>
+                <label>
+                  An unoffenisive to be posted in our #memes channel with a
+                  Hackathon/cuHacking theme.
+                </label>
+              </div>
+            </IndividualChallenge>
+            <IndividualChallenge>
+              <SmallLogoContainer>
+                <SmallLogo src={discord} />
+              </SmallLogoContainer>
+              <div>
+                <h3>Most Helpful Discord User</h3>
+                <p>1 winner</p>
+                <p>$50 Steam Gift Card.</p>
+                <label>
+                  An unoffenisive to be posted in our #memes channel with a
+                  Hackathon/cuHacking theme.
+                </label>
+              </div>
+            </IndividualChallenge>
+            <IndividualChallenge>
+              <SmallLogoContainer>
+                <SmallLogo src={css} />
+              </SmallLogoContainer>
+              <div>
+                <h3>[Event] CSS Challenge</h3>
+                <p>1 winner</p>
+                <p>Affinity Designer (on platform of choice)</p>
+                <label>
+                  Everyone gets the same HTML file. You have one hour to write
+                  CSS to style it. May the best design win!
+                </label>
+              </div>
+            </IndividualChallenge>
+            <IndividualChallenge>
+              <SmallLogoContainer>
+                <SmallLogo src={startup} />
+              </SmallLogoContainer>
+              <div>
+                <h3>[Event] Best Startup Pitch</h3>
+                <p>1 winner</p>
+                <p>Tile Slim Bluetooth Tracker</p>
+                <label>
+                  Think you have what it takes? You have five minutes to pitch
+                  the most innovate, forward-thinking, or entertaining startup
+                  idea!
+                </label>
+              </div>
+            </IndividualChallenge>
+          </IndividualChallenges>
         </IndividualSection>
+        <label
+          style={{
+            fontSize: '8px',
+            marginTop: '1rem',
+            textAlign: 'center'
+          }}
+        >
+          Illustrations sourced from the Noun Project. Credits to (in reading
+          order) ProSymbols, Flatart, Nhor, Eucalyp, Komkrit Noenpoempisut,
+          ArmOkay, and Eucalyp.
+        </label>
         <Spacer />
       </Container>
     </SidebarLayout>
