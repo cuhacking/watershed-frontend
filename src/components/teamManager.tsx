@@ -10,10 +10,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  & > * {
-    margin-bottom: 20px;
-  }
+  margin-bottom: 20px;
 `;
 
 const Card = styled.div`
@@ -23,6 +20,7 @@ const Card = styled.div`
 
   border-radius: 8px;
   padding: 20px;
+
   background-color: var(--white);
   box-shadow: var(--card-shadow);
 `;
@@ -42,6 +40,7 @@ const normalizeButton = css`
 const glowingButton = css`
   border-radius: 8px;
   padding: 20px;
+  margin-bottom: 20px;
   width: 100%;
 
   background: var(--action-gradient);

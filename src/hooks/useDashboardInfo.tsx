@@ -55,6 +55,12 @@ export interface DashboardObject {
 type CreateTeamFunction = (teamName: string) => Promise<boolean>;
 type LeaveTeamFunction = () => Promise<boolean>;
 type SendInviteFunction = (username: string) => Promise<boolean>;
+type RedeemPointsFunction = (
+  code: string
+) => Promise<{
+  status: 'success' | 'error' | 'invalid' | 'redeemed';
+  value?: number;
+}>;
 
 export interface DashboardInfo {
   isLoading: boolean;
@@ -63,6 +69,7 @@ export interface DashboardInfo {
   createTeam: CreateTeamFunction;
   leaveTeam: LeaveTeamFunction;
   sendInvite: SendInviteFunction;
+  redeemPoints: RedeemPointsFunction;
 }
 
 const useProvideDashboardInfo = (): DashboardInfo => {
@@ -197,6 +204,38 @@ const useProvideDashboardInfo = (): DashboardInfo => {
     }
   };
 
+  const redeemPoints: RedeemPointsFunction = async (code) => {
+    try {
+      const response = await request('/api/points/redeem', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          code,
+        }),
+      });
+
+      const responseBody = await response.json();
+
+      switch (response.status) {
+        case 200:
+          return {status: 'success', value: responseBody.value};
+        case 404:
+          return {status: 'invalid'};
+        case 400:
+          return {status: 'redeemed'};
+        default:
+          throw new Error(
+            `Could not redeem code. Response: ${response.status}`
+          );
+      }
+    } catch (error) {
+      console.log(error);
+      return {status: 'error'};
+    }
+  };
+
   useEffect(() => {
     if (user !== null) {
       fetchData();
@@ -210,6 +249,7 @@ const useProvideDashboardInfo = (): DashboardInfo => {
     createTeam,
     leaveTeam,
     sendInvite,
+    redeemPoints,
   };
 };
 
@@ -220,6 +260,7 @@ const DashboardInfoContext = createContext<DashboardInfo>({
   createTeam: async () => false,
   leaveTeam: async () => false,
   sendInvite: async () => false,
+  redeemPoints: async () => ({status: 'invalid'}),
 });
 
 export const ProvideDashboardInfo = (props: {children: React.ReactNode}) => {

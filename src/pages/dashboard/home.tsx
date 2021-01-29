@@ -1,7 +1,12 @@
 import React from 'react';
 import styled, {keyframes} from 'styled-components';
 import {Link} from 'react-router-dom';
-import {Countdown, LoadingSymbol, TeamManager} from '../../components';
+import {
+  Countdown,
+  LoadingSymbol,
+  TeamManager,
+  PointsManager,
+} from '../../components';
 import {SidebarLayout} from '../../layouts';
 import {useApplication, useDashboardInfo} from '../../hooks';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -99,10 +104,6 @@ const SideSection = styled.div`
 
   height: 100%;
   padding-left: 20px;
-
-  & > * {
-    margin-bottom: 20px;
-  }
 `;
 
 const EventCardContainer = styled(Link)`
@@ -225,6 +226,7 @@ export default () => {
         <SideSection>
           <Countdown />
           <TeamManager />
+          <PointsManager />
         </SideSection>
       </Content>
     </SidebarLayout>

@@ -8,3 +8,4 @@ export {default as Input} from './Input';
 export {default as LoadingSymbol} from './loadingSymbol';
 export {default as Sidebar} from './sidebar';
 export {default as TeamManager} from './teamManager';
+export {default as PointsManager} from './pointsManager';
