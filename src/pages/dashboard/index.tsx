@@ -104,6 +104,9 @@ export default () => {
           <PrivateRoute path={`${path}/schedule`} exact>
             <Schedule />
           </PrivateRoute>
+          <PrivateRoute path={`${path}/checkin`}>
+            <CheckIn />
+          </PrivateRoute>
           <PrivateRoute path={`${path}/schedule/:id`} exact>
             <Event />
           </PrivateRoute>
@@ -121,9 +124,6 @@ export default () => {
           </UnprivateRoute>
           <UnprivateRoute path={`${path}/sign-up`}>
             <SignUp />
-          </UnprivateRoute>
-          <UnprivateRoute path={`${path}/checkin`}>
-            <CheckIn />
           </UnprivateRoute>
           <Redirect to={`${path}/`} />
         </Switch>

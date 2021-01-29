@@ -1,9 +1,13 @@
 import {faDiscord} from '@fortawesome/free-brands-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {Button} from '../../components';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {buttonStyle} from './login';
+import {useHistory} from 'react-router-dom';
+import {useDashboardInfo} from '../../hooks/useDashboardInfo';
+import {useAuth} from '../../hooks';
+import {clearInterval} from 'timers';
 
 const Container = styled.div`
   height: 100vh;
@@ -78,7 +82,47 @@ const DiscordButton = styled.a`
 `;
 
 const CheckIn = () => {
+  const [discordConnected, setDiscordConnected] = useState(false);
   const [discordServer, setDiscordServer] = useState(false);
+  const {dashboard, refresh} = useDashboardInfo();
+  const history = useHistory();
+
+  const checkDiscordServerStatus = () => {
+    setInterval((timer) => {
+      fetch('/api/user/checkUserDiscord').then((res) => {
+        if (res) {
+          setDiscordServer(true);
+          clearInterval(timer);
+        }
+      });
+    }, 5000);
+  };
+
+  const checkDiscordConnectionStatus = () => {
+    setInterval((timer) => {
+      refresh();
+      if (dashboard?.user.discordId) {
+        setDiscordConnected(true);
+        clearInterval(timer);
+      }
+    }, 5000);
+  };
+
+  const checkIn = () => {
+    fetch('/api/user/checkIn').then((res) => {
+      if (res) {
+        history.push('/dashboard');
+      }
+    });
+  };
+
+  useEffect(() => {
+    const connected = dashboard?.user.checkedIn;
+    if (!connected) {
+      checkDiscordConnectionStatus();
+    }
+    checkDiscordServerStatus();
+  }, []);
 
   return (
     <Container>
@@ -93,14 +137,14 @@ const CheckIn = () => {
               </Marker>
               <label>Connect your Discord</label>
             </StepLabel>
-            <DiscordButton>
+            <DiscordButton href='/api/auth/discord/link'>
               <FontAwesomeIcon icon={faDiscord} />
               Sign in with Discord
             </DiscordButton>
           </Step>
           <Step
             style={{
-              opacity: discordServer ? 1 : 0.5,
+              opacity: discordConnected ? 1 : 0.5,
               pointerEvents: discordServer ? 'all' : 'none',
             }}
           >
@@ -110,7 +154,7 @@ const CheckIn = () => {
               </Marker>
               <label>Join out Discord Server</label>
             </StepLabel>
-            <DiscordButton>
+            <DiscordButton href='https://discord.gg/TGvYPnD'>
               <FontAwesomeIcon icon={faDiscord} />
               Join our Server
             </DiscordButton>
@@ -130,7 +174,7 @@ const CheckIn = () => {
             <Button
               kind='button'
               color='var(--wineLight)'
-              // action={console.log()}
+              action={() => checkIn()}
             >
               Start Hacking!
             </Button>
