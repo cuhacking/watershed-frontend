@@ -251,7 +251,7 @@ const TeamManager = () => {
                 Create Team
               </Button>
             </form>
-            <TextButton>Cancel</TextButton>
+            <TextButton onClick={() => setView('default')}>Cancel</TextButton>
           </Card>
         </Container>
       );
@@ -280,7 +280,7 @@ const TeamManager = () => {
                 Send Invite
               </Button>
             </form>
-            <TextButton>Cancel</TextButton>
+            <TextButton onClick={() => setView('default')}>Cancel</TextButton>
           </Card>
         </Container>
       );

@@ -124,7 +124,9 @@ interface ButtonProps {
 const Button = ({icon: Icon, children, link}: ButtonProps) => (
   <StyledLink
     to={link}
-    selected={useRouteMatch({path: link, exact: true}) !== null}
+    selected={
+      useRouteMatch({path: link, exact: link == '/dashboard/'}) !== null
+    }
   >
     <Icon />
     {children}

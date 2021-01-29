@@ -164,7 +164,7 @@ const TeamManager = () => {
                 Redeem
               </Button>
             </form>
-            <TextButton>Cancel</TextButton>
+            <TextButton onClick={() => setView('default')}>Cancel</TextButton>
           </Card>
         </Container>
       );
