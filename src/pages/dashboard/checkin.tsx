@@ -86,6 +86,7 @@ const CheckIn = () => {
   const [discordServer, setDiscordServer] = useState(false);
   const {dashboard, refresh} = useDashboardInfo();
   const history = useHistory();
+  const {request} = useAuth();
 
   const checkDiscordServerStatus = () => {
     setInterval((timer) => {
@@ -120,9 +121,20 @@ const CheckIn = () => {
     const connected = dashboard?.user.checkedIn;
     if (!connected) {
       checkDiscordConnectionStatus();
+    } else {
+      setDiscordConnected(true);
     }
+    
     checkDiscordServerStatus();
   }, []);
+
+  const linkDiscord = () => {
+    request('/api/auth/discord/link').then((response) => {
+      if (response.redirected) {
+        window.open(response.url);
+      }
+    });
+  };
 
   return (
     <Container>
@@ -137,7 +149,7 @@ const CheckIn = () => {
               </Marker>
               <label>Connect your Discord</label>
             </StepLabel>
-            <DiscordButton href='/api/auth/discord/link'>
+            <DiscordButton onClick={() => linkDiscord()}>
               <FontAwesomeIcon icon={faDiscord} />
               Sign in with Discord
             </DiscordButton>
@@ -145,7 +157,7 @@ const CheckIn = () => {
           <Step
             style={{
               opacity: discordConnected ? 1 : 0.5,
-              pointerEvents: discordServer ? 'all' : 'none',
+              pointerEvents: discordConnected ? 'all' : 'none',
             }}
           >
             <StepLabel>
