@@ -78,16 +78,16 @@ const Sponsors = () => (
         <p>click on a logo to join</p>
       </SponsorsHeader>
       <SponsorsContainer>
-        <SponsorCard href='https://google.ca' target='_blank'>
+        <SponsorCard href='https://cuhacking.com' target='_blank'>
           <SponsorLogo src={ciena} />
         </SponsorCard>
-        <SponsorCard>
+        <SponsorCard href='https://cuhacking.com' target='_blank'>
           <SponsorLogo src={ross} />
         </SponsorCard>
-        <SponsorCard>
+        <SponsorCard href='https://cuhacking.com' target='_blank'>
           <SponsorLogo src={fellow} />
         </SponsorCard>
-        <SponsorCard>
+        <SponsorCard href='https://cuhacking.com' target='_blank'>
           <SponsorLogo src={fdm} />
         </SponsorCard>
       </SponsorsContainer>
