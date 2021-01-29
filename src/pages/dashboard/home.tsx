@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import {Button, Countdown, LoadingSymbol} from '../../components';
 import {SidebarLayout} from '../../layouts';
 import {useApplication, useAuth, useDashboardInfo} from '../../hooks';
@@ -192,6 +192,10 @@ export default () => {
 
   const user = dashboard!.user;
   const events = dashboard!.upcomingEvents;
+
+  if (!user.checkedIn) {
+    return <Redirect to='/dashboard/checkin' />;
+  }
 
   return (
     <SidebarLayout>
