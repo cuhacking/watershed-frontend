@@ -8,7 +8,7 @@ import {
   useHistory,
   useRouteMatch,
 } from 'react-router-dom';
-import styled, {createGlobalStyle} from 'styled-components';
+import styled, {createGlobalStyle, keyframes} from 'styled-components';
 import {ProvideApplication, useAuth, useApplication} from '../../hooks';
 import {Button, LoadingSymbol} from '../../components';
 import Login from './login';
@@ -24,10 +24,20 @@ import CheckIn from './checkin';
 import Submissions from './submissions';
 import Leaderboard from './leaderboard';
 
+const fade = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
 const DashboardStyle = createGlobalStyle`
   body {
     --card-shadow: 0px 0px 4px #13010140;
     --card-shadow-hover: 0px 0px 12px var(--wineLight);
+    --page-animation: ${fade} 0.2s cubic-bezier(0.33, 1, 0.68, 1) 1;
   }
 
   h1, h2, h3, h4 {

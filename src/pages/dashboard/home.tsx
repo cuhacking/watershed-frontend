@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 import {Link} from 'react-router-dom';
 import {Countdown, LoadingSymbol, TeamManager} from '../../components';
 import {SidebarLayout} from '../../layouts';
@@ -18,6 +18,8 @@ const Content = styled.div`
 
   margin-top: 100px;
   text-align: center;
+
+  animation: var(--page-animation);
 
   @media only screen and (min-width: 700px) {
     max-width: var(--max-width);
