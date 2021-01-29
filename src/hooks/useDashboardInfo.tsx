@@ -21,8 +21,8 @@ export interface User {
 
 export interface TeamInvite {
   uuid: string;
-  teamId: string;
-  userId: string;
+  firstName: string;
+  discordUsername: string;
 }
 export interface Team {
   uuid: string;
@@ -55,6 +55,7 @@ export interface DashboardObject {
 type CreateTeamFunction = (teamName: string) => Promise<boolean>;
 type LeaveTeamFunction = () => Promise<boolean>;
 type SendInviteFunction = (username: string) => Promise<boolean>;
+type RevokeInviteFunction = (uuid: string) => Promise<boolean>;
 type RedeemPointsFunction = (
   code: string
 ) => Promise<{
@@ -69,6 +70,7 @@ export interface DashboardInfo {
   createTeam: CreateTeamFunction;
   leaveTeam: LeaveTeamFunction;
   sendInvite: SendInviteFunction;
+  revokeInvite: RevokeInviteFunction;
   redeemPoints: RedeemPointsFunction;
 }
 
@@ -91,23 +93,23 @@ const useProvideDashboardInfo = (): DashboardInfo => {
 
       let teamInvites: Array<TeamInvite> = [];
 
-      // if (dashboardResult.user.team != null) {
-      //   const response = await request(
-      //     `/api/team/invites/${dashboardResult.user.team.uuid}`
-      //   );
+      if (dashboardResult.user.team != null) {
+        const response = await request(
+          `/api/team/invites/${dashboardResult.user.team.uuid}`
+        );
 
-      //   if (response.status == 200) {
-      //     const invites = await response.json();
-      //     teamInvites = invites.map(
-      //       (invite: any) =>
-      //         ({
-      //           uuid: invite.uuid,
-      //           teamId: invite.team.uuid,
-      //           userId: invite.user.uuid,
-      //         } as TeamInvite)
-      //     );
-      //   }
-      // }
+        if (response.status == 200) {
+          const invites = await response.json();
+          teamInvites = invites.map(
+            (invite: any) =>
+              ({
+                uuid: invite.uuid,
+                firstName: invite.firstName,
+                discordUsername: invite.discordUsername,
+              } as TeamInvite)
+          );
+        }
+      }
 
       setDashboard({
         user: {
@@ -241,6 +243,23 @@ const useProvideDashboardInfo = (): DashboardInfo => {
     }
   };
 
+  const revokeInvite: RevokeInviteFunction = async (uuid) => {
+    try {
+      const response = await request(`/api/team/invites/${uuid}`, {
+        method: 'DELETE',
+      });
+
+      if (response.status === 204) {
+        await fetchDataNoLoad();
+        return true;
+      }
+      throw new Error(`Could not revoke invite. Response: ${response.status}`);
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
   const redeemPoints: RedeemPointsFunction = async (code) => {
     try {
       const response = await request('/api/points/redeem', {
@@ -286,6 +305,7 @@ const useProvideDashboardInfo = (): DashboardInfo => {
     createTeam,
     leaveTeam,
     sendInvite,
+    revokeInvite,
     redeemPoints,
   };
 };
@@ -297,6 +317,7 @@ const DashboardInfoContext = createContext<DashboardInfo>({
   createTeam: async () => false,
   leaveTeam: async () => false,
   sendInvite: async () => false,
+  revokeInvite: async () => false,
   redeemPoints: async () => ({status: 'invalid'}),
 });
 

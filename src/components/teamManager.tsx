@@ -6,6 +6,13 @@ import {faPlus} from '@fortawesome/free-solid-svg-icons';
 import {Button, Input, LoadingSymbol} from '../components';
 import {useDashboardInfo} from '../hooks';
 
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -101,7 +108,7 @@ const TeamMember = styled.div`
   flex-wrap: wrap;
   text-align: left;
   width: 100%;
-
+  margin-bottom: 5px;
   span {
     color: var(--wine);
   }
@@ -116,7 +123,7 @@ const miniText = css`
   text-align: right;
 `;
 
-const LeaveButton = styled.button`
+const MiniButton = styled.button`
   ${normalizeButton}
   ${miniText}
   color: var(--wineLight);
@@ -124,10 +131,6 @@ const LeaveButton = styled.button`
   &:hover {
     text-decoration: underline;
   }
-`;
-
-const InvitedText = styled.div`
-  ${miniText}
 `;
 
 const StyledInput = styled(Input)`
@@ -166,7 +169,13 @@ const Tooltip = styled.p`
 `;
 
 const TeamManager = () => {
-  const {createTeam, leaveTeam, sendInvite, dashboard} = useDashboardInfo();
+  const {
+    createTeam,
+    leaveTeam,
+    sendInvite,
+    revokeInvite,
+    dashboard,
+  } = useDashboardInfo();
   const [isLoading, setLoading] = useState(false);
   const [view, setView] = useState<'default' | 'createTeam' | 'invite'>(
     'default'
@@ -194,6 +203,7 @@ const TeamManager = () => {
 
     if (success) {
       setView('default');
+      setTeamName('');
     }
 
     setLoading(false);
@@ -219,14 +229,15 @@ const TeamManager = () => {
     }
 
     setView('default');
+    setUsername('');
     setLoading(false);
   };
 
   if (isLoading) {
     return (
-      <Container>
+      <LoadingContainer>
         <LoadingSymbol color='var(--wine)' />
-      </Container>
+      </LoadingContainer>
     );
   }
 
@@ -321,7 +332,7 @@ const TeamManager = () => {
                   {dashboard!.user.firstName}
                   <span>@{dashboard!.user.discordUsername?.split('#')[0]}</span>
                 </div>
-                <LeaveButton
+                <MiniButton
                   onClick={async () => {
                     setLoading(true);
                     await leaveTeam();
@@ -329,7 +340,7 @@ const TeamManager = () => {
                   }}
                 >
                   Leave
-                </LeaveButton>
+                </MiniButton>
               </TeamMember>
               {dashboard!.user.team.members
                 .filter((member) => member.uuid !== dashboard!.user.uuid)
@@ -339,6 +350,23 @@ const TeamManager = () => {
                     <span>@{member.discordUsername}</span>
                   </TeamMember>
                 ))}
+              {dashboard!.user.team.invites.map((invite) => (
+                <InvitedMember key={invite.uuid}>
+                  {invite.firstName}
+                  {invite.discordUsername && (
+                    <span>@{invite.discordUsername}</span>
+                  )}
+                  <MiniButton
+                    onClick={async () => {
+                      setLoading(true);
+                      await revokeInvite(invite.uuid);
+                      setLoading(false);
+                    }}
+                  >
+                    Revoke
+                  </MiniButton>
+                </InvitedMember>
+              ))}
             </TeamList>
             {dashboard!.user.team.members.length < 4 && (
               <Button

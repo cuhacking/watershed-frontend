@@ -154,10 +154,10 @@ export default () => {
           <UnprivateRoute path={`${path}/sign-up`}>
             <SignUp />
           </UnprivateRoute>
-          <PrivateRoute path={`${path}/broadcast`}>
+          <PrivateRoute path={`${path}/admin/send-notifications`}>
             <Broadcast />
           </PrivateRoute>
-          <PrivateRoute path={`${path}/points-gen`}>
+          <PrivateRoute path={`${path}/admin/generate-points`}>
             <PointsGen />
           </PrivateRoute>
           <Redirect to={`${path}/`} />
