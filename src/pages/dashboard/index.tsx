@@ -25,6 +25,8 @@ import Submissions from './submissions';
 import Leaderboard from './leaderboard';
 import Challenges from './challenges';
 import Sponsors from './sponsors';
+import Broadcast from './broadcast';
+import PointsGen from './points-gen';
 
 const DashboardStyle = createGlobalStyle`
   body {
@@ -141,6 +143,12 @@ export default () => {
           <UnprivateRoute path={`${path}/sign-up`}>
             <SignUp />
           </UnprivateRoute>
+          <PrivateRoute path={`${path}/broadcast`}>
+            <Broadcast />
+          </PrivateRoute>
+          <PrivateRoute path={`${path}/points-gen`}>
+            <PointsGen />
+          </PrivateRoute>
           <Redirect to={`${path}/`} />
         </Switch>
       </ProvideApplication>
