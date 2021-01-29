@@ -150,7 +150,6 @@ const SmallLogo = styled.img`
   width: 100%;
 `;
 
-
 const Challenges = () => {
   return (
     <SidebarLayout>
@@ -329,8 +328,8 @@ const Challenges = () => {
                 <p>3 winners</p>
                 <p>One month of Discord Nitro.</p>
                 <label>
-                  An unoffenisive to be posted in our #memes channel with a
-                  Hackathon/cuHacking theme.
+                  An unoffenisive meme to be posted in our #memes channel with a
+                  hackathon/cuHacking theme.
                 </label>
               </div>
             </IndividualChallenge>
@@ -343,8 +342,8 @@ const Challenges = () => {
                 <p>1 winner</p>
                 <p>$50 Steam Gift Card.</p>
                 <label>
-                  An unoffenisive to be posted in our #memes channel with a
-                  Hackathon/cuHacking theme.
+                  A hacker with a knack for answering questions and other
+                  helpful contributions in the Discord server.
                 </label>
               </div>
             </IndividualChallenge>
@@ -383,7 +382,7 @@ const Challenges = () => {
           style={{
             fontSize: '8px',
             marginTop: '1rem',
-            textAlign: 'center'
+            textAlign: 'center',
           }}
         >
           Illustrations sourced from the Noun Project. Credits to (in reading
