@@ -105,6 +105,8 @@ const SignOutButton = styled.a`
   }
 `;
 
+const SmallText = styled.p``;
+
 const CheckIn = () => {
   const [discordConnected, setDiscordConnected] = useState(false);
   const [discordServer, setDiscordServer] = useState(false);
@@ -153,6 +155,9 @@ const CheckIn = () => {
       <CheckInContainer>
         <h1>Check In</h1>
         <h2>Complete the steps below to get started!</h2>
+        <SmallText>
+          Refresh the page to see updates <span aria-label=':)'>🙂</span>
+        </SmallText>
         <StepsContainer
           style={{
             opacity: !discordConnected ? 1 : 0.5,
