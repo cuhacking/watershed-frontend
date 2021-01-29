@@ -124,7 +124,9 @@ interface ButtonProps {
 const Button = ({icon: Icon, children, link}: ButtonProps) => (
   <StyledLink
     to={link}
-    selected={useRouteMatch({path: link, exact: true}) !== null}
+    selected={
+      useRouteMatch({path: link, exact: link == '/dashboard/'}) !== null
+    }
   >
     <Icon />
     {children}
@@ -170,14 +172,6 @@ const Sidebar = (props: any) => {
           Leaderboard
         </Button>
       </Section>
-      {user && user.role > 0 && (
-        <Section>
-          <SectionHeader>SPONSOR PAGES</SectionHeader>
-          <Button icon={GavelIcon} link={appendBase('/sponsors/judging')}>
-            Judging
-          </Button>
-        </Section>
-      )}
       {user && user.role > 1 && (
         <Section>
           <SectionHeader>ORGANIZER PAGES</SectionHeader>
@@ -187,12 +181,12 @@ const Sidebar = (props: any) => {
           >
             Send Notifications
           </Button>
-          <Button icon={PencilIcon} link={appendBase('/admin/edit-schedule')}>
+          {/* <Button icon={PencilIcon} link={appendBase('/admin/edit-schedule')}>
             Edit Schedule
-          </Button>
-          <Button icon={GraphIcon} link={appendBase('/admin/stats')}>
+          </Button> */}
+          {/* <Button icon={GraphIcon} link={appendBase('/admin/stats')}>
             Statistics
-          </Button>
+          </Button> */}
           <Button
             icon={HundredIcon}
             link={appendBase('/admin/generate-points')}

@@ -8,7 +8,7 @@ import {
   useHistory,
   useRouteMatch,
 } from 'react-router-dom';
-import styled, {createGlobalStyle} from 'styled-components';
+import styled, {createGlobalStyle, keyframes} from 'styled-components';
 import {ProvideApplication, useAuth, useApplication} from '../../hooks';
 import {Button, LoadingSymbol} from '../../components';
 import Login from './login';
@@ -28,9 +28,20 @@ import Sponsors from './sponsors';
 import Broadcast from './broadcast';
 import PointsGen from './points-gen';
 
+const fade = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
 const DashboardStyle = createGlobalStyle`
   body {
     --card-shadow: 0px 0px 4px #13010140;
+    --card-shadow-hover: 0px 0px 12px var(--wineLight);
+    --page-animation: ${fade} 0.2s cubic-bezier(0.33, 1, 0.68, 1) 1;
   }
 
   h1, h2, h3, h4 {
@@ -113,9 +124,9 @@ export default () => {
           <PrivateRoute path={`${path}/checkin`}>
             <CheckIn />
           </PrivateRoute>
-          <PrivateRoute path={`${path}/submissions`} exact>
+          {/* <PrivateRoute path={`${path}/submissions`} exact>
             <Submissions />
-          </PrivateRoute>
+          </PrivateRoute> */}
           <PrivateRoute path={`${path}/schedule/:id`} exact>
             <Event />
           </PrivateRoute>
@@ -143,10 +154,10 @@ export default () => {
           <UnprivateRoute path={`${path}/sign-up`}>
             <SignUp />
           </UnprivateRoute>
-          <PrivateRoute path={`${path}/broadcast`}>
+          <PrivateRoute path={`${path}/admin/send-notifications`}>
             <Broadcast />
           </PrivateRoute>
-          <PrivateRoute path={`${path}/points-gen`}>
+          <PrivateRoute path={`${path}/admin/generate-points`}>
             <PointsGen />
           </PrivateRoute>
           <Redirect to={`${path}/`} />
@@ -197,7 +208,7 @@ const PrivateRoute = ({children, ...rest}: RouteProps) => {
           );
         }
 
-        if (application === null) {
+        if (application === null && user.role < 1) {
           return (
             <CustomLayout>
               <CustomLayoutContent>

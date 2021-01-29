@@ -378,7 +378,7 @@ const Challenges = () => {
             </IndividualChallenge>
           </IndividualChallenges>
         </IndividualSection>
-        <label
+        {/* <label
           style={{
             fontSize: '8px',
             marginTop: '1rem',
@@ -388,7 +388,7 @@ const Challenges = () => {
           Illustrations sourced from the Noun Project. Credits to (in reading
           order) ProSymbols, Flatart, Nhor, Eucalyp, Komkrit Noenpoempisut,
           ArmOkay, and Eucalyp.
-        </label>
+        </label> */}
         <Spacer />
       </Container>
     </SidebarLayout>

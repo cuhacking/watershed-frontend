@@ -1,22 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import {Link, Redirect} from 'react-router-dom';
-import {Button, Countdown, LoadingSymbol} from '../../components';
+import {
+  Countdown,
+  LoadingSymbol,
+  TeamManager,
+  PointsManager,
+} from '../../components';
 import {SidebarLayout} from '../../layouts';
-import {useApplication, useAuth, useDashboardInfo} from '../../hooks';
+import {useDashboardInfo} from '../../hooks';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons';
 import {Helmet} from 'react-helmet';
 import {UpcomingEvent} from '../../hooks/useDashboardInfo';
-import {
-  eventTimeString,
-  eventTypeName,
-  EventTypeMarker,
-  EventDetailRow,
-  EventDetailText,
-  EventIcon,
-  EventLoading,
-} from '../../shared/events';
+import {eventTimeString, EventTypeMarker} from '../../shared/events';
 
 const Content = styled.div`
   flex: 1;
@@ -26,6 +23,8 @@ const Content = styled.div`
 
   margin-top: 100px;
   text-align: center;
+
+  animation: var(--page-animation);
 
   @media only screen and (min-width: 700px) {
     max-width: var(--max-width);
@@ -105,20 +104,23 @@ const SideSection = styled.div`
 
   height: 100%;
   padding-left: 20px;
-
-  & > * {
-    margin-bottom: 20px;
-  }
 `;
 
-const EventCardContainer = styled.div`
+const card = css`
   padding: 20px;
   background-color: var(--white);
   border-radius: 8px;
   box-shadow: var(--card-shadow);
-  height: 100%;
 
   transition: 100ms ease-out;
+`;
+
+const AnnouncementCardContainer = styled.div`
+  ${card}
+`;
+
+const EventCardContainer = styled(Link)`
+  ${card}
 
   &:hover {
     cursor: pointer;
@@ -146,7 +148,40 @@ const EventCardTime = styled.p`
 
 const EventCardDescription = styled.p`
   margin-bottom: 0;
+
+  a {
+    color: var(--wineLight);
+  }
+
+  a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 `;
+
+interface AnnouncementCardProps {
+  title: string;
+  description: string;
+  url?: string;
+}
+
+const AnnouncementCard = ({title, description, url}: AnnouncementCardProps) => {
+  return (
+    <AnnouncementCardContainer>
+      <EventCardHeader>
+        <h4>{title}</h4>
+      </EventCardHeader>
+      <EventCardDescription>{description}</EventCardDescription>
+      {url && (
+        <EventCardDescription>
+          <a href={url} target='_blank' rel='noopener noreferrer'>
+            {url}
+          </a>
+        </EventCardDescription>
+      )}
+    </AnnouncementCardContainer>
+  );
+};
 
 interface UpcomingEventProps {
   event: UpcomingEvent;
@@ -159,25 +194,20 @@ const EventCard = ({event}: UpcomingEventProps) => {
     str.length > 200 ? `${str.slice(0, 197)}...` : str;
 
   return (
-    <Link to={`/dashboard/schedule/${event.id}`}>
-      <EventCardContainer>
-        <EventCardHeader>
-          <EventTypeMarker type={event.type} />
-          <h4>{event.title}</h4>
-        </EventCardHeader>
-        <EventCardTime>
-          {eventTimeString(timezone, event.startTime, event.endTime)}
-        </EventCardTime>
-        <EventCardDescription>
-          {truncate(event.description)}
-        </EventCardDescription>
-      </EventCardContainer>
-    </Link>
+    <EventCardContainer to={`/dashboard/schedule/${event.id}`}>
+      <EventCardHeader>
+        <EventTypeMarker type={event.type} />
+        <h4>{event.title}</h4>
+      </EventCardHeader>
+      <EventCardTime>
+        {eventTimeString(timezone, event.startTime, event.endTime)}
+      </EventCardTime>
+      <EventCardDescription>{truncate(event.description)}</EventCardDescription>
+    </EventCardContainer>
   );
 };
 
 export default () => {
-  const {application} = useApplication();
   const {isLoading, dashboard} = useDashboardInfo();
 
   if (isLoading) {
@@ -190,19 +220,30 @@ export default () => {
     );
   }
 
-  const user = dashboard!.user;
-  const events = dashboard!.upcomingEvents;
-
-  if (!user.checkedIn) {
-    return <Redirect to='/dashboard/checkin' />;
+  if (dashboard == null) {
+    return (
+      <SidebarLayout>
+        <Content>
+          <h1>Something went wrong. Please refresh the page.</h1>
+        </Content>
+      </SidebarLayout>
+    );
   }
+
+  const user = dashboard.user;
+  const events = dashboard.upcomingEvents;
+  const announcements = dashboard.announcements;
+
+  // if (!user.checkedIn) {
+  //   return <Redirect to='/dashboard/checkin' />;
+  // }
 
   return (
     <SidebarLayout>
       <Helmet title='cuHacking 2021: Snowed In' />
       <Content>
         <MainSection>
-          <Greeting>Hey, {application!.firstName}!</Greeting>
+          <Greeting>Hey, {user.firstName}!</Greeting>
           <Subtitle>
             You currently have <span>{user.points}</span>{' '}
             {user.points === 1 ? 'point' : 'points'}.
@@ -210,7 +251,18 @@ export default () => {
           <Subsection>
             <h2>Recent Announcements</h2>
             <CardSection>
-              <p>(No announcements)</p>
+              {announcements.length === 0 ? (
+                <p>(No announcements)</p>
+              ) : (
+                announcements.map((announcement, index) => (
+                  <AnnouncementCard
+                    key={index}
+                    title={announcement.title}
+                    description={announcement.description}
+                    url={announcement.url}
+                  />
+                ))
+              )}
             </CardSection>
           </Subsection>
           <Subsection>
@@ -229,6 +281,8 @@ export default () => {
         </MainSection>
         <SideSection>
           <Countdown />
+          <TeamManager />
+          <PointsManager />
         </SideSection>
       </Content>
     </SidebarLayout>

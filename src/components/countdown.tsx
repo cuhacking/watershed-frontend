@@ -10,6 +10,7 @@ const StyledCountdown = styled.div`
   align-items: flex-start;
 
   padding: 16px;
+  margin-bottom: 20px;
 
   width: 100%;
 

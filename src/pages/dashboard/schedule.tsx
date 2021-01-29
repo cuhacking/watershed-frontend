@@ -27,22 +27,13 @@ const Spacer = styled.div`
   height: 10vh;
 `;
 
-const fade = keyframes`
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-`;
-
 const EventSection = styled.section`
   position: relative;
   width: 100%;
   max-width: var(--event-width);
   display: flex;
   flex-direction: column;
-  animation: ${fade} 0.2s cubic-bezier(0.33, 1, 0.68, 1) 1;
+  animation: var(--page-animation);
 `;
 
 const DateTitle = styled.h1`

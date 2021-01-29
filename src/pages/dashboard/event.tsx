@@ -20,15 +20,6 @@ const Spacer = styled.div`
   height: 10vh;
 `;
 
-const fade = keyframes`
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-`;
-
 const EventSection = styled.section`
   position: relative;
   width: var(--event-width);
@@ -36,7 +27,7 @@ const EventSection = styled.section`
   display: flex;
   flex-direction: column;
   padding: 16px;
-  animation: ${fade} 0.2s cubic-bezier(0.33, 1, 0.68, 1) 1;
+  animation: var(--page-animation);
 `;
 
 const EventTitle = styled.h1`
