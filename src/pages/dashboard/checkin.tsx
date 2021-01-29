@@ -112,33 +112,25 @@ const CheckIn = () => {
   const history = useHistory();
   const {request, signOut} = useAuth();
 
-  const checkDiscordServerStatus = () => {
-    // Initial check
-    request('/api/user/checkUserDiscord').then((res) => {
-      if (res.ok) {
-        setDiscordServer(true);
+  useEffect(() => {
+    const asyncFunc = async () => {
+      if (dashboard?.user.discordId == null) {
+        return;
       }
-    });
 
-    // Interval check
-    setInterval((timer) => {
-      request('/api/user/checkUserDiscord').then((res) => {
-        if (res.ok) {
-          setDiscordServer(true);
-          clearInterval(timer);
-        }
-      });
-    }, 5000);
-  };
+      setDiscordConnected(true);
 
-  const checkDiscordConnectionStatus = () => {
-    setInterval((timer) => {
-      refresh();
-      if (dashboard?.user.discordId) {
-        clearInterval(timer);
+      const response = await request('/api/user/checkUserDiscord');
+
+      if (!response.ok) {
+        return;
       }
-    }, 5000);
-  };
+
+      setDiscordServer(true);
+    };
+
+    asyncFunc();
+  }, []);
 
   const checkIn = () => {
     request('/api/user/checkIn').then((res) => {
@@ -147,18 +139,6 @@ const CheckIn = () => {
       }
     });
   };
-
-  useEffect(() => {
-    setDiscordConnected(dashboard?.user.discordId != null);
-  }, [dashboard]);
-
-  useEffect(() => {
-    const connected = dashboard?.user.checkedIn;
-    if (!connected) {
-      checkDiscordConnectionStatus();
-    }
-    checkDiscordServerStatus();
-  }, []);
 
   const linkDiscord = () => {
     request('/api/auth/discord/link').then((response) => {
@@ -173,30 +153,36 @@ const CheckIn = () => {
       <CheckInContainer>
         <h1>Check In</h1>
         <h2>Complete the steps below to get started!</h2>
-        <StepsContainer>
+        <StepsContainer
+          style={{
+            opacity: !discordConnected ? 1 : 0.5,
+            pointerEvents: !discordConnected ? 'all' : 'none',
+          }}
+        >
           <Step>
             <StepLabel>
               <Marker>
                 <label>1</label>
               </Marker>
-              <label>Connect your Discord</label>
+              <label>Connect your Discord account</label>
             </StepLabel>
             <DiscordButton onClick={() => linkDiscord()}>
               <FontAwesomeIcon icon={faDiscord} />
-              Sign in with Discord
+              Link your Discord
             </DiscordButton>
           </Step>
           <Step
             style={{
-              opacity: discordConnected ? 1 : 0.5,
-              pointerEvents: discordConnected ? 'all' : 'none',
+              opacity: discordConnected && !discordServer ? 1 : 0.5,
+              pointerEvents:
+                discordConnected && !discordServer ? 'all' : 'none',
             }}
           >
             <StepLabel>
               <Marker>
                 <label>2</label>
               </Marker>
-              <label>Join out Discord Server</label>
+              <label>Join our Discord Server</label>
             </StepLabel>
             <DiscordButton href='https://discord.gg/TGvYPnD'>
               <FontAwesomeIcon icon={faDiscord} />
@@ -205,8 +191,8 @@ const CheckIn = () => {
           </Step>
           <Step
             style={{
-              opacity: discordServer ? 1 : 0.5,
-              pointerEvents: discordServer ? 'all' : 'none',
+              opacity: discordConnected && discordServer ? 1 : 0.5,
+              pointerEvents: discordConnected && discordServer ? 'all' : 'none',
             }}
           >
             <StepLabel>
