@@ -215,17 +215,21 @@ const PrivateRoute = ({children, ...rest}: RouteProps) => {
                 <LogoLink to='/'>
                   <StyledLogo />
                 </LogoLink>
-                <h1>Registrations closed.</h1>
-                <p>
-                  Sorry, registrations closed on January 27, 23:59 EST.
-                  <br />
-                  <br />
-                  Follow us on our socials so you don't miss out on our future
-                  events!
-                </p>
+                <h1>
+                  We've opened registrations just for you{' '}
+                  <span aria-label='wink'>😉</span>
+                </h1>
+                <p>Fill out the application once more to join the hackathon.</p>
+                <StyledButton
+                  kind='link'
+                  color='var(--wineLight)'
+                  link='/dashboard/registration'
+                >
+                  Registration
+                </StyledButton>
                 <StyledButton
                   kind='button'
-                  color='var(--wineLight)'
+                  color='var(--wine)'
                   action={handleSignOut}
                 >
                   Sign Out
