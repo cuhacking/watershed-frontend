@@ -34,7 +34,7 @@ const ChallengeSection = styled.div`
   flex-direction: column;
   width: 100%;
   margin-top: 4rem;
-  
+
   & * {
     text-align: center;
   }
@@ -86,6 +86,40 @@ const LargeLogoContainer = styled.div`
 
 const LargeLogo = styled.img`
   height: 90%;
+`;
+
+const IndividualSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 4rem;
+`;
+
+const IndividualHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: center;
+`;
+
+const IndividualChallenge = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: calc(30%);
+  margin: 2rem 0;
+
+  & h3 {
+    margin: 0;
+  }
+
+  & label {
+    font-size: 12px;
+  }
+
+  & a {
+    font-size: inherit;
+    color: var(--wine) !important;
+  }
 `;
 
 const Challenges = () => {
@@ -234,14 +268,41 @@ const Challenges = () => {
               </label>
             </SponsoredChallenge>
           </SponsoredChallenges>
-          <label style={{
-            fontSize: '8px'
-          }}>
+          <label
+            style={{
+              fontSize: '8px',
+            }}
+          >
             Illustrations sourced from the Noun Project. Credits to (in reading
             order) ProSymbols, Flatart, Nhor, Eucalyp, Komkrit Noenpoempisut,
             ArmOkay, and Eucalyp.
           </label>
         </ChallengeSection>
+        <IndividualSection>
+          <IndividualHeader>
+            <h2>Challenges for Individuals</h2>
+            <label>
+              Smaller prizes to be won based on attributes of participation.
+            </label>
+          </IndividualHeader>
+          <SponsoredChallenges>
+            <IndividualChallenge>
+              <LargeLogoContainer>
+                <LargeLogo src={ross} />
+              </LargeLogoContainer>
+              <div>
+                <h3>Fan Engage-o-meter</h3>
+                <p>Nintendo Switch Lite</p>
+                <label>
+                  Build a fan engagement app that large-scale events would use to
+                  increase the engagement of the viewership by creating trivia
+                  games to use throughout their events. See more details{' '}
+                  <a href='#'>here</a>!
+                </label>
+              </div>
+            </IndividualChallenge>
+          </SponsoredChallenges>
+        </IndividualSection>
         <Spacer />
       </Container>
     </SidebarLayout>
