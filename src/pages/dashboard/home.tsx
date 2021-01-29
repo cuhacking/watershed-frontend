@@ -179,8 +179,18 @@ export default () => {
     );
   }
 
-  const user = dashboard!.user;
-  const events = dashboard!.upcomingEvents;
+  if (dashboard == null) {
+    return (
+      <SidebarLayout>
+        <Content>
+          <h1>Something went wrong. Please refresh the page.</h1>
+        </Content>
+      </SidebarLayout>
+    );
+  }
+
+  const user = dashboard.user;
+  const events = dashboard.upcomingEvents;
 
   return (
     <SidebarLayout>
