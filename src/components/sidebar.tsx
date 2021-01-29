@@ -144,7 +144,9 @@ const Sidebar = (props: any) => {
 
   return (
     <Container {...props}>
-      <StyledLogo />
+      <Link to='/'>
+        <StyledLogo />
+      </Link>
       <Section>
         <Button icon={TilesIcon} link={appendBase('/')}>
           Dashboard
