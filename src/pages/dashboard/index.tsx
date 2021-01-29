@@ -23,6 +23,10 @@ import {ReactComponent as Logo} from 'assets/img/word-and-year-logo-white.svg';
 import CheckIn from './checkin';
 import Submissions from './submissions';
 import Leaderboard from './leaderboard';
+import Challenges from './challenges';
+import Sponsors from './sponsors';
+import Broadcast from './broadcast';
+import PointsGen from './points-gen';
 
 const fade = keyframes`
   0% {
@@ -129,6 +133,12 @@ export default () => {
           <PrivateRoute path={`${path}/leaderboard`} exact>
             <Leaderboard />
           </PrivateRoute>
+          <PrivateRoute path={`${path}/challenges`} exact>
+            <Challenges />
+          </PrivateRoute>
+          <PrivateRoute path={`${path}/sponsors`}>
+            <Sponsors />
+          </PrivateRoute>
           <RegistrationRoute path={`${path}/registration`} exact>
             <Registration />
           </RegistrationRoute>
@@ -144,6 +154,12 @@ export default () => {
           <UnprivateRoute path={`${path}/sign-up`}>
             <SignUp />
           </UnprivateRoute>
+          <PrivateRoute path={`${path}/broadcast`}>
+            <Broadcast />
+          </PrivateRoute>
+          <PrivateRoute path={`${path}/points-gen`}>
+            <PointsGen />
+          </PrivateRoute>
           <Redirect to={`${path}/`} />
         </Switch>
       </ProvideApplication>

@@ -27,7 +27,7 @@ export const eventTypeName = (type: EventType) => {
   } else if (type === 'workshops') {
     return 'Workshop';
   } else if (type === 'social-events') {
-    return 'Social Activity';
+    return 'Activity';
   } else {
     return 'Activity';
   }

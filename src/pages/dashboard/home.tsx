@@ -1,6 +1,6 @@
 import React from 'react';
-import styled, {keyframes} from 'styled-components';
-import {Link} from 'react-router-dom';
+import styled from 'styled-components';
+import {Link, Redirect} from 'react-router-dom';
 import {
   Countdown,
   LoadingSymbol,
@@ -8,7 +8,7 @@ import {
   PointsManager,
 } from '../../components';
 import {SidebarLayout} from '../../layouts';
-import {useApplication, useDashboardInfo} from '../../hooks';
+import {useDashboardInfo} from '../../hooks';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons';
 import {Helmet} from 'react-helmet';
@@ -191,6 +191,10 @@ export default () => {
 
   const user = dashboard.user;
   const events = dashboard.upcomingEvents;
+
+  if (!user.checkedIn) {
+    return <Redirect to='/dashboard/checkin' />;
+  }
 
   return (
     <SidebarLayout>
