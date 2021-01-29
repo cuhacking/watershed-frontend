@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import {Link, Redirect} from 'react-router-dom';
 import {
   Countdown,
@@ -106,13 +106,21 @@ const SideSection = styled.div`
   padding-left: 20px;
 `;
 
-const EventCardContainer = styled(Link)`
+const card = css`
   padding: 20px;
   background-color: var(--white);
   border-radius: 8px;
   box-shadow: var(--card-shadow);
 
   transition: 100ms ease-out;
+`;
+
+const AnnouncementCardContainer = styled.div`
+  ${card}
+`;
+
+const EventCardContainer = styled(Link)`
+  ${card}
 
   &:hover {
     cursor: pointer;
@@ -141,6 +149,23 @@ const EventCardTime = styled.p`
 const EventCardDescription = styled.p`
   margin-bottom: 0;
 `;
+
+interface AnnouncementCardProps {
+  title: string;
+  description: string;
+  url?: string;
+}
+
+const AnnouncementCard = ({title, description, url}: AnnouncementCardProps) => {
+  return (
+    <AnnouncementCardContainer>
+      <EventCardHeader>
+        <h4>{title}</h4>
+      </EventCardHeader>
+      <EventCardDescription>{description}</EventCardDescription>
+    </AnnouncementCardContainer>
+  );
+};
 
 interface UpcomingEventProps {
   event: UpcomingEvent;
@@ -191,6 +216,7 @@ export default () => {
 
   const user = dashboard.user;
   const events = dashboard.upcomingEvents;
+  const announcements = dashboard.announcements;
 
   if (!user.checkedIn) {
     return <Redirect to='/dashboard/checkin' />;
@@ -209,7 +235,18 @@ export default () => {
           <Subsection>
             <h2>Recent Announcements</h2>
             <CardSection>
-              <p>(No announcements)</p>
+              {announcements.length === 0 ? (
+                <p>(No announcements)</p>
+              ) : (
+                announcements.map((announcement, index) => (
+                  <AnnouncementCard
+                    key={index}
+                    title={announcement.title}
+                    description={announcement.description}
+                    url={announcement.url}
+                  />
+                ))
+              )}
             </CardSection>
           </Subsection>
           <Subsection>

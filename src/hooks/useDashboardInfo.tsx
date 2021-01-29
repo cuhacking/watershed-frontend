@@ -8,6 +8,12 @@ export enum Role {
   Organizer,
 }
 
+export interface Announcement {
+  title: string;
+  description: string;
+  url?: string;
+}
+
 export type UpcomingEvent = Omit<
   Event,
   'location' | 'locationName' | 'host' | 'resources'
@@ -19,17 +25,18 @@ export interface User {
   discordUsername: string;
 }
 
-export interface TeamInvite {
+export interface Invite {
   uuid: string;
   firstName: string;
   discordUsername: string;
 }
+
 export interface Team {
   uuid: string;
   name: string;
   members: Array<User>;
   submission: boolean;
-  invites: Array<TeamInvite>;
+  invites: Array<Invite>;
 }
 
 export interface DashboardObject {
@@ -50,6 +57,7 @@ export interface DashboardObject {
     team: Team | null;
   };
   upcomingEvents: Array<UpcomingEvent>;
+  announcements: Array<Announcement>;
 }
 
 type CreateTeamFunction = (teamName: string) => Promise<boolean>;
@@ -81,17 +89,25 @@ const useProvideDashboardInfo = (): DashboardInfo => {
 
   const fetchDataNoLoad = async () => {
     try {
-      const [dashboardResponse, eventsResponse] = await Promise.all([
+      const [
+        dashboardResponse,
+        eventsResponse,
+        announcementsResponse,
+      ] = await Promise.all([
         request('/api/dashboard'),
         request('/api/event/upcoming?num=3'),
+        request('/api/announcement'),
       ]);
 
       const dashboardResult = await dashboardResponse.json();
       const eventsResult = await eventsResponse.json();
+      const announcementsResult = await announcementsResponse.json();
 
       console.log(dashboardResult);
+      console.log(announcementsResult);
 
-      let teamInvites: Array<TeamInvite> = [];
+      let memberInvites: Array<Invite> = [];
+      let myInvites: Array<Invite> = [];
 
       if (dashboardResult.user.team != null) {
         const response = await request(
@@ -100,15 +116,29 @@ const useProvideDashboardInfo = (): DashboardInfo => {
 
         if (response.status == 200) {
           const invites = await response.json();
-          teamInvites = invites.map(
+          memberInvites = invites.map(
             (invite: any) =>
               ({
                 uuid: invite.uuid,
                 firstName: invite.firstName,
                 discordUsername: invite.discordUsername,
-              } as TeamInvite)
+              } as Invite)
           );
         }
+      } else {
+        // const response = await request(`/api/team/invites`);
+        // if (response.status == 200) {
+        //   const invites = await response.json();
+        //   console.log(invites);
+        //   myInvites = invites.map(
+        //     (invite: any) =>
+        //       ({
+        //         uuid: invite.uuid,
+        //         firstName: invite.firstName,
+        //         discordUsername: invite.discordUsername,
+        //       } as Invite)
+        //   );
+        // }
       }
 
       setDashboard({
@@ -139,7 +169,7 @@ const useProvideDashboardInfo = (): DashboardInfo => {
                       } as User)
                   ),
                   submission: Boolean(dashboardResult.user.team.submission),
-                  invites: teamInvites,
+                  invites: memberInvites,
                 }
               : null,
         },
@@ -156,14 +186,18 @@ const useProvideDashboardInfo = (): DashboardInfo => {
               description: rawEvent.description,
             } as UpcomingEvent)
         ),
+        announcements: announcementsResult.slice(0, 3).map(
+          (announcement: any) =>
+            ({
+              title: announcement.title,
+              description: announcement.description,
+              url: announcement.url || undefined,
+            } as Announcement)
+        ),
       });
     } catch (e) {
       console.error(e);
     }
-
-    try {
-      // TODO: get invites and load into team
-    } catch (e) {}
   };
 
   const fetchData = async () => {
