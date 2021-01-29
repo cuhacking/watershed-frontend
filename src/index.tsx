@@ -47,7 +47,7 @@ const GlobalStyle = createGlobalStyle`
     --parksCanada: #3A5154;
     --wineDark: #57061E;
     --wineLight: #CA4353;
-    --actionGradient: linear-gradient(135deg, var(--wine) 0%, rgba(176,95,78,1) 100%);
+    --action-gradient: linear-gradient(135deg, var(--wine) 0%, rgba(176,95,78,1) 100%);
     --outdoor: #030a16;
     --indoor: #130101;
 

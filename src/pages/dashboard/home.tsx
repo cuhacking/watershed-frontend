@@ -1,22 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
-import {Button, Countdown, LoadingSymbol} from '../../components';
+import {Countdown, LoadingSymbol, TeamManager} from '../../components';
 import {SidebarLayout} from '../../layouts';
-import {useApplication, useAuth, useDashboardInfo} from '../../hooks';
+import {useApplication, useDashboardInfo} from '../../hooks';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons';
 import {Helmet} from 'react-helmet';
 import {UpcomingEvent} from '../../hooks/useDashboardInfo';
-import {
-  eventTimeString,
-  eventTypeName,
-  EventTypeMarker,
-  EventDetailRow,
-  EventDetailText,
-  EventIcon,
-  EventLoading,
-} from '../../shared/events';
+import {eventTimeString, EventTypeMarker} from '../../shared/events';
 
 const Content = styled.div`
   flex: 1;
@@ -111,12 +103,11 @@ const SideSection = styled.div`
   }
 `;
 
-const EventCardContainer = styled.div`
+const EventCardContainer = styled(Link)`
   padding: 20px;
   background-color: var(--white);
   border-radius: 8px;
   box-shadow: var(--card-shadow);
-  height: 100%;
 
   transition: 100ms ease-out;
 
@@ -159,20 +150,16 @@ const EventCard = ({event}: UpcomingEventProps) => {
     str.length > 200 ? `${str.slice(0, 197)}...` : str;
 
   return (
-    <Link to={`/dashboard/schedule/${event.id}`}>
-      <EventCardContainer>
-        <EventCardHeader>
-          <EventTypeMarker type={event.type} />
-          <h4>{event.title}</h4>
-        </EventCardHeader>
-        <EventCardTime>
-          {eventTimeString(timezone, event.startTime, event.endTime)}
-        </EventCardTime>
-        <EventCardDescription>
-          {truncate(event.description)}
-        </EventCardDescription>
-      </EventCardContainer>
-    </Link>
+    <EventCardContainer to={`/dashboard/schedule/${event.id}`}>
+      <EventCardHeader>
+        <EventTypeMarker type={event.type} />
+        <h4>{event.title}</h4>
+      </EventCardHeader>
+      <EventCardTime>
+        {eventTimeString(timezone, event.startTime, event.endTime)}
+      </EventCardTime>
+      <EventCardDescription>{truncate(event.description)}</EventCardDescription>
+    </EventCardContainer>
   );
 };
 
@@ -225,6 +212,7 @@ export default () => {
         </MainSection>
         <SideSection>
           <Countdown />
+          <TeamManager />
         </SideSection>
       </Content>
     </SidebarLayout>

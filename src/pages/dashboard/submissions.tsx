@@ -132,11 +132,13 @@ const SubmitButton = styled(Link)`
   padding: 1rem;
   border-radius: 0.5rem;
   border: none;
-  background: var(--actionGradient);
+  background: var(--action-gradient);
   margin-top: 2rem;
   color: var(--white);
   font-size: 1.5rem;
   font-family: var(--primary-font);
+  transition: 100ms ease-out;
+  box-shadow: var(--card-shadow);
 
   &:hover {
     cursor: pointer;

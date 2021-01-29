@@ -13,11 +13,32 @@ export type UpcomingEvent = Omit<
   'location' | 'locationName' | 'host' | 'resources'
 >;
 
+export interface User {
+  uuid: string;
+  name: string;
+  discordUsername: string;
+}
+
+export interface TeamInvite {
+  uuid: string;
+  teamId: string;
+  userId: string;
+}
+export interface Team {
+  uuid: string;
+  name: string;
+  members: Array<User>;
+  submission: boolean;
+  invites: Array<TeamInvite>;
+}
+
 export interface DashboardObject {
   startTime: string;
   endTime: string;
   user: {
     uuid: string;
+    // firstName: string;
+    // lastName: string; TODO: RYAN!!!
     email: string;
     role: Role;
     discordId: string | null;
@@ -26,14 +47,17 @@ export interface DashboardObject {
     confirmed: boolean;
     checkedIn: boolean;
     points: number;
+    team: Team | null;
   };
   upcomingEvents: Array<UpcomingEvent>;
 }
 
+type CreateTeamFunction = (teamName: string) => Promise<boolean>;
 export interface DashboardInfo {
   isLoading: boolean;
   dashboard: DashboardObject | null;
-  refresh: Function
+  refresh: Function;
+  createTeam: CreateTeamFunction;
 }
 
 const useProvideDashboardInfo = (): DashboardInfo => {
@@ -52,6 +76,8 @@ const useProvideDashboardInfo = (): DashboardInfo => {
       const dashboardResult = await dashboardResponse.json();
       const eventsResult = await eventsResponse.json();
 
+      console.log(dashboardResult);
+
       setDashboard({
         user: {
           uuid: dashboardResult.user.uuid,
@@ -63,6 +89,23 @@ const useProvideDashboardInfo = (): DashboardInfo => {
           confirmed: dashboardResult.user.confirmed,
           checkedIn: dashboardResult.user.checkedIn ?? false,
           points: dashboardResult.user.points,
+          team:
+            dashboardResult.user.team != null
+              ? {
+                  uuid: dashboardResult.user.team.uuid,
+                  name: dashboardResult.user.team.name,
+                  members: dashboardResult.user.team.members.map(
+                    (member: any) =>
+                      ({
+                        uuid: member.uuid,
+                        name: '<noName>',
+                        discordUsername: member.discordId ?? '<noDiscord>',
+                      } as User)
+                  ),
+                  submission: Boolean(dashboardResult.user.team.submission),
+                  invites: dashboardResult.user.team.invites ?? [],
+                }
+              : null,
         },
         startTime: dashboardResult.startTime,
         endTime: dashboardResult.endTime,
@@ -86,7 +129,30 @@ const useProvideDashboardInfo = (): DashboardInfo => {
 
   const refresh = () => {
     fetchData();
-  }
+  };
+
+  const createTeam: CreateTeamFunction = async (teamName) => {
+    try {
+      const response = await request('/api/team', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: teamName,
+        }),
+      });
+
+      if (response.status === 201) {
+        return true;
+      }
+
+      throw new Error(`Could not create team. Response: ${response.status}`);
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
 
   useEffect(() => {
     if (user !== null) {
@@ -97,14 +163,16 @@ const useProvideDashboardInfo = (): DashboardInfo => {
   return {
     isLoading,
     dashboard,
-    refresh
+    refresh,
+    createTeam,
   };
 };
 
 const DashboardInfoContext = createContext<DashboardInfo>({
   isLoading: true,
   dashboard: null,
-  refresh: () => {}
+  refresh: () => {},
+  createTeam: async () => false,
 });
 
 export const ProvideDashboardInfo = (props: {children: React.ReactNode}) => {

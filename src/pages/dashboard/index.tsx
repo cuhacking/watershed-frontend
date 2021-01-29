@@ -27,6 +27,7 @@ import Leaderboard from './leaderboard';
 const DashboardStyle = createGlobalStyle`
   body {
     --card-shadow: 0px 0px 4px #13010140;
+    --card-shadow-hover: 0px 0px 12px var(--wineLight);
   }
 
   h1, h2, h3, h4 {

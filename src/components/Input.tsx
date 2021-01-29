@@ -48,6 +48,7 @@ const StyledInput = styled.input`
 
 type InputProps = {
   placeHolder?: string;
+  className?: string;
   label?: string;
   value?: string;
   name?: string;
@@ -77,9 +78,11 @@ const InputComponent = ({
   style,
   required,
   grow,
+  className,
   ...rest
 }: InputProps) => (
   <InputContainer
+    className={className}
     style={{
       width: `${expand ? '100%' : 'unset'}`,
       padding: `${padded ? '1rem 8px' : 0}`,
