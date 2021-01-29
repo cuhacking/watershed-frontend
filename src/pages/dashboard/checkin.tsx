@@ -157,7 +157,7 @@ const CheckIn = () => {
           <Step
             style={{
               opacity: discordConnected ? 1 : 0.5,
-              pointerEvents: discordServer ? 'all' : 'none',
+              pointerEvents: discordConnected ? 'all' : 'none',
             }}
           >
             <StepLabel>
