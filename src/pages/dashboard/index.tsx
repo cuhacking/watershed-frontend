@@ -23,6 +23,7 @@ import {ReactComponent as Logo} from 'assets/img/word-and-year-logo-white.svg';
 import CheckIn from './checkin';
 import Submissions from './submissions';
 import Leaderboard from './leaderboard';
+import Challenges from './challenges';
 
 const DashboardStyle = createGlobalStyle`
   body {
@@ -117,6 +118,9 @@ export default () => {
           </PrivateRoute>
           <PrivateRoute path={`${path}/leaderboard`} exact>
             <Leaderboard />
+          </PrivateRoute>
+          <PrivateRoute path={`${path}/challenges`} exact>
+            <Challenges />
           </PrivateRoute>
           <RegistrationRoute path={`${path}/registration`} exact>
             <Registration />
