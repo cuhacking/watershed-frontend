@@ -131,12 +131,18 @@ const CheckIn = () => {
       setDiscordServer(true);
     };
 
+    if (dashboard?.user.checkedIn) {
+      history.push('/dashboard');
+      return;
+    }
+
     asyncFunc();
   }, [dashboard]);
 
   const checkIn = () => {
     request('/api/user/checkIn').then((res) => {
-      if (res) {
+      if (res.ok) {
+        refresh();
         history.push('/dashboard');
       }
     });
