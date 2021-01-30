@@ -174,7 +174,7 @@ const CheckIn = () => {
   if (isLoading) {
     return (
       <Container>
-        <CheckInContainer>
+        <CheckInContainer style={{alignItems: 'center'}}>
           <LoadingSymbol color='var(--white)' />
         </CheckInContainer>
       </Container>
