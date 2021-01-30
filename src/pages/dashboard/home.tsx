@@ -21,7 +21,7 @@ const Content = styled.div`
   flex-direction: row;
   justify-content: center;
 
-  margin-top: 100px;
+  margin: 100px 0;
   text-align: center;
 
   animation: var(--page-animation);
@@ -89,11 +89,11 @@ const CardSection = styled.div`
   }
 
   @media only screen and (min-width: 1000px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   @media only screen and (min-width: 1250px) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 `;
 
@@ -150,7 +150,8 @@ const EventCardDescription = styled.p`
   margin-bottom: 0;
 
   a {
-    color: var(--wineLight);
+    color: var(--wineLight) !important;
+    word-wrap: break-word;
   }
 
   a:hover {

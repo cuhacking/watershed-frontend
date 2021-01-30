@@ -2206,6 +2206,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/emoji-js@npm:^3":
+  version: 3.5.0
+  resolution: "@types/emoji-js@npm:3.5.0"
+  checksum: a72b1a205672baa2f30bbdb806a890175fd4a6c2dc066f59c17c803bd26576a929911dbd23b555a6a25d94dbda4f5a4dcf8b58b2a6d00897e7566c3cbeb3c461
+  languageName: node
+  linkType: hard
+
 "@types/emscripten@npm:^1.38.0":
   version: 1.39.4
   resolution: "@types/emscripten@npm:1.39.4"
@@ -15899,6 +15906,7 @@ typescript@^4.1.3:
     "@testing-library/jest-dom": ^4.2.4
     "@testing-library/react": ^9.3.2
     "@testing-library/user-event": ^7.1.2
+    "@types/emoji-js": ^3
     "@types/jest": ^26.0.14
     "@types/js-cookie": ^2
     "@types/node": ^14.11.10

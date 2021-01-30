@@ -1,6 +1,6 @@
 import {faDiscord} from '@fortawesome/free-brands-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {Button} from '../../components';
+import {Button, LoadingSymbol} from '../../components';
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {buttonStyle} from './login';
@@ -105,60 +105,63 @@ const SignOutButton = styled.a`
   }
 `;
 
+const SmallText = styled.p`
+  margin: 0;
+  margin-left: 20px;
+  font-size: 0.8rem;
+  font-style: italic;
+`;
+
 const CheckIn = () => {
   const [discordConnected, setDiscordConnected] = useState(false);
   const [discordServer, setDiscordServer] = useState(false);
   const {dashboard, refresh} = useDashboardInfo();
   const history = useHistory();
   const {request, signOut} = useAuth();
-
-  const checkDiscordServerStatus = () => {
-    // Initial check
-    request('/api/user/checkUserDiscord').then((res) => {
-      if (res.ok) {
-        setDiscordServer(true);
-      }
-    });
-
-    // Interval check
-    setInterval((timer) => {
-      request('/api/user/checkUserDiscord').then((res) => {
-        if (res.ok) {
-          setDiscordServer(true);
-          clearInterval(timer);
-        }
-      });
-    }, 5000);
-  };
-
-  const checkDiscordConnectionStatus = () => {
-    setInterval((timer) => {
-      refresh();
-      if (dashboard?.user.discordId) {
-        clearInterval(timer);
-      }
-    }, 5000);
-  };
-
-  const checkIn = () => {
-    request('/api/user/checkIn').then((res) => {
-      if (res) {
-        history.push('/dashboard');
-      }
-    });
-  };
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    setDiscordConnected(dashboard?.user.discordId != null);
+    const asyncFunc = async () => {
+      if (dashboard?.user.discordId == null) {
+        return;
+      }
+
+      setDiscordConnected(true);
+
+      const response = await request('/api/user/checkUserDiscord');
+
+      if (!response.ok) {
+        return;
+      }
+
+      setDiscordServer(true);
+    };
+
+    if (dashboard?.user.checkedIn) {
+      history.push('/dashboard');
+      return;
+    } else {
+      setLoading(false);
+    }
+
+    asyncFunc();
   }, [dashboard]);
 
-  useEffect(() => {
-    const connected = dashboard?.user.checkedIn;
-    if (!connected) {
-      checkDiscordConnectionStatus();
-    }
-    checkDiscordServerStatus();
-  }, []);
+  const checkIn = () => {
+    setLoading(true);
+    request('/api/user/checkIn').then((res) => {
+      if (res.ok) {
+        refresh()
+          .then(() => {
+            setLoading(false);
+            history.push('/dashboard');
+          })
+          .catch(() => {
+            setLoading(false);
+          });
+      }
+    });
+  };
 
   const linkDiscord = () => {
     request('/api/auth/discord/link').then((response) => {
@@ -168,35 +171,61 @@ const CheckIn = () => {
     });
   };
 
+  if (isLoading) {
+    return (
+      <Container>
+        <CheckInContainer>
+          <LoadingSymbol color='var(--white)' />
+        </CheckInContainer>
+      </Container>
+    );
+  }
+
   return (
     <Container>
       <CheckInContainer>
         <h1>Check In</h1>
         <h2>Complete the steps below to get started!</h2>
+        <p>
+          Refresh the page to see updates <span aria-label=':)'>🙂</span>
+        </p>
         <StepsContainer>
-          <Step>
-            <StepLabel>
-              <Marker>
-                <label>1</label>
-              </Marker>
-              <label>Connect your Discord</label>
-            </StepLabel>
-            <DiscordButton onClick={() => linkDiscord()}>
-              <FontAwesomeIcon icon={faDiscord} />
-              Sign in with Discord
-            </DiscordButton>
-          </Step>
           <Step
             style={{
-              opacity: discordConnected ? 1 : 0.5,
-              pointerEvents: discordConnected ? 'all' : 'none',
+              opacity: !discordConnected ? 1 : 0.5,
+              pointerEvents: !discordConnected ? 'all' : 'none',
             }}
           >
             <StepLabel>
               <Marker>
-                <label>2</label>
+                <label>{discordConnected ? '✓' : '1'}</label>
               </Marker>
-              <label>Join out Discord Server</label>
+              <div>
+                <label>Connect your Discord account</label>
+                {discordConnected && dashboard?.user.discordUsername && (
+                  <SmallText>
+                    Connected user: {dashboard?.user.discordUsername}
+                  </SmallText>
+                )}
+              </div>
+            </StepLabel>
+            <DiscordButton onClick={() => linkDiscord()}>
+              <FontAwesomeIcon icon={faDiscord} />
+              Link your Discord
+            </DiscordButton>
+          </Step>
+          <Step
+            style={{
+              opacity: discordConnected && !discordServer ? 1 : 0.5,
+              pointerEvents:
+                discordConnected && !discordServer ? 'all' : 'none',
+            }}
+          >
+            <StepLabel>
+              <Marker>
+                <label>{discordServer ? '✓' : '2'}</label>
+              </Marker>
+              <label>Join our Discord Server</label>
             </StepLabel>
             <DiscordButton href='https://discord.gg/TGvYPnD'>
               <FontAwesomeIcon icon={faDiscord} />
@@ -205,8 +234,8 @@ const CheckIn = () => {
           </Step>
           <Step
             style={{
-              opacity: discordServer ? 1 : 0.5,
-              pointerEvents: discordServer ? 'all' : 'none',
+              opacity: discordConnected && discordServer ? 1 : 0.5,
+              pointerEvents: discordConnected && discordServer ? 'all' : 'none',
             }}
           >
             <StepLabel>

@@ -16,6 +16,8 @@ import discord from 'assets/img/discord.svg';
 import meme from 'assets/img/meme.svg';
 import css from 'assets/img/css.svg';
 import startup from 'assets/img/startup.svg';
+import points from 'assets/img/points.svg';
+import mentor from 'assets/img/mentor.svg';
 
 const Spacer = styled.div`
   height: 10vh;
@@ -155,7 +157,7 @@ const Challenges = () => {
     <SidebarLayout>
       <Helmet
         titleTemplate={`%s — cuHacking 2021 Dashboard`}
-        title='Schedule'
+        title='Challenges'
       />
       <Spacer />
       <Container>
@@ -182,7 +184,10 @@ const Challenges = () => {
                 Build a fan engagement app that large-scale events would use to
                 increase the engagement of the viewership by creating trivia
                 games to use throughout their events. See more details{' '}
-                <a href='#'>here</a>!
+                <a href='https://s3.us-west-2.amazonaws.com/secure.notion-static.com/da7eaa33-a4d0-44df-a52c-08748dd89501/Hack-a-thon_-_Trivia_Game.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210129%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210129T222814Z&X-Amz-Expires=86400&X-Amz-Signature=ae93aba4197885646256cef1622c5afe9fb810836dc512e6a40002f493a8be1f&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Hack-a-thon_-_Trivia_Game.pdf%22'>
+                  on this pdf
+                </a>
+                !
               </label>
             </SponsoredChallenge>
             <SponsoredChallenge>
@@ -278,11 +283,12 @@ const Challenges = () => {
                 <LargeLogo src={ravens} />
               </LargeLogoContainer>
               <h3>Raven’s Quest</h3>
-              <p>
+              <p>MX Master 2S</p>
+              <label>
                 A series of puzzles and challenges to complete alongside your
                 hack, if you wish. Find out more in the raven-announcements
                 channel on <a href='https://discord.gg/feT4jYCAUJ'>Discord</a>.
-              </p>
+              </label>
             </SponsoredChallenge>
             <SponsoredChallenge>
               <LargeLogoContainer>
@@ -368,11 +374,39 @@ const Challenges = () => {
               <div>
                 <h3>[Event] Best Startup Pitch</h3>
                 <p>1 winner</p>
-                <p>Tile Slim Bluetooth Tracker</p>
+                <p>AeroPress</p>
                 <label>
                   Think you have what it takes? You have five minutes to pitch
                   the most innovate, forward-thinking, or entertaining startup
                   idea!
+                </label>
+              </div>
+            </IndividualChallenge>
+            <IndividualChallenge>
+              <SmallLogoContainer>
+                <SmallLogo src={mentor} />
+              </SmallLogoContainer>
+              <div>
+                <h3>Most Helpful Mentor</h3>
+                <p>1 winner</p>
+                <p>Tile Slim Bluetooth Tracker</p>
+                <label>
+                  A mentor that has shown outstanding helpful advice to various
+                  hackers throughout the event.
+                </label>
+              </div>
+            </IndividualChallenge>
+            <IndividualChallenge>
+              <SmallLogoContainer>
+                <SmallLogo src={points} />
+              </SmallLogoContainer>
+              <div>
+                <h3>Most points</h3>
+                <p>3 winners</p>
+                <p>TBA</p>
+                <label>
+                  Points awarded through participation in workshops and
+                  activities. Gather as many points as you can!
                 </label>
               </div>
             </IndividualChallenge>
