@@ -376,10 +376,12 @@ const TeamManager = () => {
                 ))}
               {dashboard!.user.team.invites.map((invite) => (
                 <InvitedMember key={invite.uuid}>
-                  {invite.firstName.trim()}
-                  {invite.discordUsername && (
-                    <span>@{invite.discordUsername}</span>
-                  )}
+                  <div>
+                    {invite.firstName}
+                    {invite.discordUsername && (
+                      <span>@{invite.discordUsername}</span>
+                    )}
+                  </div>
                   <MiniButton
                     onClick={async () => {
                       setLoading(true);
