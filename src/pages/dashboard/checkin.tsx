@@ -1,6 +1,6 @@
 import {faDiscord} from '@fortawesome/free-brands-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {Button} from '../../components';
+import {Button, LoadingSymbol} from '../../components';
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {buttonStyle} from './login';
@@ -113,6 +113,7 @@ const CheckIn = () => {
   const {dashboard, refresh} = useDashboardInfo();
   const history = useHistory();
   const {request, signOut} = useAuth();
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const asyncFunc = async () => {
@@ -134,16 +135,25 @@ const CheckIn = () => {
     if (dashboard?.user.checkedIn) {
       history.push('/dashboard');
       return;
+    } else {
+      setLoading(false);
     }
 
     asyncFunc();
   }, [dashboard]);
 
   const checkIn = () => {
+    setLoading(true);
     request('/api/user/checkIn').then((res) => {
       if (res.ok) {
-        refresh();
-        history.push('/dashboard');
+        refresh()
+          .then(() => {
+            setLoading(false);
+            history.push('/dashboard');
+          })
+          .catch(() => {
+            setLoading(false);
+          });
       }
     });
   };
@@ -155,6 +165,16 @@ const CheckIn = () => {
       }
     });
   };
+
+  if (isLoading) {
+    return (
+      <Container>
+        <CheckInContainer>
+          <LoadingSymbol color='var(--white)' />
+        </CheckInContainer>
+      </Container>
+    );
+  }
 
   return (
     <Container>

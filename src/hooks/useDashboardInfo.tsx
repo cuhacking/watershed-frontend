@@ -82,7 +82,7 @@ type RedeemPointsFunction = (
 export interface DashboardInfo {
   isLoading: boolean;
   dashboard: DashboardObject | null;
-  refresh: Function;
+  refresh: () => Promise<void>;
   createTeam: CreateTeamFunction;
   joinTeam: JoinTeamFunction;
   leaveTeam: LeaveTeamFunction;
@@ -223,7 +223,7 @@ const useProvideDashboardInfo = (): DashboardInfo => {
   };
 
   const refresh = () => {
-    fetchDataNoLoad();
+    return fetchDataNoLoad();
   };
 
   const createTeam: CreateTeamFunction = async (teamName) => {
@@ -386,7 +386,7 @@ const useProvideDashboardInfo = (): DashboardInfo => {
 const DashboardInfoContext = createContext<DashboardInfo>({
   isLoading: true,
   dashboard: null,
-  refresh: () => {},
+  refresh: async () => {},
   createTeam: async () => false,
   joinTeam: async () => false,
   leaveTeam: async () => false,
