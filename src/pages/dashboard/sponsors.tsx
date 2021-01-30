@@ -17,6 +17,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   padding: 0 4rem;
+  max-width: var(--max-width);
 `;
 
 const Header = styled.div`
@@ -48,8 +49,8 @@ const SponsorCard = styled.a`
   border-radius: 0.8rem;
   transition: box-shadow 300ms;
   padding: 32px 48px;
-  margin: 1.5rem;
-  width: 40%;
+  margin: 16px;
+  width: 400px;
 
   &:hover {
     box-shadow: var(--shadow);
@@ -66,7 +67,10 @@ const SponsorLogo = styled.img`
 
 const Sponsors = () => (
   <SidebarLayout>
-    <Helmet titleTemplate={`%s — cuHacking 2021 Dashboard`} title='Sponsor Rooms' />
+    <Helmet
+      titleTemplate={`%s — cuHacking 2021 Dashboard`}
+      title='Sponsor Rooms'
+    />
     <Spacer />
     <Container>
       <Header>
@@ -77,16 +81,32 @@ const Sponsors = () => (
         <p>Click on a logo to join</p>
       </SponsorsHeader>
       <SponsorsContainer>
-        <SponsorCard href='https://meet.google.com/sev-sckc-hoq' target='_blank'>
+        <SponsorCard
+          href='https://meet.google.com/sev-sckc-hoq'
+          target='_blank'
+          rel='noopener noreferrer'
+        >
           <SponsorLogo src={ciena} />
         </SponsorCard>
-        <SponsorCard href='https://meet.google.com/dfq-rzpj-owc' target='_blank'>
+        <SponsorCard
+          href='https://meet.google.com/dfq-rzpj-owc'
+          target='_blank'
+          rel='noopener noreferrer'
+        >
           <SponsorLogo src={ross} />
         </SponsorCard>
-        <SponsorCard href='https://meet.google.com/rqt-kmos-ggf' target='_blank'>
+        <SponsorCard
+          href='https://meet.google.com/rqt-kmos-ggf'
+          target='_blank'
+          rel='noopener noreferrer'
+        >
           <SponsorLogo src={fellow} />
         </SponsorCard>
-        <SponsorCard href='https://meet.google.com/asc-tgtb-epu' target='_blank'>
+        <SponsorCard
+          href='https://meet.google.com/asc-tgtb-epu'
+          target='_blank'
+          rel='noopener noreferrer'
+        >
           <SponsorLogo src={fdm} />
         </SponsorCard>
       </SponsorsContainer>
