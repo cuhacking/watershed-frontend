@@ -59,13 +59,19 @@ export default () => {
   const [name, setName] = React.useState<string>('');
   const [repo, setRepo] = React.useState<string>('');
   const [video, setVideo] = React.useState<string>('');
+  const [channel, setChannel] = React.useState<string>('');
 
   const [result, setResult] = React.useState<string | null>(null);
 
   const send = () => {
     request('/api/announcement', {
       method: 'POST',
-      body: JSON.stringify({title: name, description: repo, url: video}),
+      body: JSON.stringify({
+        title: name,
+        description: repo,
+        url: video,
+        id: channel === '' ? undefined : channel,
+      }),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -102,6 +108,13 @@ export default () => {
           value={video}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setVideo(e.target.value);
+          }}
+        />
+        <Input
+          placeholder='Channel ID (optional)'
+          value={channel}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setChannel(e.target.value);
           }}
         />
 
