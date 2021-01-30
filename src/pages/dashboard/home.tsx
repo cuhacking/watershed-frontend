@@ -21,7 +21,7 @@ const Content = styled.div`
   flex-direction: row;
   justify-content: center;
 
-  margin-top: 100px;
+  margin: 100px 0;
   text-align: center;
 
   animation: var(--page-animation);
