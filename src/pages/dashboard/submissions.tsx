@@ -4,104 +4,6 @@ import {SidebarLayout} from '../../layouts';
 import {Helmet} from 'react-helmet';
 import {Link} from 'react-router-dom';
 
-const sampleProjects: ProjectPreview[] = [
-  {
-    name: 'Project Atlas',
-    team: 'cuHacking dev-team',
-    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
-  },
-  {
-    name: 'Project Atlas',
-    team: 'cuHacking dev-team',
-    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
-  },
-  {
-    name: 'Project Atlas',
-    team: 'cuHacking dev-team',
-    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
-  },
-  {
-    name: 'Project Atlas',
-    team: 'cuHacking dev-team',
-    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
-  },
-  {
-    name: 'Project Atlas',
-    team: 'cuHacking dev-team',
-    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
-  },
-  {
-    name: 'Project Atlas',
-    team: 'cuHacking dev-team',
-    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
-  },
-  {
-    name: 'Project Atlas',
-    team: 'cuHacking dev-team',
-    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
-  },
-  {
-    name: 'Project Atlas',
-    team: 'cuHacking dev-team',
-    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
-  },
-  {
-    name: 'Project Atlas',
-    team: 'cuHacking dev-team',
-    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
-  },
-  {
-    name: 'Project Atlas',
-    team: 'cuHacking dev-team',
-    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
-  },
-  {
-    name: 'Project Atlas',
-    team: 'cuHacking dev-team',
-    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
-  },
-  {
-    name: 'Project Atlas',
-    team: 'cuHacking dev-team',
-    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
-  },
-  {
-    name: 'Project Atlas',
-    team: 'cuHacking dev-team',
-    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
-  },
-  {
-    name: 'Project Atlas',
-    team: 'cuHacking dev-team',
-    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
-  },
-  {
-    name: 'Project Atlas',
-    team: 'cuHacking dev-team',
-    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
-  },
-  {
-    name: 'Project Atlas',
-    team: 'cuHacking dev-team',
-    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
-  },
-  {
-    name: 'Project Atlas',
-    team: 'cuHacking dev-team',
-    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
-  },
-  {
-    name: 'Project Atlas',
-    team: 'cuHacking dev-team',
-    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
-  },
-  {
-    name: 'Project Atlas',
-    team: 'cuHacking dev-team',
-    backgroundURL: 'https://i.ytimg.com/vi/r8ZeGZOXREs/maxresdefault.jpg',
-  },
-];
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -146,12 +48,15 @@ const SubmitButton = styled(Link)`
   }
 `;
 
+const StyledLink = styled(Link)`
+  width: calc(25% - 1rem);
+  height: 148px;
+`;
+
 const ProjectCard = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  width: calc(25% - 1rem);
-  height: 148px;
   border-radius: 0.5rem;
   background-color: lightblue;
   color: var(--white);
@@ -160,6 +65,7 @@ const ProjectCard = styled.div`
   transition: box-shadow 200ms;
   position: relative;
   overflow: hidden;
+  height: 100%;
 
   &:hover {
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
@@ -185,21 +91,25 @@ const ProjectOverlay = styled.div`
 interface ProjectPreview {
   name: string;
   team: string;
-  backgroundURL: string;
+  repo: string;
+  cover: string;
 }
 
 const Submissions = () => {
   const [projects, setProjects] = useState<ProjectPreview[]>([]);
-
   useEffect(() => {
-    setProjects(sampleProjects);
+    fetch('/api/submission')
+      .then((res) => res.json())
+      .then((json) => {
+        setProjects(json as ProjectPreview[]);
+      });
   }, []);
 
   return (
     <SidebarLayout>
       <Helmet
         titleTemplate={`%s — cuHacking 2021 Dashboard`}
-        title='Schedule'
+        title='Submissions'
       />
       <Spacer />
       <Container>
@@ -217,16 +127,20 @@ const Submissions = () => {
         </SubmitButton>
         <ProjectsDisplay>
           {projects.map((project, index) => (
-            <ProjectCard
-              style={{
-                background: `url(${project.backgroundURL})`,
-              }}
+            <StyledLink
               key={index}
+              to={`/dashboard/submissions/${encodeURIComponent(project.repo)}`}
             >
-              <ProjectOverlay />
-              <h3>{project.name}</h3>
-              <p>{project.team}</p>
-            </ProjectCard>
+              <ProjectCard
+                style={{
+                  background: `url(${project.cover})`,
+                }}
+              >
+                <ProjectOverlay />
+                <h3>{project.name}</h3>
+                <p>{project.team}</p>
+              </ProjectCard>
+            </StyledLink>
           ))}
         </ProjectsDisplay>
         <Spacer />

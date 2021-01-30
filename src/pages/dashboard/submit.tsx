@@ -6,6 +6,7 @@ import {useDropzone, FileRejection, DropEvent} from 'react-dropzone';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import {useAuth, useDashboardInfo} from '../../hooks';
+import {Helmet} from 'react-helmet';
 
 const Spacer = styled.div`
   height: 10vh;
@@ -115,6 +116,10 @@ const SubmissionScrim = styled.div`
   & p {
     margin: 0;
   }
+
+  & a {
+    margin-top: 4px;
+  }
 `;
 
 const SubmissionCover = styled.div<{url?: string}>`
@@ -173,6 +178,7 @@ const Dropzone = (props: {file?: File; onFileChange: (file: File) => void}) => {
     onDrop,
     maxFiles: 1,
     maxSize: 5000000,
+    accept: ['image/png', 'image/jpeg'],
   });
   return (
     <DropContainer {...getRootProps()}>
@@ -203,15 +209,52 @@ const submitMessage = (
   } else if (video === '') {
     return 'You must provide a link to a video demo';
   } else if (readme == null || readme === '') {
-    return 'Could not validate README';
+    return 'Could not find a valid README.md file in repo';
   }
 
   return null;
 };
 
+const CheckContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin: 8px 0;
+`;
+
+const ChallengeContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const ChallengeCheck = (props: {
+  value: string;
+  name: string;
+  onChange: (value: string, checked: boolean) => void;
+}) => {
+  const [isChecked, setChecked] = React.useState(false);
+  const handleChange = () => {
+    setChecked((checked) => {
+      props.onChange(props.value, !checked);
+      return !checked;
+    });
+  };
+  return (
+    <CheckContainer>
+      <input
+        id={props.value}
+        type='checkbox'
+        checked={isChecked}
+        onChange={handleChange}
+      />
+      <label htmlFor={props.value}>{props.name}</label>
+    </CheckContainer>
+  );
+};
+
 export default () => {
   const {request, user} = useAuth();
-  
+
   const history = useHistory();
   const {dashboard} = useDashboardInfo();
   const [name, setName] = React.useState<string>('');
@@ -219,6 +262,7 @@ export default () => {
   const [video, setVideo] = React.useState<string>('');
   const [image, setImage] = React.useState<File | undefined>();
   const [imageUrl, setImageUrl] = React.useState<string | undefined>();
+  const [challenges, setChallenges] = React.useState<string[]>([]);
 
   const [readme, setReadme] = React.useState<string | null>(null);
   const [message, setMessage] = React.useState<string | null>(null);
@@ -228,9 +272,28 @@ export default () => {
     setRepo(repo);
     if (repo) {
       request('/api/submission/preview/' + encodeURIComponent(repo))
-        .then((res) => res.text())
-        .then((text) => setReadme(text));
+        .then((res) => {
+          if (res.ok) {
+            return res.text();
+          } else {
+            throw 'No readme';
+          }
+        })
+        .then((text) => setReadme(text))
+        .catch(() => {
+          setReadme(null);
+        });
     }
+  };
+
+  const handleChallengeChange = (value: string, checked: boolean) => {
+    setChallenges((challenges) => {
+      if (checked) {
+        return [...challenges, value];
+      } else {
+        return challenges.filter((item) => item !== value);
+      }
+    });
   };
 
   useEffect(() => {
@@ -252,7 +315,7 @@ export default () => {
       const payload = new FormData();
       payload.append(
         'body',
-        JSON.stringify({name, repoUrl: repo, videoLink: video, challenges: []})
+        JSON.stringify({name, repoUrl: repo, videoLink: video, challenges})
       );
 
       if (image) {
@@ -296,6 +359,10 @@ export default () => {
 
   return (
     <SidebarLayout>
+      <Helmet
+        titleTemplate={`%s — cuHacking 2021 Dashboard`}
+        title='Submit your hack!'
+      />
       <Spacer />
       <FormContainer>
         <Title>Submit your hack!</Title>
@@ -318,9 +385,9 @@ export default () => {
           }}
         />
         <HelperText>
-          Your project must be hosted as a publicly accessible git repository.
-          The repository must contain a README.md file that will be used as your
-          project's description.
+          Your project must be hosted as a publicly accessible git repository.{' '}
+          <b>The repository must contain a README.md file</b> that will be used
+          as your project's description.
         </HelperText>
         <HelperText>
           The description will be visible to other hackers and will also be used
@@ -339,7 +406,7 @@ export default () => {
         </HelperText>
         <HelperText>
           We recommend uploading your video to the cloud (Google Drive, Dropbox,
-          OneDrive, etc.) and creating a publicly shareable link.
+          OneDrive, etc.) and creating a <b>publicly shareable link</b>.
         </HelperText>
         <SmallSpacer />
         <SubSubtitle>Cover Photo (optional)</SubSubtitle>
@@ -354,6 +421,45 @@ export default () => {
           See more details about these on the{' '}
           <StyledLink to='/dashboard/challenges'>Challenges Page</StyledLink>.
         </HelperText>
+        <ChallengeContainer style={{marginTop: 8}}>
+          <ChallengeCheck
+            value='ros-challenge'
+            name='Fan Engage-O-meter'
+            onChange={handleChallengeChange}
+          />
+          <ChallengeCheck
+            value='ciena-challenge'
+            name='Diversity & Inclusion Award'
+            onChange={handleChallengeChange}
+          />
+          <ChallengeCheck
+            value='echoAR-challenge'
+            name='Best Hack Using echoAR'
+            onChange={handleChallengeChange}
+          />
+        </ChallengeContainer>
+        <ChallengeContainer style={{marginBottom: 24}}>
+          <ChallengeCheck
+            value='best-green-hack'
+            name='Best "Green" Hack'
+            onChange={handleChallengeChange}
+          />
+          <ChallengeCheck
+            value='best-health-hack'
+            name='Best Health Hack'
+            onChange={handleChallengeChange}
+          />
+          <ChallengeCheck
+            value='best-game'
+            name='Best Game'
+            onChange={handleChallengeChange}
+          />
+          <ChallengeCheck
+            value='best-educational-hack'
+            name='Best Educational Hack'
+            onChange={handleChallengeChange}
+          />
+        </ChallengeContainer>
         <SubSubtitle>Submission Preview</SubSubtitle>
         <SubmissionPreviewCard>
           <SubmissionCover url={imageUrl}>
@@ -362,10 +468,11 @@ export default () => {
                 {name === '' ? <Placeholder>Project Name</Placeholder> : name}
               </h3>
               <p>{dashboard?.user.team?.name}</p>
+              <a href={repo}>{repo}</a>
             </SubmissionScrim>
           </SubmissionCover>
           {readme != null && (
-            <StyledMarkdown plugins={gfm}>{readme}</StyledMarkdown>
+            <StyledMarkdown plugins={[gfm]}>{readme}</StyledMarkdown>
           )}
         </SubmissionPreviewCard>
         {message && <HelperText>{message}</HelperText>}

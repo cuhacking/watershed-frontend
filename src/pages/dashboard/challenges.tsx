@@ -157,7 +157,7 @@ const Challenges = () => {
     <SidebarLayout>
       <Helmet
         titleTemplate={`%s — cuHacking 2021 Dashboard`}
-        title='Schedule'
+        title='Challenges'
       />
       <Spacer />
       <Container>
