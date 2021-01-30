@@ -402,7 +402,7 @@ export default () => {
           }}
         />
         <HelperText>
-          A link to a video (up to one minute) demonstrating your project.
+          A link to a video (up to three minutes) demonstrating your project.
         </HelperText>
         <HelperText>
           We recommend uploading your video to the cloud (Google Drive, Dropbox,

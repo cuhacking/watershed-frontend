@@ -102,39 +102,39 @@ const RavensQuest = () => {
   const updateProgress = (progress: RavensProgress) => {
     const newStatus = {...robotParts};
 
-    if (progress.track0 >= 0 || progress.track0 === 'Completed') {
+    if (progress.track0 > 0 || progress.track0 === 'Completed') {
       newStatus.head = true;
     }
-    if (progress.track0 >= 1 || progress.track0 === 'Completed') {
+    if (progress.track0 > 1 || progress.track0 === 'Completed') {
       newStatus.face = true;
     }
-    if (progress.track0 >= 2 || progress.track0 === 'Completed') {
+    if (progress.track0 > 2 || progress.track0 === 'Completed') {
       newStatus.eye = true;
     }
     if (progress.track0 === 'Completed') {
       newStatus.hat = true;
     }
 
-    if (progress.track1 >= 0 || progress.track1 === 'Completed') {
+    if (progress.track1 > 0 || progress.track1 === 'Completed') {
       newStatus.torso = true;
     }
-    if (progress.track1 >= 1 || progress.track1 === 'Completed') {
+    if (progress.track1 > 1 || progress.track1 === 'Completed') {
       newStatus.sides = true;
     }
-    if (progress.track1 >= 2 || progress.track1 === 'Completed') {
+    if (progress.track1 > 2 || progress.track1 === 'Completed') {
       newStatus.controlPanel = true;
     }
     if (progress.track1 === 'Completed') {
       newStatus.arm = true;
     }
 
-    if (progress.track2 >= 0 || progress.track2 === 'Completed') {
+    if (progress.track2 > 0 || progress.track2 === 'Completed') {
       newStatus.base = true;
     }
-    if (progress.track0 >= 1 || progress.track2 === 'Completed') {
+    if (progress.track0 > 1 || progress.track2 === 'Completed') {
       newStatus.baseButtons = true;
     }
-    if (progress.track2 >= 2 || progress.track2 === 'Completed') {
+    if (progress.track2 > 2 || progress.track2 === 'Completed') {
       newStatus.leftTrack = true;
     }
     if (progress.track2 === 'Completed') {
@@ -148,7 +148,7 @@ const RavensQuest = () => {
     request('/api/ravensQuest/progress')
       .then((res) => res.json())
       .then((json) => {
-        if (json.track0) {
+        if (json.track0 !== undefined) {
           updateProgress(json as RavensProgress);
         }
       });
