@@ -145,11 +145,13 @@ const RavensQuest = () => {
   };
 
   useEffect(() => {
-    request('/api/ravensQuest/progress').then((res: any) => {
-      if (res) {
-        updateProgress(res as RavensProgress);
-      }
-    });
+    request('/api/ravensQuest/progress')
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.track0) {
+          updateProgress(json as RavensProgress);
+        }
+      });
   }, []);
 
   return (
