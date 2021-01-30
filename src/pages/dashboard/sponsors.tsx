@@ -66,7 +66,7 @@ const SponsorLogo = styled.img`
 
 const Sponsors = () => (
   <SidebarLayout>
-    <Helmet titleTemplate={`%s — cuHacking 2021 Dashboard`} title='Schedule' />
+    <Helmet titleTemplate={`%s — cuHacking 2021 Dashboard`} title='Sponsor Rooms' />
     <Spacer />
     <Container>
       <Header>
