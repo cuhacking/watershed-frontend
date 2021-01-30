@@ -105,7 +105,12 @@ const SignOutButton = styled.a`
   }
 `;
 
-const SmallText = styled.p``;
+const SmallText = styled.p`
+  margin: 0;
+  margin-left: 20px;
+  font-size: 0.8rem;
+  font-style: italic;
+`;
 
 const CheckIn = () => {
   const [discordConnected, setDiscordConnected] = useState(false);
@@ -181,9 +186,9 @@ const CheckIn = () => {
       <CheckInContainer>
         <h1>Check In</h1>
         <h2>Complete the steps below to get started!</h2>
-        <SmallText>
+        <p>
           Refresh the page to see updates <span aria-label=':)'>🙂</span>
-        </SmallText>
+        </p>
         <StepsContainer>
           <Step
             style={{
@@ -195,7 +200,14 @@ const CheckIn = () => {
               <Marker>
                 <label>{discordConnected ? '✓' : '1'}</label>
               </Marker>
-              <label>Connect your Discord account</label>
+              <div>
+                <label>Connect your Discord account</label>
+                {discordConnected && dashboard?.user.discordUsername && (
+                  <SmallText>
+                    Connected user: {dashboard?.user.discordUsername}
+                  </SmallText>
+                )}
+              </div>
             </StepLabel>
             <DiscordButton onClick={() => linkDiscord()}>
               <FontAwesomeIcon icon={faDiscord} />
