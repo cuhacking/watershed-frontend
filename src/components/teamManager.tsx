@@ -352,11 +352,7 @@ const TeamManager = () => {
               <TeamMember>
                 <div>
                   {dashboard!.user.firstName}
-                  {dashboard!.user.discordUsername && (
-                    <span>
-                      @{dashboard!.user.discordUsername?.split('#')[0]}
-                    </span>
-                  )}
+                  <span> (you)</span>
                 </div>
                 <MiniButton
                   onClick={async () => {
@@ -374,14 +370,13 @@ const TeamManager = () => {
                   <TeamMember key={member.uuid}>
                     <div>
                       {member.name}
-                      {/* <span>@{member.discordUsername}</span> */}
-                      {member.discordUsername}
+                      <span>@{member.discordUsername}</span>
                     </div>
                   </TeamMember>
                 ))}
               {dashboard!.user.team.invites.map((invite) => (
                 <InvitedMember key={invite.uuid}>
-                  {invite.firstName}
+                  {invite.firstName.trim()}
                   {invite.discordUsername && (
                     <span>@{invite.discordUsername}</span>
                   )}

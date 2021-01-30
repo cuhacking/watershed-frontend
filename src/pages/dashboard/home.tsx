@@ -282,8 +282,12 @@ export default () => {
         </MainSection>
         <SideSection>
           <Countdown />
-          <TeamManager />
-          <PointsManager />
+          {user.role !== 1 && (
+            <>
+              <TeamManager />
+              <PointsManager />
+            </>
+          )}
         </SideSection>
       </Content>
     </SidebarLayout>
