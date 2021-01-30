@@ -132,7 +132,7 @@ const CheckIn = () => {
     };
 
     asyncFunc();
-  }, []);
+  }, [dashboard]);
 
   const checkIn = () => {
     request('/api/user/checkIn').then((res) => {
