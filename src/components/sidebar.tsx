@@ -17,6 +17,7 @@ import {
   GraphIcon,
   HundredIcon,
   ExitIcon,
+  RavenIcon,
 } from '../assets/img/icons';
 
 const Container = styled.div`
@@ -170,6 +171,9 @@ const Sidebar = (props: any) => {
         </Button>
         <Button icon={RanksIcon} link={appendBase('/leaderboard')}>
           Leaderboard
+        </Button>
+        <Button icon={RavenIcon} link={appendBase('/quest')}>
+          Raven's quest
         </Button>
       </Section>
       {user && user.role > 1 && (

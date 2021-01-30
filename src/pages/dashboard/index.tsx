@@ -27,6 +27,7 @@ import Challenges from './challenges';
 import Sponsors from './sponsors';
 import Broadcast from './broadcast';
 import PointsGen from './points-gen';
+import RavensQuest from './ravensQuest';
 import Submission from './submission';
 import Submit from './submit';
 
@@ -146,6 +147,9 @@ export default () => {
           </PrivateRoute>
           <PrivateRoute path={`${path}/sponsors`}>
             <Sponsors />
+          </PrivateRoute>
+          <PrivateRoute path={`${path}/quest`}>
+            <RavensQuest />
           </PrivateRoute>
           <RegistrationRoute path={`${path}/registration`} exact>
             <Registration />
