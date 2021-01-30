@@ -27,6 +27,7 @@ import Challenges from './challenges';
 import Sponsors from './sponsors';
 import Broadcast from './broadcast';
 import PointsGen from './points-gen';
+import RavensQuest from './ravensQuest';
 
 const fade = keyframes`
   0% {
@@ -138,6 +139,9 @@ export default () => {
           </PrivateRoute>
           <PrivateRoute path={`${path}/sponsors`}>
             <Sponsors />
+          </PrivateRoute>
+          <PrivateRoute path={`${path}/ravens-quest`}>
+            <RavensQuest />
           </PrivateRoute>
           <RegistrationRoute path={`${path}/registration`} exact>
             <Registration />

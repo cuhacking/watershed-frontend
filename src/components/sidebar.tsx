@@ -171,6 +171,9 @@ const Sidebar = (props: any) => {
         <Button icon={RanksIcon} link={appendBase('/leaderboard')}>
           Leaderboard
         </Button>
+        {/* <Button icon={} link={appendBase('/ravens-quest')}>
+
+        </Button> */}
       </Section>
       {user && user.role > 1 && (
         <Section>
