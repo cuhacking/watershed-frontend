@@ -11,3 +11,4 @@ export {ReactComponent as SuitcaseIcon} from './suitcase.svg';
 export {ReactComponent as TilesIcon} from './tiles.svg';
 export {ReactComponent as TrophyIcon} from './trophy.svg';
 export {ReactComponent as ExitIcon} from './exit.svg';
+export {ReactComponent as RavenIcon} from './raven.svg';
