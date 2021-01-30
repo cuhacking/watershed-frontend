@@ -1,6 +1,6 @@
 import {faDiscord} from '@fortawesome/free-brands-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {Button} from '../../components';
+import {Button, LoadingSymbol} from '../../components';
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {buttonStyle} from './login';
@@ -113,6 +113,7 @@ const CheckIn = () => {
   const {dashboard, refresh} = useDashboardInfo();
   const history = useHistory();
   const {request, signOut} = useAuth();
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const asyncFunc = async () => {
@@ -131,13 +132,28 @@ const CheckIn = () => {
       setDiscordServer(true);
     };
 
+    if (dashboard?.user.checkedIn) {
+      history.push('/dashboard');
+      return;
+    } else {
+      setLoading(false);
+    }
+
     asyncFunc();
   }, [dashboard]);
 
   const checkIn = () => {
+    setLoading(true);
     request('/api/user/checkIn').then((res) => {
-      if (res) {
-        history.push('/dashboard');
+      if (res.ok) {
+        refresh()
+          .then(() => {
+            setLoading(false);
+            history.push('/dashboard');
+          })
+          .catch(() => {
+            setLoading(false);
+          });
       }
     });
   };
@@ -150,6 +166,16 @@ const CheckIn = () => {
     });
   };
 
+  if (isLoading) {
+    return (
+      <Container>
+        <CheckInContainer>
+          <LoadingSymbol color='var(--white)' />
+        </CheckInContainer>
+      </Container>
+    );
+  }
+
   return (
     <Container>
       <CheckInContainer>
@@ -158,16 +184,16 @@ const CheckIn = () => {
         <SmallText>
           Refresh the page to see updates <span aria-label=':)'>🙂</span>
         </SmallText>
-        <StepsContainer
-          style={{
-            opacity: !discordConnected ? 1 : 0.5,
-            pointerEvents: !discordConnected ? 'all' : 'none',
-          }}
-        >
-          <Step>
+        <StepsContainer>
+          <Step
+            style={{
+              opacity: !discordConnected ? 1 : 0.5,
+              pointerEvents: !discordConnected ? 'all' : 'none',
+            }}
+          >
             <StepLabel>
               <Marker>
-                <label>1</label>
+                <label>{discordConnected ? '✓' : '1'}</label>
               </Marker>
               <label>Connect your Discord account</label>
             </StepLabel>
@@ -185,7 +211,7 @@ const CheckIn = () => {
           >
             <StepLabel>
               <Marker>
-                <label>2</label>
+                <label>{discordServer ? '✓' : '2'}</label>
               </Marker>
               <label>Join our Discord Server</label>
             </StepLabel>
