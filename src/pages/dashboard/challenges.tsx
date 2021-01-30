@@ -16,6 +16,8 @@ import discord from 'assets/img/discord.svg';
 import meme from 'assets/img/meme.svg';
 import css from 'assets/img/css.svg';
 import startup from 'assets/img/startup.svg';
+import points from 'assets/img/points.svg';
+import mentor from 'assets/img/mentor.svg';
 
 const Spacer = styled.div`
   height: 10vh;
@@ -281,11 +283,12 @@ const Challenges = () => {
                 <LargeLogo src={ravens} />
               </LargeLogoContainer>
               <h3>Raven’s Quest</h3>
-              <p>
+              <p>MX Master 2S</p>
+              <label>
                 A series of puzzles and challenges to complete alongside your
                 hack, if you wish. Find out more in the raven-announcements
                 channel on <a href='https://discord.gg/feT4jYCAUJ'>Discord</a>.
-              </p>
+              </label>
             </SponsoredChallenge>
             <SponsoredChallenge>
               <LargeLogoContainer>
@@ -371,11 +374,39 @@ const Challenges = () => {
               <div>
                 <h3>[Event] Best Startup Pitch</h3>
                 <p>1 winner</p>
-                <p>Tile Slim Bluetooth Tracker</p>
+                <p>AeroPress</p>
                 <label>
                   Think you have what it takes? You have five minutes to pitch
                   the most innovate, forward-thinking, or entertaining startup
                   idea!
+                </label>
+              </div>
+            </IndividualChallenge>
+            <IndividualChallenge>
+              <SmallLogoContainer>
+                <SmallLogo src={mentor} />
+              </SmallLogoContainer>
+              <div>
+                <h3>Most Helpful Mentor</h3>
+                <p>1 winner</p>
+                <p>Tile Slim Bluetooth Tracker</p>
+                <label>
+                  A mentor that has shown outstanding helpful advice to various
+                  hackers throughout the event.
+                </label>
+              </div>
+            </IndividualChallenge>
+            <IndividualChallenge>
+              <SmallLogoContainer>
+                <SmallLogo src={points} />
+              </SmallLogoContainer>
+              <div>
+                <h3>Most points</h3>
+                <p>3 winners</p>
+                <p>TBA</p>
+                <label>
+                  Points awarded through participation in workshops and
+                  activities. Gather as many points as you can!
                 </label>
               </div>
             </IndividualChallenge>
