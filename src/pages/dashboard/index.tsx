@@ -27,6 +27,8 @@ import Challenges from './challenges';
 import Sponsors from './sponsors';
 import Broadcast from './broadcast';
 import PointsGen from './points-gen';
+import Submission from './submission';
+import Submit from './submit';
 
 const fade = keyframes`
   0% {
@@ -124,9 +126,15 @@ export default () => {
           <PrivateRoute path={`${path}/checkin`}>
             <CheckIn />
           </PrivateRoute>
-          {/* <PrivateRoute path={`${path}/submissions`} exact>
+          <PrivateRoute path={`${path}/submissions`} exact>
             <Submissions />
-          </PrivateRoute> */}
+          </PrivateRoute>
+          <PrivateRoute path={`${path}/submissions/:id`} exact>
+            <Submission />
+          </PrivateRoute>
+          <PrivateRoute path={`${path}/submit`} exact>
+            <Submit />
+          </PrivateRoute>
           <PrivateRoute path={`${path}/schedule/:id`} exact>
             <Event />
           </PrivateRoute>
