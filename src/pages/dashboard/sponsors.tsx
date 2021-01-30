@@ -77,16 +77,16 @@ const Sponsors = () => (
         <p>Click on a logo to join</p>
       </SponsorsHeader>
       <SponsorsContainer>
-        <SponsorCard href='https://meet.google.com/hdm-uene-saz' target='_blank'>
+        <SponsorCard href='https://meet.google.com/sev-sckc-hoq' target='_blank'>
           <SponsorLogo src={ciena} />
         </SponsorCard>
-        <SponsorCard href='https://meet.google.com/wvf-dyiv-jye' target='_blank'>
+        <SponsorCard href='https://meet.google.com/dfq-rzpj-owc' target='_blank'>
           <SponsorLogo src={ross} />
         </SponsorCard>
-        <SponsorCard href='https://meet.google.com/dac-owtz-eqx' target='_blank'>
+        <SponsorCard href='https://meet.google.com/rqt-kmos-ggf' target='_blank'>
           <SponsorLogo src={fellow} />
         </SponsorCard>
-        <SponsorCard href='https://meet.google.com/zba-ygev-jah' target='_blank'>
+        <SponsorCard href='https://meet.google.com/asc-tgtb-epu' target='_blank'>
           <SponsorLogo src={fdm} />
         </SponsorCard>
       </SponsorsContainer>
