@@ -177,10 +177,7 @@ const useProvideDashboardInfo = (): DashboardInfo => {
                           uuid: member.uuid,
                           name: member.firstName,
                           discordUsername:
-                            member.discordUsername &&
-                            member.discordUsername != null
-                              ? member.discordUsername.split('#')[0]
-                              : '',
+                            member.discordUsername?.split('#')?.[0] ?? '',
                         } as User)
                     ),
                   submission: Boolean(dashboardResult.user.team.submission),
