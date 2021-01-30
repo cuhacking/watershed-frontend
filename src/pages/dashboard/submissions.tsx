@@ -22,21 +22,46 @@ const Header = styled.div`
 `;
 
 const ProjectsDisplay = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -0.5rem;
-  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-row-gap: 20px;
+  grid-column-gap: 20px;
+
+  padding: 20px 0;
+
+  @media only screen and (min-width: 900px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media only screen and (min-width: 1200px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @media only screen and (min-width: 1500px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  @media only screen and (min-width: 1800px) {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  @media only screen and (min-width: 2100px) {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
 `;
 
 const SubmitButton = styled(Link)`
   width: 100%;
-  text-align: center;
-  padding: 1rem;
-  border-radius: 0.5rem;
+
+  border-radius: 8px;
   border: none;
+  padding: 16px;
+  margin-top: 32px;
+
   background: var(--action-gradient);
-  margin-top: 2rem;
   color: var(--white);
+
+  text-align: center;
   font-size: 1.5rem;
   font-family: var(--primary-font);
   transition: 100ms ease-out;
@@ -48,24 +73,23 @@ const SubmitButton = styled(Link)`
   }
 `;
 
-const StyledLink = styled(Link)`
-  width: calc(25% - 1rem);
-  height: 148px;
-`;
-
-const ProjectCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  background-color: lightblue;
-  color: var(--white);
-  margin: 0.5rem;
-  justify-content: flex-end;
-  transition: box-shadow 200ms;
+const ProjectCard = styled(Link)`
   position: relative;
   overflow: hidden;
-  height: 100%;
+
+  width: 100%;
+  height: 148px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  border-radius: 8px;
+  padding: 20px;
+
+  background-color: lightblue;
+  color: var(--white) !important;
+  transition: box-shadow 200ms;
 
   &:hover {
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
@@ -115,7 +139,7 @@ const Submissions = () => {
       <Container>
         <Header>
           <h2>Submissions</h2>
-          <label>Check out what other hackers have built</label>
+          <label>Check out what other hackers have built.</label>
         </Header>
         <SubmitButton
           style={{
@@ -127,20 +151,17 @@ const Submissions = () => {
         </SubmitButton>
         <ProjectsDisplay>
           {projects.map((project, index) => (
-            <StyledLink
+            <ProjectCard
               key={index}
               to={`/dashboard/submissions/${encodeURIComponent(project.repo)}`}
+              style={{
+                background: `url(${project.cover})`,
+              }}
             >
-              <ProjectCard
-                style={{
-                  background: `url(${project.cover})`,
-                }}
-              >
-                <ProjectOverlay />
-                <h3>{project.name}</h3>
-                <p>{project.team}</p>
-              </ProjectCard>
-            </StyledLink>
+              <ProjectOverlay />
+              <h3>{project.name}</h3>
+              <p>{project.team}</p>
+            </ProjectCard>
           ))}
         </ProjectsDisplay>
         <Spacer />

@@ -97,6 +97,7 @@ const Subtitle = styled.h4`
 
 const TeamList = styled.div`
   margin: 20px;
+  margin-bottom: 0;
   width: 100%;
 `;
 
@@ -394,14 +395,20 @@ const TeamManager = () => {
                 </InvitedMember>
               ))}
             </TeamList>
-            {dashboard!.user.team.members.length < 4 && (
-              <Button
-                kind='button'
-                color='var(--wineLight)'
-                action={() => setView('invite')}
-              >
-                Invite
-              </Button>
+            {1 +
+              dashboard!.user.team.members.length +
+              dashboard!.user.team.invites.length <
+              4 && (
+              <>
+                <div style={{height: 10}} />
+                <Button
+                  kind='button'
+                  color='var(--wineLight)'
+                  action={() => setView('invite')}
+                >
+                  Invite
+                </Button>
+              </>
             )}
           </Card>
         </Container>

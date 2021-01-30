@@ -112,9 +112,6 @@ const useProvideDashboardInfo = (): DashboardInfo => {
       const eventsResult = await eventsResponse.json();
       const announcementsResult = await announcementsResponse.json();
 
-      console.log(dashboardResult);
-      console.log(announcementsResult);
-
       let memberInvites: Array<Invite> = [];
       let myInvites: Array<MyInvite> = [];
 
@@ -179,7 +176,8 @@ const useProvideDashboardInfo = (): DashboardInfo => {
                         ({
                           uuid: member.uuid,
                           name: member.firstName,
-                          discordUsername: member.discordUsername.split('#')[0],
+                          discordUsername:
+                            member.discordUsername?.split('#')?.[0] ?? '',
                         } as User)
                     ),
                   submission: Boolean(dashboardResult.user.team.submission),
