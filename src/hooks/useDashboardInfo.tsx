@@ -170,15 +170,18 @@ const useProvideDashboardInfo = (): DashboardInfo => {
               ? {
                   uuid: dashboardResult.user.team.uuid,
                   name: dashboardResult.user.team.name,
-                  members: dashboardResult.user.team.members.map(
-                    (member: any) =>
-                      ({
-                        uuid: member.uuid,
-                        name: '',
-                        discordUsername:
-                          member.discordUsername ?? '<noDiscord>#1234',
-                      } as User)
-                  ),
+                  members: dashboardResult.teamMembers
+                    .filter(
+                      (member: any) => member.uuid !== dashboardResult.user.uuid
+                    )
+                    .map(
+                      (member: any) =>
+                        ({
+                          uuid: member.uuid,
+                          name: member.firstName,
+                          discordUsername: member.discordUsername.split('#')[0],
+                        } as User)
+                    ),
                   submission: Boolean(dashboardResult.user.team.submission),
                   invites: memberInvites,
                 }
