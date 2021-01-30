@@ -140,7 +140,7 @@ export default () => {
           <PrivateRoute path={`${path}/sponsors`}>
             <Sponsors />
           </PrivateRoute>
-          <PrivateRoute path={`${path}/ravens-quest`}>
+          <PrivateRoute path={`${path}/quest`}>
             <RavensQuest />
           </PrivateRoute>
           <RegistrationRoute path={`${path}/registration`} exact>

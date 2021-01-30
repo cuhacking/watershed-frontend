@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import {SidebarLayout} from '../../layouts';
 import {Helmet} from 'react-helmet';
+import ravensBackground from '../../assets/img/ravens-background.png';
+import {hi} from 'date-fns/locale';
 
 const Spacer = styled.div`
   height: 5vh;
@@ -12,13 +14,7 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  padding: 0 4rem;
-`;
-
-const Header = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 0 2rem;
 `;
 
 const RavensQuest = () => {
@@ -26,15 +22,20 @@ const RavensQuest = () => {
     <SidebarLayout>
       <Helmet
         titleTemplate={`%s — cuHacking 2021 Dashboard`}
-        title='Schedule'
+        title="Raven's quest"
       />
       <Spacer />
       <Container>
-        <Header>
-          <h1>Raven's Quest</h1>
-          <label>The cuHacking challenge begins here</label>
-        </Header>
+        <img
+          style={{
+            height: '100%',
+            width: '100%',
+            boxShadow: 'var(--shadow)'
+          }}
+          src={ravensBackground}
+        />
       </Container>
+      <Spacer />
     </SidebarLayout>
   );
 };
