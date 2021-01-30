@@ -158,16 +158,16 @@ const CheckIn = () => {
         <SmallText>
           Refresh the page to see updates <span aria-label=':)'>🙂</span>
         </SmallText>
-        <StepsContainer
-          style={{
-            opacity: !discordConnected ? 1 : 0.5,
-            pointerEvents: !discordConnected ? 'all' : 'none',
-          }}
-        >
-          <Step>
+        <StepsContainer>
+          <Step
+            style={{
+              opacity: !discordConnected ? 1 : 0.5,
+              pointerEvents: !discordConnected ? 'all' : 'none',
+            }}
+          >
             <StepLabel>
               <Marker>
-                <label>1</label>
+                <label>{discordConnected ? '✓' : '1'}</label>
               </Marker>
               <label>Connect your Discord account</label>
             </StepLabel>
@@ -185,7 +185,7 @@ const CheckIn = () => {
           >
             <StepLabel>
               <Marker>
-                <label>2</label>
+                <label>{discordServer ? '✓' : '2'}</label>
               </Marker>
               <label>Join our Discord Server</label>
             </StepLabel>
