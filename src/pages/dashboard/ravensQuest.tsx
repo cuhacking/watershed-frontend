@@ -102,37 +102,43 @@ const RavensQuest = () => {
   const updateProgress = (progress: RavensProgress) => {
     const newStatus = {...robotParts};
 
-    switch (progress.track0) {
-      case 0:
-        newStatus.head = true;
-      case 1:
-        newStatus.face = true;
-      case 2:
-        newStatus.eye = true;
-      case 'Completed':
-        newStatus.hat = true;
+    if (progress.track0 >= 0 || progress.track0 === 'Completed') {
+      newStatus.head = true;
+    }
+    if (progress.track0 >= 1 || progress.track0 === 'Completed') {
+      newStatus.face = true;
+    }
+    if (progress.track0 >= 2 || progress.track0 === 'Completed') {
+      newStatus.eye = true;
+    }
+    if (progress.track0 === 'Completed') {
+      newStatus.hat = true;
     }
 
-    switch (progress.track1) {
-      case 0:
-        newStatus.torso = true;
-      case 1:
-        newStatus.sides = true;
-      case 2:
-        newStatus.controlPanel = true;
-      case 'Completed':
-        newStatus.arm = true;
+    if (progress.track1 >= 0 || progress.track1 === 'Completed') {
+      newStatus.torso = true;
+    }
+    if (progress.track1 >= 1 || progress.track1 === 'Completed') {
+      newStatus.sides = true;
+    }
+    if (progress.track1 >= 2 || progress.track1 === 'Completed') {
+      newStatus.controlPanel = true;
+    }
+    if (progress.track1 === 'Completed') {
+      newStatus.arm = true;
     }
 
-    switch (progress.track2) {
-      case 0:
-        newStatus.base = true;
-      case 1:
-        newStatus.baseButtons = true;
-      case 2:
-        newStatus.leftTrack = true;
-      case 'Completed':
-        newStatus.rightTrack = true;
+    if (progress.track2 >= 0 || progress.track2 === 'Completed') {
+      newStatus.base = true;
+    }
+    if (progress.track0 >= 1 || progress.track2 === 'Completed') {
+      newStatus.baseButtons = true;
+    }
+    if (progress.track2 >= 2 || progress.track2 === 'Completed') {
+      newStatus.leftTrack = true;
+    }
+    if (progress.track2 === 'Completed') {
+      newStatus.rightTrack = true;
     }
 
     setRobotParts(newStatus);
