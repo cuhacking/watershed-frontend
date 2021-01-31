@@ -48,6 +48,7 @@ export interface Team {
 export interface DashboardObject {
   startTime: string;
   endTime: string;
+  graceTime: number;
   user: {
     uuid: string;
     firstName: string;
@@ -111,6 +112,7 @@ const useProvideDashboardInfo = (): DashboardInfo => {
       const dashboardResult = await dashboardResponse.json();
       const eventsResult = await eventsResponse.json();
       const announcementsResult = await announcementsResponse.json();
+
 
       let memberInvites: Array<Invite> = [];
       let myInvites: Array<MyInvite> = [];
@@ -187,6 +189,7 @@ const useProvideDashboardInfo = (): DashboardInfo => {
         },
         startTime: dashboardResult.startTime,
         endTime: dashboardResult.endTime,
+        graceTime: dashboardResult.graceTime ?? 30,
         upcomingEvents: eventsResult.map(
           (rawEvent: any) =>
             ({

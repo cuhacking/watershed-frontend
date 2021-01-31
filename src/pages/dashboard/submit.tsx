@@ -204,25 +204,6 @@ const Dropzone = (props: {file?: File; onFileChange: (file: File) => void}) => {
   );
 };
 
-const submitMessage = (
-  name: string,
-  repo: string,
-  video: string,
-  readme: string | null
-) => {
-  if (name === '') {
-    return 'You must provide a name';
-  } else if (repo === '') {
-    return 'You must provide a git repository';
-  } else if (video === '') {
-    return 'You must provide a link to a video demo';
-  } else if (readme == null || readme === '') {
-    return 'Could not find a valid README.md file in repo';
-  }
-
-  return null;
-};
-
 const CheckContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -308,37 +289,31 @@ export default () => {
   };
 
   const handleSubmit = () => {
-    const message = submitMessage(name, repo, video, readme);
+    setMessage(null);
 
-    if (!message) {
-      setMessage(null);
+    const payload = new FormData();
+    payload.append(
+      'body',
+      JSON.stringify({name, repoUrl: repo, videoLink: video, challenges})
+    );
 
-      const payload = new FormData();
-      payload.append(
-        'body',
-        JSON.stringify({name, repoUrl: repo, videoLink: video, challenges})
-      );
-
-      if (image) {
-        payload.append('cover', image, image.name);
-      }
-      request('/api/submission/', {
-        method: 'POST',
-        body: payload,
-      })
-        .then((response) => {
-          if (response.ok) {
-            setSubmitted(true);
-          } else {
-            setMessage('An error occurred');
-          }
-        })
-        .catch(() => {
-          setMessage('An error occurred');
-        });
-    } else {
-      setMessage(message);
+    if (image) {
+      payload.append('cover', image, image.name);
     }
+    request('/api/submission/', {
+      method: 'POST',
+      body: payload,
+    })
+      .then((response) => {
+        if (response.ok) {
+          setSubmitted(true);
+        } else {
+          setMessage('An error occurred');
+        }
+      })
+      .catch(() => {
+        setMessage('An error occurred');
+      });
   };
 
   useEffect(() => {
@@ -346,11 +321,7 @@ export default () => {
     if (dashboard) {
       const diff = Date.now() - Date.parse(dashboard.endTime);
 
-      // 15min grace period
-      if (
-        diff > 900000 ||
-        (dashboard.user.team && dashboard.user.team.submission)
-      ) {
+      if (diff > dashboard.graceTime * 60000) {
         setAbleToSubmit(false);
       }
       setLoading(false);
