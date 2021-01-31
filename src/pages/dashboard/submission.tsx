@@ -109,7 +109,8 @@ const SubmissionCover = styled.div<{url?: string}>`
   width: 100%;
   height: 172px;
   background: ${({url}) =>
-    url ? `var(--white) url(${[url]}) no-repeat center center` : 'var(--wine)'};
+    url ? `var(--wine) url(${[url]}) no-repeat center center` : 'var(--wine)'};
+  background-size: cover;
 `;
 
 const Links = styled.div`

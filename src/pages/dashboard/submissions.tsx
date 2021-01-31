@@ -91,7 +91,15 @@ const ProjectCard = styled(Link)<{cover: string}>`
   padding: 20px;
 
   background-color: var(--wine);
-  background: url(${(props) => props.cover});
+  background-size: cover;
+
+  ${({cover}) =>
+    cover
+      ? `
+  background: url(${cover})
+  `
+      : ``}
+
   color: var(--white) !important;
   transition: box-shadow 200ms;
 
