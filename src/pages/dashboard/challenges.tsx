@@ -32,6 +32,7 @@ const Container = styled.div`
   padding: 0 4rem;
 
   max-width: var(--max-width);
+  animation: var(--page-animation);
 `;
 
 const Header = styled.div`
@@ -187,10 +188,7 @@ const Challenges = () => {
                 Build a fan engagement app that large-scale events would use to
                 increase the engagement of the viewership by creating trivia
                 games to use throughout their events. See more details{' '}
-                <a href={rossPDF}>
-                  on this pdf
-                </a>
-                !
+                <a href={rossPDF}>on this pdf</a>!
               </label>
             </SponsoredChallenge>
             <SponsoredChallenge>

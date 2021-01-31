@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import styled, {keyframes} from 'styled-components';
 import {useParams, Redirect, Link, useHistory} from 'react-router-dom';
 import {SidebarLayout} from '../../layouts';
@@ -7,6 +7,7 @@ import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import {useAuth, useDashboardInfo} from '../../hooks';
 import {Helmet} from 'react-helmet';
+import {LoadingSymbol} from '../../components';
 
 const Spacer = styled.div`
   height: 10vh;
@@ -145,6 +146,13 @@ const SubmitButton = styled.button`
   color: var(--white);
   font-family: var(--secondary-font);
   font-size: 16px;
+
+  transition: 100ms ease-out;
+  box-shadow: var(--card-shadow);
+
+  &:hover {
+    box-shadow: var(--card-shadow-hover);
+  }
 `;
 
 // From Stackoverflow
@@ -257,16 +265,19 @@ export default () => {
 
   const history = useHistory();
   const {dashboard} = useDashboardInfo();
-  const [name, setName] = React.useState<string>('');
-  const [repo, setRepo] = React.useState<string>('');
-  const [video, setVideo] = React.useState<string>('');
-  const [image, setImage] = React.useState<File | undefined>();
-  const [imageUrl, setImageUrl] = React.useState<string | undefined>();
-  const [challenges, setChallenges] = React.useState<string[]>([]);
+  const [name, setName] = useState<string>('');
+  const [repo, setRepo] = useState<string>('');
+  const [video, setVideo] = useState<string>('');
+  const [image, setImage] = useState<File | undefined>();
+  const [imageUrl, setImageUrl] = useState<string | undefined>();
+  const [challenges, setChallenges] = useState<string[]>([]);
 
-  const [readme, setReadme] = React.useState<string | null>(null);
-  const [message, setMessage] = React.useState<string | null>(null);
-  const [submitted, setSubmitted] = React.useState<boolean>(false);
+  const [readme, setReadme] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState<boolean>(false);
+
+  const [isLoading, setLoading] = useState(true);
+  const [ableToSubmit, setAbleToSubmit] = useState(true);
 
   const handleRepoChange = (repo: string) => {
     setRepo(repo);
@@ -295,16 +306,6 @@ export default () => {
       }
     });
   };
-
-  useEffect(() => {
-    if (image != null) {
-      const reader = new FileReader();
-      reader.onloadend = (e) => {
-        setImageUrl(reader.result as string);
-      };
-      reader.readAsDataURL(image);
-    }
-  }, [image]);
 
   const handleSubmit = () => {
     const message = submitMessage(name, repo, video, readme);
@@ -340,12 +341,62 @@ export default () => {
     }
   };
 
+  useEffect(() => {
+    // hopefully nobody changes their local time
+    if (dashboard) {
+      const diff = Date.now() - Date.parse(dashboard.endTime);
+
+      // 15min grace period
+      if (diff > 900000) {
+        setAbleToSubmit(false);
+      }
+      setLoading(false);
+    }
+  }, [dashboard]);
+
+  useEffect(() => {
+    if (image != null) {
+      const reader = new FileReader();
+      reader.onloadend = (e) => {
+        setImageUrl(reader.result as string);
+      };
+      reader.readAsDataURL(image);
+    }
+  }, [image]);
+
+  if (isLoading) {
+    return (
+      <SidebarLayout>
+        <LoadingSymbol color='var(--wine)' />
+      </SidebarLayout>
+    );
+  }
+
   if (submitted) {
     return (
       <SidebarLayout>
         <LargeSpacer />
         <Title>Your project has been submitted!</Title>
         <Subtitle>You can sit back and relax now.</Subtitle>
+        <SubmitButton
+          onClick={() => {
+            history.push('/dashboard/submissions');
+          }}
+        >
+          See other submissions
+        </SubmitButton>
+      </SidebarLayout>
+    );
+  }
+
+  if (!ableToSubmit) {
+    return (
+      <SidebarLayout>
+        <LargeSpacer />
+        <Title>Submissions are now closed.</Title>
+        <Subtitle>
+          Check out other submissions on our submissions page!
+        </Subtitle>
         <SubmitButton
           onClick={() => {
             history.push('/dashboard/submissions');

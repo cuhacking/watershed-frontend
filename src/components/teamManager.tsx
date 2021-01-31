@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import styled, {css} from 'styled-components';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -185,6 +185,19 @@ const TeamManager = () => {
   const [teamName, setTeamName] = useState('');
   const [inputError, setInputError] = useState<string>();
   const [username, setUsername] = useState('');
+  const [ableToSubmit, setAbleToSubmit] = useState(true);
+
+  useEffect(() => {
+    // hopefully nobody changes their local time
+    if (dashboard) {
+      const diff = Date.now() - Date.parse(dashboard.endTime);
+
+      // 15min grace period
+      if (diff > 900000) {
+        setAbleToSubmit(false);
+      }
+    }
+  }, [dashboard]);
 
   const handleCreateTeam = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -334,18 +347,20 @@ const TeamManager = () => {
 
       return (
         <Container>
-          {/* <Link to='/dashboard/submit'>
-            <ActionBox>
-              All done with hacking?
-              <LargeActionText>
-                Submit
-                <br />
-                your
-                <br />
-                hack!
-              </LargeActionText>
-            </ActionBox>
-          </Link> */}
+          {ableToSubmit && (
+            <Link to='/dashboard/submit'>
+              <ActionBox>
+                All done with hacking?
+                <LargeActionText>
+                  Submit
+                  <br />
+                  your
+                  <br />
+                  hack!
+                </LargeActionText>
+              </ActionBox>
+            </Link>
+          )}
           <Card>
             <EyebrowText>Team</EyebrowText>
             <Subtitle>{dashboard!.user.team.name}</Subtitle>
