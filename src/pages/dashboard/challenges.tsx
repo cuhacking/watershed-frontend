@@ -44,7 +44,7 @@ const ChallengeSection = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 4rem;
+  margin-top: 64px;
 
   & * {
     text-align: center;
@@ -154,6 +154,11 @@ const SmallLogoContainer = styled.div`
 
 const SmallLogo = styled.img`
   width: 100%;
+`;
+
+const Disclaimer = styled.p`
+  color: var(--wine);
+  margin: 48px 0 16px;
 `;
 
 const Challenges = () => {
@@ -413,6 +418,11 @@ const Challenges = () => {
             </IndividualChallenge>
           </IndividualChallenges>
         </IndividualSection>
+        <Disclaimer>
+          <strong>DISCLAIMER:</strong> If it turns out we cannot ship to your
+          location due to logistical complications, your prize will be converted
+          to its equivalent cash value in CAD (Canadian Dollar).
+        </Disclaimer>
         {/* <label
           style={{
             fontSize: '8px',
