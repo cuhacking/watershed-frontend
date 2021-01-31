@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {SidebarLayout} from '../../layouts';
 import {Helmet} from 'react-helmet';
 import {Link} from 'react-router-dom';
+import {useDashboardInfo} from '../../hooks';
 
 const Container = styled.div`
   display: flex;
@@ -10,6 +11,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   padding: 0 6rem;
+  animation: var(--page-animation);
 `;
 
 const Spacer = styled.div`
@@ -120,7 +122,10 @@ interface ProjectPreview {
 }
 
 const Submissions = () => {
+  const {dashboard} = useDashboardInfo();
+  const [ableToSubmit, setAbleToSubmit] = useState(false);
   const [projects, setProjects] = useState<ProjectPreview[]>([]);
+
   useEffect(() => {
     fetch('/api/submission')
       .then((res) => res.json())
@@ -128,6 +133,18 @@ const Submissions = () => {
         setProjects(json as ProjectPreview[]);
       });
   }, []);
+
+  useEffect(() => {
+    // hopefully nobody changes their local time
+    if (dashboard) {
+      const diff = Date.now() - Date.parse(dashboard.endTime);
+
+      // 15min grace period
+      if (diff < 900000) {
+        setAbleToSubmit(true);
+      }
+    }
+  }, [dashboard]);
 
   return (
     <SidebarLayout>
@@ -141,14 +158,16 @@ const Submissions = () => {
           <h2>Submissions</h2>
           <label>Check out what other hackers have built.</label>
         </Header>
-        <SubmitButton
-          style={{
-            color: 'var(--white)',
-          }}
-          to='/dashboard/submit'
-        >
-          Submit your hack
-        </SubmitButton>
+        {ableToSubmit && (
+          <SubmitButton
+            style={{
+              color: 'var(--white)',
+            }}
+            to='/dashboard/submit'
+          >
+            Submit your hack
+          </SubmitButton>
+        )}
         <ProjectsDisplay>
           {projects.map((project, index) => (
             <ProjectCard
