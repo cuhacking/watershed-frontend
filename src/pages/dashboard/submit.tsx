@@ -347,7 +347,10 @@ export default () => {
       const diff = Date.now() - Date.parse(dashboard.endTime);
 
       // 15min grace period
-      if (diff > 900000) {
+      if (
+        diff > 900000 ||
+        (dashboard.user.team && dashboard.user.team.submission)
+      ) {
         setAbleToSubmit(false);
       }
       setLoading(false);
@@ -368,6 +371,28 @@ export default () => {
     return (
       <SidebarLayout>
         <LoadingSymbol color='var(--wine)' />
+      </SidebarLayout>
+    );
+  }
+
+  if (dashboard!.user.team == null) {
+    return (
+      <SidebarLayout>
+        <LargeSpacer />
+        <Title>Please join a team to submit a project.</Title>
+        <Subtitle>
+          Check out other submissions on our submissions page!
+        </Subtitle>
+        <SubSubtitle>
+          If you're rolling solo, join a team with just you in it.
+        </SubSubtitle>
+        <SubmitButton
+          onClick={() => {
+            history.push('/dashboard/submissions');
+          }}
+        >
+          See other submissions
+        </SubmitButton>
       </SidebarLayout>
     );
   }
