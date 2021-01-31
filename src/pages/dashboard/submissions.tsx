@@ -145,11 +145,7 @@ const Submissions = () => {
       const diff = Date.now() - Date.parse(dashboard.endTime);
 
       // 15min grace period
-      if (
-        diff < 900000 &&
-        dashboard.user.team &&
-        !dashboard.user.team.submission
-      ) {
+      if (diff < 900000) {
         setAbleToSubmit(true);
       }
     }
@@ -174,7 +170,9 @@ const Submissions = () => {
             }}
             to='/dashboard/submit'
           >
-            Submit your hack
+            {dashboard!.user.team && dashboard!.user.team.submission
+              ? 'Re-submit'
+              : 'Submit your hack!'}
           </SubmitButton>
         )}
         <ProjectsDisplay>

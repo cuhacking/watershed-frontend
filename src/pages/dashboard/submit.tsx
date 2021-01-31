@@ -347,10 +347,7 @@ export default () => {
       const diff = Date.now() - Date.parse(dashboard.endTime);
 
       // 15min grace period
-      if (
-        diff > 900000 ||
-        (dashboard.user.team && dashboard.user.team.submission)
-      ) {
+      if (diff > 900000) {
         setAbleToSubmit(false);
       }
       setLoading(false);
