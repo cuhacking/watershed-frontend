@@ -18,6 +18,7 @@ const Container = styled.div`
   height: 100%;
   padding: 0 4rem;
   max-width: var(--max-width);
+  animation: var(--page-animation);
 `;
 
 const Header = styled.div`

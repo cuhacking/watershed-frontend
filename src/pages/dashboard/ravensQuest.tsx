@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import styled, {keyframes} from 'styled-components';
+import styled from 'styled-components';
 import {SidebarLayout} from '../../layouts';
 import {Helmet} from 'react-helmet';
 import ravensBackground from '../../assets/img/ravens-background.png';
@@ -17,16 +17,6 @@ import rightTrack from '../../assets/img/robot/right-track.png';
 import sides from '../../assets/img/robot/sides.png';
 import torso from '../../assets/img/robot/torso.png';
 import {useAuth} from '../../hooks/useAuth';
-import {stat} from 'fs';
-
-const fade = keyframes`
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-`;
 
 const Spacer = styled.div`
   height: 5vh;
@@ -39,6 +29,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   padding: 0 32px;
+  animation: var(--page-animation);
 `;
 
 const Hidden = styled.div<{revealed: boolean}>`
