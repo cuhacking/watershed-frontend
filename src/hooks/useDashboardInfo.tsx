@@ -113,7 +113,6 @@ const useProvideDashboardInfo = (): DashboardInfo => {
       const eventsResult = await eventsResponse.json();
       const announcementsResult = await announcementsResponse.json();
 
-      console.log(dashboardResult);
 
       let memberInvites: Array<Invite> = [];
       let myInvites: Array<MyInvite> = [];
