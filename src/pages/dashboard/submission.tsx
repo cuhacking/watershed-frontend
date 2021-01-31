@@ -1,12 +1,12 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import styled, {keyframes} from 'styled-components';
-import {useParams, Redirect, Link, useHistory} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import {SidebarLayout} from '../../layouts';
-import {useDropzone, FileRejection, DropEvent} from 'react-dropzone';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
-import {useAuth, useDashboardInfo} from '../../hooks';
 import {EventLoading} from '../../shared/events';
+import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 interface Project {
   submission: Submission;
@@ -19,6 +19,7 @@ interface Submission {
   projectName: string;
   repo: string;
   readmeText: string;
+  demoVideo: string;
 }
 
 const Spacer = styled.div`
@@ -95,16 +96,12 @@ const SubmissionScrim = styled.div`
   color: var(--white);
   padding: 16px;
 
-  & h3 {
+  & h2 {
     margin: 0;
   }
 
   & p {
     margin: 0;
-  }
-
-  & a {
-    margin-top: 4px;
   }
 `;
 
@@ -113,6 +110,22 @@ const SubmissionCover = styled.div<{url?: string}>`
   height: 172px;
   background: ${({url}) =>
     url ? `var(--white) url(${[url]}) no-repeat center center` : 'var(--wine)'};
+`;
+
+const Links = styled.div`
+  margin-top: 16px;
+
+  & a {
+    margin-top: 4px;
+  }
+
+  & a:hover {
+    text-decoration: underline;
+  }
+
+  a svg {
+    margin-left: 0.25em;
+  }
 `;
 
 export default () => {
@@ -135,6 +148,7 @@ export default () => {
       </SidebarLayout>
     );
   }
+
   return (
     <SidebarLayout>
       <Spacer />
@@ -142,9 +156,28 @@ export default () => {
         <SubmissionPreviewCard>
           <SubmissionCover url={project.cover}>
             <SubmissionScrim>
-              <h3>{project.submission.projectName}</h3>
+              <h2>{project.submission.projectName}</h2>
               <p>{project.team?.name}</p>
-              <a href={project.submission.repo}>{project.submission.repo}</a>
+
+              <Links>
+                <a
+                  href={project.submission.repo}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  Repository
+                  <FontAwesomeIcon icon={faExternalLinkAlt} size='1x' />
+                </a>
+                {'   •   '}
+                <a
+                  href={project.submission.demoVideo}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  Demo Video
+                  <FontAwesomeIcon icon={faExternalLinkAlt} size='1x' />
+                </a>
+              </Links>
             </SubmissionScrim>
           </SubmissionCover>
           {project.submission.readmeText != null && (

@@ -4,6 +4,7 @@ import {SidebarLayout} from '../../layouts';
 import {Helmet} from 'react-helmet';
 import {Link} from 'react-router-dom';
 import {useDashboardInfo} from '../../hooks';
+import {LoadingSymbol} from '../../components';
 
 const Container = styled.div`
   display: flex;
@@ -75,7 +76,7 @@ const SubmitButton = styled(Link)`
   }
 `;
 
-const ProjectCard = styled(Link)`
+const ProjectCard = styled(Link)<{cover: string}>`
   position: relative;
   overflow: hidden;
 
@@ -89,7 +90,8 @@ const ProjectCard = styled(Link)`
   border-radius: 8px;
   padding: 20px;
 
-  background-color: lightblue;
+  background-color: var(--wine);
+  background: url(${(props) => props.cover});
   color: var(--white) !important;
   transition: box-shadow 200ms;
 
@@ -125,13 +127,16 @@ const Submissions = () => {
   const {dashboard} = useDashboardInfo();
   const [ableToSubmit, setAbleToSubmit] = useState(false);
   const [projects, setProjects] = useState<ProjectPreview[]>([]);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('/api/submission')
       .then((res) => res.json())
       .then((json) => {
         setProjects(json as ProjectPreview[]);
-      });
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
   }, []);
 
   useEffect(() => {
@@ -140,7 +145,11 @@ const Submissions = () => {
       const diff = Date.now() - Date.parse(dashboard.endTime);
 
       // 15min grace period
-      if (diff < 900000) {
+      if (
+        diff < 900000 &&
+        dashboard.user.team &&
+        !dashboard.user.team.submission
+      ) {
         setAbleToSubmit(true);
       }
     }
@@ -169,19 +178,23 @@ const Submissions = () => {
           </SubmitButton>
         )}
         <ProjectsDisplay>
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={index}
-              to={`/dashboard/submissions/${encodeURIComponent(project.repo)}`}
-              style={{
-                background: `url(${project.cover})`,
-              }}
-            >
-              <ProjectOverlay />
-              <h3>{project.name}</h3>
-              <p>{project.team}</p>
-            </ProjectCard>
-          ))}
+          {isLoading ? (
+            <LoadingSymbol color='var(--wine)' />
+          ) : (
+            projects.map((project, index) => (
+              <ProjectCard
+                key={index}
+                to={`/dashboard/submissions/${encodeURIComponent(
+                  project.repo
+                )}`}
+                cover={project.cover}
+              >
+                <ProjectOverlay />
+                <h3>{project.name}</h3>
+                <p>{project.team}</p>
+              </ProjectCard>
+            ))
+          )}
         </ProjectsDisplay>
         <Spacer />
       </Container>
