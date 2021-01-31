@@ -192,9 +192,8 @@ const TeamManager = () => {
     if (dashboard) {
       const diff = Date.now() - Date.parse(dashboard.endTime);
 
-      // 15min grace period
       if (
-        diff > 900000 ||
+        diff > dashboard.graceTime * 60000 ||
         (dashboard.user.team && dashboard.user.team.submission)
       ) {
         setAbleToSubmit(false);

@@ -321,8 +321,7 @@ export default () => {
     if (dashboard) {
       const diff = Date.now() - Date.parse(dashboard.endTime);
 
-      // 15min grace period
-      if (diff > 900000) {
+      if (diff > dashboard.graceTime * 60000) {
         setAbleToSubmit(false);
       }
       setLoading(false);
