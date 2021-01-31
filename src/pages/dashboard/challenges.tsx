@@ -18,6 +18,7 @@ import css from 'assets/img/css.svg';
 import startup from 'assets/img/startup.svg';
 import points from 'assets/img/points.svg';
 import mentor from 'assets/img/mentor.svg';
+import rossPDF from 'assets/Hack-a-thon_-_Trivia_Game.pdf';
 
 const Spacer = styled.div`
   height: 10vh;
@@ -186,7 +187,7 @@ const Challenges = () => {
                 Build a fan engagement app that large-scale events would use to
                 increase the engagement of the viewership by creating trivia
                 games to use throughout their events. See more details{' '}
-                <a href='https://s3.us-west-2.amazonaws.com/secure.notion-static.com/da7eaa33-a4d0-44df-a52c-08748dd89501/Hack-a-thon_-_Trivia_Game.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210129%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210129T222814Z&X-Amz-Expires=86400&X-Amz-Signature=ae93aba4197885646256cef1622c5afe9fb810836dc512e6a40002f493a8be1f&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Hack-a-thon_-_Trivia_Game.pdf%22'>
+                <a href={rossPDF}>
                   on this pdf
                 </a>
                 !
