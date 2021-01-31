@@ -438,7 +438,7 @@ export default () => {
             onChange={handleChallengeChange}
           />
         </ChallengeContainer>
-        <ChallengeContainer style={{marginBottom: 24}}>
+        <ChallengeContainer>
           <ChallengeCheck
             value='best-green-hack'
             name='Best "Green" Hack'
@@ -457,6 +457,23 @@ export default () => {
           <ChallengeCheck
             value='best-educational-hack'
             name='Best Educational Hack'
+            onChange={handleChallengeChange}
+          />
+        </ChallengeContainer>
+        <ChallengeContainer style={{marginBottom: 24}}>
+          <ChallengeCheck
+            value='mlh-google-cloud'
+            name='Best Use of Google Cloud'
+            onChange={handleChallengeChange}
+          />
+          <ChallengeCheck
+            value='best-domain-registered'
+            name='Best Domain Registered'
+            onChange={handleChallengeChange}
+          />
+          <ChallengeCheck
+            value='best-hardware-hack'
+            name='Best Hardware Hack'
             onChange={handleChallengeChange}
           />
         </ChallengeContainer>
