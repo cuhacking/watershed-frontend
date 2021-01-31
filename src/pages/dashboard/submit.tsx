@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import styled, {keyframes} from 'styled-components';
-import {useParams, Redirect, Link, useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {SidebarLayout} from '../../layouts';
 import {useDropzone, FileRejection, DropEvent} from 'react-dropzone';
 import ReactMarkdown from 'react-markdown';
@@ -130,8 +130,12 @@ const SubmissionCover = styled.div<{url?: string}>`
     url ? `var(--white) url(${[url]}) no-repeat center center` : 'var(--wine)'};
 `;
 
-const SubmitButton = styled.button`
-  width: 100%;
+const SubmitButton = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 400px;
   height: 64px;
   background: linear-gradient(
       307.69deg,
@@ -143,9 +147,9 @@ const SubmitButton = styled.button`
   border-radius: 8px;
   margin-bottom: 16px;
   cursor: pointer;
-  color: var(--white);
+  color: var(--white) !important;
   font-family: var(--secondary-font);
-  font-size: 16px;
+  font-size: 1.25rem;
 
   transition: 100ms ease-out;
   box-shadow: var(--card-shadow);
@@ -244,7 +248,6 @@ const ChallengeCheck = (props: {
 export default () => {
   const {request, user} = useAuth();
 
-  const history = useHistory();
   const {dashboard} = useDashboardInfo();
   const [name, setName] = useState<string>('');
   const [repo, setRepo] = useState<string>('');
@@ -357,12 +360,8 @@ export default () => {
         <SubSubtitle>
           If you're rolling solo, join a team with just you in it.
         </SubSubtitle>
-        <SubmitButton
-          onClick={() => {
-            history.push('/dashboard/submissions');
-          }}
-        >
-          See other submissions
+        <SubmitButton to='/dashboard/submissions'>
+          See other submissions.
         </SubmitButton>
       </SidebarLayout>
     );
@@ -374,12 +373,8 @@ export default () => {
         <LargeSpacer />
         <Title>Your project has been submitted!</Title>
         <Subtitle>You can sit back and relax now.</Subtitle>
-        <SubmitButton
-          onClick={() => {
-            history.push('/dashboard/submissions');
-          }}
-        >
-          See other submissions
+        <SubmitButton to='/dashboard/submissions'>
+          See other submissions.
         </SubmitButton>
       </SidebarLayout>
     );
@@ -393,12 +388,8 @@ export default () => {
         <Subtitle>
           Check out other submissions on our submissions page!
         </Subtitle>
-        <SubmitButton
-          onClick={() => {
-            history.push('/dashboard/submissions');
-          }}
-        >
-          See other submissions
+        <SubmitButton to='/dashboard/submissions'>
+          See other submissions.
         </SubmitButton>
       </SidebarLayout>
     );
